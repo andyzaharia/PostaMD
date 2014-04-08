@@ -12,6 +12,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [NSPersistentStoreCoordinator setDataModelName:@"DataModel" withStoreName:@"data.sqlite"];
+    
     // Override point for customization after application launch.
     return YES;
 }

@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFF6142AB6A4544B4F1A441 /* libPods.a */; };
+		7552383818C2013B00B55DE1 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383718C2013B00B55DE1 /* DataLoader.m */; };
+		7552383B18C214C700B55DE1 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383A18C214C700B55DE1 /* TrackingInfo.m */; };
+		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
+		7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
+		7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
+		755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */; };
+		755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */; };
+		755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */; };
+		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
+		755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
+		755851B818C13D5B00AA0553 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
+		755851BB18C13E1900AA0553 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
 		75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
 		75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11418C12AE200DB1856 /* CoreGraphics.framework */; };
 		75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11618C12AE200DB1856 /* UIKit.framework */; };
@@ -34,6 +47,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		7552383618C2013B00B55DE1 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
+		7552383718C2013B00B55DE1 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
+		7552383918C214C700B55DE1 /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
+		7552383A18C214C700B55DE1 /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
+		7552383C18C2376900B55DE1 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
+		7552383D18C2376900B55DE1 /* PackageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageInfoViewController.m; sourceTree = "<group>"; };
+		7552383F18C241A000B55DE1 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
+		7552384018C241A000B55DE1 /* TrackingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfoCell.m; sourceTree = "<group>"; };
+		7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		755851A218C13A0900AA0553 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
+		755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
+		755851A418C13A0900AA0553 /* NSManagedObjectContext+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Custom.h"; sourceTree = "<group>"; };
+		755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Custom.m"; sourceTree = "<group>"; };
+		755851A618C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+Custom.h"; sourceTree = "<group>"; };
+		755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+Custom.m"; sourceTree = "<group>"; };
+		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		755851B318C13C0100AA0553 /* PackagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagesViewController.h; sourceTree = "<group>"; };
+		755851B418C13C0100AA0553 /* PackagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackagesViewController.m; sourceTree = "<group>"; };
+		755851B618C13D5B00AA0553 /* PackageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCell.h; sourceTree = "<group>"; };
+		755851B718C13D5B00AA0553 /* PackageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCell.m; sourceTree = "<group>"; };
+		755851B918C13E1900AA0553 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
+		755851BA18C13E1900AA0553 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
 		75EBA10F18C12AE200DB1856 /* PostaMD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaMD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EBA11218C12AE200DB1856 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75EBA11418C12AE200DB1856 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +89,7 @@
 		75EBA13918C12AE200DB1856 /* PostaMDTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PostaMDTests-Info.plist"; sourceTree = "<group>"; };
 		75EBA13B18C12AE200DB1856 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75EBA13D18C12AE200DB1856 /* PostaMDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostaMDTests.m; sourceTree = "<group>"; };
+		CDFF6142AB6A4544B4F1A441 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +97,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */,
 				75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */,
 				75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */,
 				75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */,
+				68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,13 +118,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75320A6F18C8A76A00ADA656 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				7552383918C214C700B55DE1 /* TrackingInfo.h */,
+				7552383A18C214C700B55DE1 /* TrackingInfo.m */,
+				755851B918C13E1900AA0553 /* Package.h */,
+				755851BA18C13E1900AA0553 /* Package.m */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
+		755851A018C13A0900AA0553 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				755851A118C13A0900AA0553 /* ZACoreData */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		755851A118C13A0900AA0553 /* ZACoreData */ = {
+			isa = PBXGroup;
+			children = (
+				755851A218C13A0900AA0553 /* NSManagedObject+CoreData.h */,
+				755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */,
+				755851A418C13A0900AA0553 /* NSManagedObjectContext+Custom.h */,
+				755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */,
+				755851A618C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.h */,
+				755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */,
+			);
+			path = ZACoreData;
+			sourceTree = "<group>";
+		};
 		75EBA10618C12AE200DB1856 = {
 			isa = PBXGroup;
 			children = (
+				755851A018C13A0900AA0553 /* Libs */,
 				75EBA11818C12AE200DB1856 /* PostaMD */,
 				75EBA13718C12AE200DB1856 /* PostaMDTests */,
 				75EBA11118C12AE200DB1856 /* Frameworks */,
 				75EBA11018C12AE200DB1856 /* Products */,
+				3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,10 +174,12 @@
 		75EBA11118C12AE200DB1856 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				755851AB18C13A6100AA0553 /* CoreData.framework */,
 				75EBA11218C12AE200DB1856 /* Foundation.framework */,
 				75EBA11418C12AE200DB1856 /* CoreGraphics.framework */,
 				75EBA11618C12AE200DB1856 /* UIKit.framework */,
 				75EBA13118C12AE200DB1856 /* XCTest.framework */,
+				CDFF6142AB6A4544B4F1A441 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,8 +192,20 @@
 				75EBA12418C12AE200DB1856 /* Main.storyboard */,
 				75EBA12718C12AE200DB1856 /* ViewController.h */,
 				75EBA12818C12AE200DB1856 /* ViewController.m */,
+				755851B318C13C0100AA0553 /* PackagesViewController.h */,
+				755851B418C13C0100AA0553 /* PackagesViewController.m */,
 				75EBA12A18C12AE200DB1856 /* Images.xcassets */,
 				75EBA11918C12AE200DB1856 /* Supporting Files */,
+				7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */,
+				75320A6F18C8A76A00ADA656 /* Entities */,
+				755851B618C13D5B00AA0553 /* PackageCell.h */,
+				755851B718C13D5B00AA0553 /* PackageCell.m */,
+				7552383618C2013B00B55DE1 /* DataLoader.h */,
+				7552383718C2013B00B55DE1 /* DataLoader.m */,
+				7552383C18C2376900B55DE1 /* PackageInfoViewController.h */,
+				7552383D18C2376900B55DE1 /* PackageInfoViewController.m */,
+				7552383F18C241A000B55DE1 /* TrackingInfoCell.h */,
+				7552384018C241A000B55DE1 /* TrackingInfoCell.m */,
 			);
 			path = PostaMD;
 			sourceTree = "<group>";
@@ -159,9 +246,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75EBA14118C12AE200DB1856 /* Build configuration list for PBXNativeTarget "PostaMD" */;
 			buildPhases = (
+				98860E089F614FDC963B25EF /* Check Pods Manifest.lock */,
 				75EBA10B18C12AE200DB1856 /* Sources */,
 				75EBA10C18C12AE200DB1856 /* Frameworks */,
 				75EBA10D18C12AE200DB1856 /* Resources */,
+				1AA923A5EA5C4970A377EA4E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,14 +333,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1AA923A5EA5C4970A377EA4E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98860E089F614FDC963B25EF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		75EBA10B18C12AE200DB1856 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				755851B818C13D5B00AA0553 /* PackageCell.m in Sources */,
+				7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */,
 				75EBA12918C12AE200DB1856 /* ViewController.m in Sources */,
+				755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */,
+				7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */,
+				755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
+				7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */,
+				755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
+				755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */,
+				7552383B18C214C700B55DE1 /* TrackingInfo.m in Sources */,
+				7552383818C2013B00B55DE1 /* DataLoader.m in Sources */,
 				75EBA11F18C12AE200DB1856 /* main.m in Sources */,
+				755851BB18C13E1900AA0553 /* Package.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +508,7 @@
 		};
 		75EBA14218C12AE200DB1856 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -388,6 +522,7 @@
 		};
 		75EBA14318C12AE200DB1856 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -460,6 +595,7 @@
 				75EBA14318C12AE200DB1856 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		75EBA14418C12AE200DB1856 /* Build configuration list for PBXNativeTarget "PostaMDTests" */ = {
 			isa = XCConfigurationList;
@@ -468,8 +604,22 @@
 				75EBA14618C12AE200DB1856 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 75EBA10718C12AE200DB1856 /* Project object */;
 }
