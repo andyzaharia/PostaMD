@@ -39,6 +39,25 @@
         self.navigationItem.rightBarButtonItem = nil;
     }
     
+    __weak PackageInfoViewController *weakSelf = self;
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserverForName:NSManagedObjectContextDidSaveNotification
+                                    object:context
+                                     queue:nil
+                                usingBlock:^(NSNotification *note) {
+                                    NSManagedObjectContext *savedContext = [note object];
+                                    if (savedContext == context) {
+                                        return;
+                                    }
+                                    
+                                    dispatch_sync(dispatch_get_main_queue(), ^{
+                                        [weakSelf.tableView reloadData];
+                                    });
+                                }];
+
     [self loadData];
 }
 
@@ -156,9 +175,14 @@
     [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
     [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
     [SVProgressHUD show];
+    
+    __weak PackageInfoViewController *weakSelf = self;
+    
     [DataLoader getTrackingInfoForItemWithID: self.package.trackingNumber
                                       onDone: ^(id data) {
                                           [SVProgressHUD dismiss];
+                                          [weakSelf loadData];
+                                          
                                       } onFailure:^(NSError *error) {
                                           [SVProgressHUD dismiss];
                                       }];

@@ -27,7 +27,7 @@
 		75EBA11F18C12AE200DB1856 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA11E18C12AE200DB1856 /* main.m */; };
 		75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12218C12AE200DB1856 /* AppDelegate.m */; };
 		75EBA12618C12AE200DB1856 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12418C12AE200DB1856 /* Main.storyboard */; };
-		75EBA12918C12AE200DB1856 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12818C12AE200DB1856 /* ViewController.m */; };
+		75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12818C12AE200DB1856 /* AddPackageViewController.m */; };
 		75EBA12B18C12AE200DB1856 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12A18C12AE200DB1856 /* Images.xcassets */; };
 		75EBA13218C12AE200DB1856 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA13118C12AE200DB1856 /* XCTest.framework */; };
 		75EBA13318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
@@ -81,8 +81,8 @@
 		75EBA12118C12AE200DB1856 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		75EBA12218C12AE200DB1856 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		75EBA12518C12AE200DB1856 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		75EBA12718C12AE200DB1856 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		75EBA12818C12AE200DB1856 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		75EBA12718C12AE200DB1856 /* AddPackageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddPackageViewController.h; sourceTree = "<group>"; };
+		75EBA12818C12AE200DB1856 /* AddPackageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddPackageViewController.m; sourceTree = "<group>"; };
 		75EBA12A18C12AE200DB1856 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		75EBA13018C12AE200DB1856 /* PostaMDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostaMDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EBA13118C12AE200DB1856 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -153,8 +153,8 @@
 		75BB1B7118F45358003B2DA9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				75EBA12718C12AE200DB1856 /* ViewController.h */,
-				75EBA12818C12AE200DB1856 /* ViewController.m */,
+				75EBA12718C12AE200DB1856 /* AddPackageViewController.h */,
+				75EBA12818C12AE200DB1856 /* AddPackageViewController.m */,
 				755851B318C13C0100AA0553 /* PackagesViewController.h */,
 				755851B418C13C0100AA0553 /* PackagesViewController.m */,
 				7552383C18C2376900B55DE1 /* PackageInfoViewController.h */,
@@ -388,7 +388,7 @@
 			files = (
 				755851B818C13D5B00AA0553 /* PackageCell.m in Sources */,
 				7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */,
-				75EBA12918C12AE200DB1856 /* ViewController.m in Sources */,
+				75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */,
 				755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */,
 				7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */,
 				755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */,

@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Andrei Zaharia. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "AddPackageViewController.h"
 #import "AFNetworking.h"
 #import "TFHpple.h"
 #import "Package.h"
 #import "DataLoader.h"
 
 
-@interface ViewController ()
+@interface AddPackageViewController ()
 
 
 @property (weak, nonatomic) IBOutlet UITextField *tfName;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation ViewController
+@implementation AddPackageViewController
 
 - (void)viewDidLoad
 {
@@ -61,7 +61,13 @@
 }
 
 - (IBAction)pasteTrackingNumber:(id)sender {
+    if (![self.tfTrackingNumber isFirstResponder]) {
+        [self.tfTrackingNumber becomeFirstResponder];
+    }
+    
     [self.tfTrackingNumber paste: sender];
+    
+    [self.tfName becomeFirstResponder];
 }
 
 @end
