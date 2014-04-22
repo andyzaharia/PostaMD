@@ -20,9 +20,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
         sharedDateFormatter = [[NSDateFormatter alloc] init];
         [sharedDateFormatter setDateFormat:@"M/dd/yyyy hh:mm:ss a"];
     }
-    
-    
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
@@ -35,7 +33,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
               NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
               [context performBlock:^{
                   
-                  NSString *responseString = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding];
+                  //NSString *responseString = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding];
                                     
                   TFHpple *doc = [[TFHpple alloc] initWithHTMLData: data];
                   
@@ -50,10 +48,13 @@ static NSDateFormatter *sharedDateFormatter = nil;
                       package = [Package createEntityInContext: context];
                   }
                   
+                  __block BOOL _hasNewData = NO;
+                  
                   childs = [childs subarrayWithRange:NSMakeRange(2, [childs count] - 2)];
                   [childs enumerateObjectsUsingBlock:^(TFHppleElement *e, NSUInteger idx, BOOL *stop) {
                       
                       __block TrackingInfo *info = nil;
+                      __block BOOL _receivedByUser = NO;
                       
                       NSArray *tdChilds = [e childrenWithTagName:@"td"];
                       [tdChilds enumerateObjectsUsingBlock:^(TFHppleElement *td, NSUInteger idx, BOOL *stop) {
@@ -64,6 +65,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
                               
                               if (!info) {
                                   info = [TrackingInfo createEntityInContext: context];
+                                  _hasNewData = YES;
                               }
                               
                               info.package = package;
@@ -81,8 +83,13 @@ static NSDateFormatter *sharedDateFormatter = nil;
                                   case 2:
                                       info.localityStr = [td text];
                                       break;
-                                  case 3:
+                                  case 3: {
                                       info.eventStr = [td text];
+                                      
+                                      if (!_receivedByUser && [info.eventStr isEqualToString:@"Livrarea destinatarului"]) {
+                                          _receivedByUser = YES;
+                                      }
+                                  }
                                       break;
                                   case 4:
                                       info.infoStr = [td text];
@@ -92,15 +99,28 @@ static NSDateFormatter *sharedDateFormatter = nil;
                               }
                           }
                           
-                          NSLog(@"TD %@", [td text]);
+                          //NSLog(@"TD %@", [td text]);
                       }];
+                      
+                      if (_receivedByUser) {
+                          package.received = @(YES);
+                      }
                   }];
                   
+                  
+                  package.lastChecked = [NSDate date];
                   [context save];
                   
+                  NSManagedObjectID *objID = [package objectID];
+                  
                   dispatch_async(dispatch_get_main_queue(), ^{
+                      NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
+                      
+                      Package *pkg = (Package *)[ctx objectWithID: objID];
+                      [ctx refreshObject:pkg mergeChanges: YES];
+                      
                       if (onDone) {
-                          onDone(nil);
+                          onDone(@(_hasNewData));
                       }
                   });
               }];
@@ -109,6 +129,60 @@ static NSDateFormatter *sharedDateFormatter = nil;
                   onFailure(error);
               }
           }];
+}
+
+#pragma mark - ------------------------------------------------------------
+
++(void) fetchPackageTrackingInBackground: (NSString *) trackingID
+                             onDoneFetch: (OnFetchSuccess) onDone
+{
+    [DataLoader getTrackingInfoForItemWithID: trackingID
+                                      onDone: ^(NSNumber *hasNewData) {
+                                          onDone([hasNewData boolValue] ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData);
+                                      } onFailure:^(NSError *error) {
+                                          onDone(UIBackgroundFetchResultFailed);
+                                      }];
+}
+
++(void) fetchTrackingInfoForItems: (NSMutableArray *) items
+                   currentResults: (NSMutableArray *) currentResults
+                      onDoneFetch: (OnFetchSuccess) onDone
+{
+    if ([items count] > 0) {
+        NSString *lastNumber = [items lastObject];
+        [items removeLastObject];
+    
+        [DataLoader fetchPackageTrackingInBackground: lastNumber
+                                         onDoneFetch:^(UIBackgroundFetchResult result) {
+                                             [currentResults addObject: @(result)];
+                                             
+                                             [DataLoader fetchTrackingInfoForItems:items
+                                                                    currentResults:currentResults
+                                                                       onDoneFetch:^(UIBackgroundFetchResult result) {
+                                                                           onDone(result);
+                                                                       }];
+                                         }];
+    } else {
+        NSArray *sorted = [currentResults sortedArrayUsingSelector: @selector(compare:)];
+        
+        if ([sorted count] > 0) {
+            NSNumber *firstItem = [sorted firstObject];
+            onDone([firstItem integerValue]);
+        } else {
+           onDone(UIBackgroundFetchResultNoData);
+        }
+    }
+}
+
++(void) getTrackingInfoForItems: (NSArray *) trackingNumbers
+                         onDone: (OnFetchSuccess) onDone
+{
+    NSMutableArray *mutableList = [NSMutableArray arrayWithArray: trackingNumbers];
+    [DataLoader fetchTrackingInfoForItems: mutableList
+                           currentResults: [NSMutableArray array]
+                              onDoneFetch:^(UIBackgroundFetchResult result) {
+                                  onDone(result);
+                              }];
 }
 
 @end
