@@ -35,6 +35,10 @@
     self.title = self.package.name;
     self.lbTrackingNumber.text = self.package.trackingNumber;
 
+    if ([self.package.received boolValue]) {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
     [self loadData];
 }
 

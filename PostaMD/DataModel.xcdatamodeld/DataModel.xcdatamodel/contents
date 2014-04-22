@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Package" representedClassName="Package" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastChecked" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="received" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="trackingNumber" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="info" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrackingInfo" inverseName="package" inverseEntity="TrackingInfo" syncable="YES"/>
     </entity>
@@ -16,7 +18,7 @@
         <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="info" inverseEntity="Package" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Package" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="TrackingInfo" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Package" positionX="0" positionY="0" width="128" height="133"/>
+        <element name="TrackingInfo" positionX="0" positionY="0" width="128" height="150"/>
     </elements>
 </model>

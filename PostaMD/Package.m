@@ -2,7 +2,7 @@
 //  Package.m
 //  PostaMD
 //
-//  Created by Andrei Zaharia on 2/28/14.
+//  Created by Andrei Zaharia on 4/8/14.
 //  Copyright (c) 2014 Andrei Zaharia. All rights reserved.
 //
 
@@ -12,9 +12,11 @@
 
 @implementation Package
 
-@dynamic trackingNumber;
-@dynamic name;
 @dynamic date;
+@dynamic name;
+@dynamic trackingNumber;
+@dynamic lastChecked;
+@dynamic received;
 @dynamic info;
 
 @end

@@ -12,6 +12,7 @@
 #import "TrackingInfo.h"
 #import "DataLoader.h"
 #import "PackageInfoViewController.h"
+#import "SVProgressHUD.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
 
@@ -87,6 +88,53 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
+{
+    __weak PackagesViewController *weakSelf = self;
+    [DataLoader getTrackingInfoForItemWithID: trackingNumbers[index]
+                                      onDone: ^(id data) {
+                                          [trackingNumbers removeObjectAtIndex: index];
+                                          
+                                          if ([trackingNumbers count] == 0) {
+                                              [SVProgressHUD dismiss];
+                                          } else {
+                                              [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                          }
+                                          
+                                      } onFailure:^(NSError *error) {
+                                          [trackingNumbers removeObjectAtIndex: index];
+                                          
+                                          if ([trackingNumbers count] == 0) {
+                                              [SVProgressHUD dismiss];
+                                          } else {
+                                              [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                          }
+                                      }];
+}
+
+- (IBAction)refreshPackages:(id)sender {
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
+    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    
+    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: itemsToFetch];
+    for (int i = 0; i < itemsToFetch; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
+        Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
+        if (![package.received boolValue]) {
+            [trackingNumbers addObject: package.trackingNumber];
+        }
+    }
+    
+    if ([trackingNumbers count]) {
+        [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
+        [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+        [SVProgressHUD show];
+        
+        [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+    }
 }
 
 #pragma mark -
@@ -198,10 +246,13 @@
     TrackingInfo *lastTrackInfo = [items lastObject];
     if (lastTrackInfo) {
         cell.lbLastTrackingInfo.text = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+    } else {
+        cell.lbLastTrackingInfo.text = @"";
     }
     
     cell.lbName.text = package.name;
     cell.lbTrackingNumber.text = package.trackingNumber;
+    cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

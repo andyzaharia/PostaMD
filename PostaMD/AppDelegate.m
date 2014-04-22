@@ -7,12 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "Package.h"
+#import "DataLoader.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [NSPersistentStoreCoordinator setDataModelName:@"DataModel" withStoreName:@"data.sqlite"];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
     
     // Override point for customization after application launch.
     return YES;
@@ -43,6 +46,31 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    NSPredicate *predicate = [NSPredicate predicateWithValue: YES];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: NO];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
+    [request setFetchBatchSize: 20];
+    [request setPredicate: predicate];
+    [request setSortDescriptors: @[sort]];
+    
+    NSArray *items = [context executeFetchRequest: request error: nil];
+    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: [items count]];
+    [items enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL *stop) {
+        if (![package.received boolValue]) {
+            [trackingNumbers addObject: package.trackingNumber];
+        }
+    }];
+    
+    [DataLoader getTrackingInfoForItems: trackingNumbers
+                                 onDone: ^(UIBackgroundFetchResult result) {
+                                     completionHandler(result);
+                                 }];
 }
 
 @end

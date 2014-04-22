@@ -2,7 +2,7 @@
 //  Package.h
 //  PostaMD
 //
-//  Created by Andrei Zaharia on 2/28/14.
+//  Created by Andrei Zaharia on 4/8/14.
 //  Copyright (c) 2014 Andrei Zaharia. All rights reserved.
 //
 
@@ -13,9 +13,11 @@
 
 @interface Package : NSManagedObject
 
-@property (nonatomic, retain) NSString * trackingNumber;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * date;
+@property (nonatomic, retain) NSDate    * date;
+@property (nonatomic, retain) NSString  * name;
+@property (nonatomic, retain) NSString  * trackingNumber;
+@property (nonatomic, retain) NSDate * lastChecked;
+@property (nonatomic, retain) NSNumber * received;
 @property (nonatomic, retain) NSSet *info;
 @end
 
