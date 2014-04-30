@@ -34,6 +34,7 @@
 		75EBA13418C12AE200DB1856 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11618C12AE200DB1856 /* UIKit.framework */; };
 		75EBA13C18C12AE200DB1856 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA13A18C12AE200DB1856 /* InfoPlist.strings */; };
 		75EBA13E18C12AE200DB1856 /* PostaMDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA13D18C12AE200DB1856 /* PostaMDTests.m */; };
+		75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		75EBA13918C12AE200DB1856 /* PostaMDTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PostaMDTests-Info.plist"; sourceTree = "<group>"; };
 		75EBA13B18C12AE200DB1856 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75EBA13D18C12AE200DB1856 /* PostaMDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostaMDTests.m; sourceTree = "<group>"; };
+		75F72D0619118637009EDF97 /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
+		75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
 		CDFF6142AB6A4544B4F1A441 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -132,6 +135,7 @@
 		755851A018C13A0900AA0553 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				75F72D0519118637009EDF97 /* AFHTTPRequestOperationManager-Timeout */,
 				755851A118C13A0900AA0553 /* ZACoreData */,
 			);
 			path = Libs;
@@ -245,6 +249,15 @@
 				75EBA13A18C12AE200DB1856 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		75F72D0519118637009EDF97 /* AFHTTPRequestOperationManager-Timeout */ = {
+			isa = PBXGroup;
+			children = (
+				75F72D0619118637009EDF97 /* AFHTTPRequestOperationManager+timeout.h */,
+				75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */,
+			);
+			path = "AFHTTPRequestOperationManager-Timeout";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,6 +407,7 @@
 				755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */,
 				755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */,
+				75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
 				755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */,
 				7552383B18C214C700B55DE1 /* TrackingInfo.m in Sources */,

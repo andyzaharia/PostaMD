@@ -9,6 +9,7 @@
 #import "DataLoader.h"
 #import "Package.h"
 #import "TrackingInfo.h"
+#import "AFHTTPRequestOperationManager+Timeout.h"
 
 @implementation DataLoader
 
@@ -22,14 +23,16 @@ static NSDateFormatter *sharedDateFormatter = nil;
     }
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
+    //manager.
     manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary *parameters = @{@"itemid": trackID};
     
-    [manager POST:@"http://www.posta.md:8081/IPSWeb_item_events.asp"
-       parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, NSData *data) {
+    [manager        POST: @"http://www.posta.md:8081/IPSWeb_item_events.asp"
+              parameters: parameters
+         timeoutInterval: 5.0
+                 success: ^(AFHTTPRequestOperation *operation, NSData *data) {
+                     
               NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
               [context performBlock:^{
                   
