@@ -41,6 +41,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -68,8 +69,16 @@
     }];
     
     [DataLoader getTrackingInfoForItems: trackingNumbers
-                                 onDone: ^(UIBackgroundFetchResult result) {
-                                     completionHandler(result);
+                        backgroundFetch: YES
+                                 onDone: ^(NSInteger count) {
+                                     if (count >= 0) {
+                                         UIBackgroundFetchResult result = (count > 0) ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData;
+                                         completionHandler(result);
+                                     } else {
+                                         completionHandler(UIBackgroundFetchResultFailed);
+                                     }
+                                     
+                                     application.applicationIconBadgeNumber = (count >= 0) ? count : 0;
                                  }];
 }
 

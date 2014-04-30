@@ -145,6 +145,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
 }
 
 +(void) fetchTrackingInfoForItems: (NSMutableArray *) items
+                  backgroundFetch: (BOOL) backgroundFetch
                    currentResults: (NSMutableArray *) currentResults
                       onDoneFetch: (OnFetchSuccess) onDone
 {
@@ -153,35 +154,45 @@ static NSDateFormatter *sharedDateFormatter = nil;
         [items removeLastObject];
     
         [DataLoader fetchPackageTrackingInBackground: lastNumber
-                                         onDoneFetch:^(UIBackgroundFetchResult result) {
-                                             [currentResults addObject: @(result)];
+                                         onDoneFetch:^(NSInteger count) {
                                              
-                                             [DataLoader fetchTrackingInfoForItems:items
-                                                                    currentResults:currentResults
-                                                                       onDoneFetch:^(UIBackgroundFetchResult result) {
-                                                                           onDone(result);
+                                             //Add the tracking result to the results array.
+                                             [currentResults addObject: @(count)];
+                                             
+                                             [DataLoader fetchTrackingInfoForItems: items
+                                                                   backgroundFetch: backgroundFetch
+                                                                    currentResults: currentResults
+                                                                       onDoneFetch: ^(NSInteger count) {
+                                                                           onDone(count);
                                                                        }];
                                          }];
     } else {
-        NSArray *sorted = [currentResults sortedArrayUsingSelector: @selector(compare:)];
+        __block NSInteger itemCountWithNewData = 0;
+        [currentResults enumerateObjectsUsingBlock:^(NSNumber *result, NSUInteger idx, BOOL *stop) {
+            if ([result integerValue] == UIBackgroundFetchResultNewData) {
+                itemCountWithNewData++;
+            }
+        }];
         
-        if ([sorted count] > 0) {
-            NSNumber *firstItem = [sorted firstObject];
-            onDone([firstItem integerValue]);
+        
+        if (itemCountWithNewData > 0) {
+            onDone(itemCountWithNewData);
         } else {
-           onDone(UIBackgroundFetchResultNoData);
+           onDone(-1);
         }
     }
 }
 
 +(void) getTrackingInfoForItems: (NSArray *) trackingNumbers
+                backgroundFetch: (BOOL) backgroundFetch
                          onDone: (OnFetchSuccess) onDone
 {
     NSMutableArray *mutableList = [NSMutableArray arrayWithArray: trackingNumbers];
     [DataLoader fetchTrackingInfoForItems: mutableList
+                          backgroundFetch: backgroundFetch
                            currentResults: [NSMutableArray array]
-                              onDoneFetch:^(UIBackgroundFetchResult result) {
-                                  onDone(result);
+                              onDoneFetch: ^(NSInteger itemsWithNewData) {
+                                  onDone(itemsWithNewData);
                               }];
 }
 

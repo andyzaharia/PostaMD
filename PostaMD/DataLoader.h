@@ -13,7 +13,7 @@
 typedef void (^OnSuccess)(id data);
 typedef void (^OnFailure)(NSError *error);
 
-typedef void (^OnFetchSuccess)(UIBackgroundFetchResult result);
+typedef void (^OnFetchSuccess)(NSInteger count);
 
 
 @interface DataLoader : NSObject
@@ -23,6 +23,7 @@ typedef void (^OnFetchSuccess)(UIBackgroundFetchResult result);
                            onFailure: (OnFailure) onFailure;
 
 +(void) getTrackingInfoForItems: (NSArray *) trackingNumbers
+                backgroundFetch: (BOOL) backgroundFetch
                          onDone: (OnFetchSuccess) onDone;
 
 

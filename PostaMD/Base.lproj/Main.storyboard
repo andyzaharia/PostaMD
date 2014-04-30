@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="iMy-m1-Cy5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="iMy-m1-Cy5">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -20,7 +20,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgP-bX-q2I">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgP-bX-q2I">
                                             <rect key="frame" x="20" y="8" width="292" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
@@ -29,17 +29,20 @@
                                             <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmX-CX-qWr">
-                                            <rect key="frame" x="20" y="44" width="292" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmX-CX-qWr">
+                                            <rect key="frame" x="20" y="44" width="266" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="MVD-v7-BIa"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="292" translatesAutoresizingMaskIntoConstraints="NO" id="bU2-db-VP5">
-                                            <rect key="frame" x="20" y="69" width="292" height="26"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="266" translatesAutoresizingMaskIntoConstraints="NO" id="bU2-db-VP5">
+                                            <rect key="frame" x="20" y="69" width="266" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,6 +51,20 @@
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="RmX-CX-qWr" secondAttribute="trailing" constant="1" id="42k-MD-Cdi"/>
+                                        <constraint firstAttribute="trailing" secondItem="qgP-bX-q2I" secondAttribute="trailing" constant="-25" id="BBF-nJ-hYG"/>
+                                        <constraint firstItem="qgP-bX-q2I" firstAttribute="leading" secondItem="RmX-CX-qWr" secondAttribute="leading" id="DzK-Iv-mY2"/>
+                                        <constraint firstItem="bU2-db-VP5" firstAttribute="top" secondItem="RmX-CX-qWr" secondAttribute="bottom" constant="4" id="FGV-3D-N06"/>
+                                        <constraint firstItem="bU2-db-VP5" firstAttribute="leading" secondItem="hvw-Vk-jEz" secondAttribute="leading" constant="20" id="G8P-9c-8jc"/>
+                                        <constraint firstItem="bU2-db-VP5" firstAttribute="leading" secondItem="RmX-CX-qWr" secondAttribute="leading" id="KbD-zH-lvE"/>
+                                        <constraint firstAttribute="trailing" secondItem="bU2-db-VP5" secondAttribute="trailing" constant="1" id="LpL-pW-uP5"/>
+                                        <constraint firstAttribute="bottom" secondItem="bU2-db-VP5" secondAttribute="bottom" constant="3" id="YOu-7a-r9i"/>
+                                        <constraint firstItem="RmX-CX-qWr" firstAttribute="top" secondItem="qgP-bX-q2I" secondAttribute="bottom" constant="8" symbolic="YES" id="f4x-hW-Ojo"/>
+                                        <constraint firstItem="RmX-CX-qWr" firstAttribute="top" secondItem="hvw-Vk-jEz" secondAttribute="top" constant="44" id="fHn-xX-jra"/>
+                                        <constraint firstItem="RmX-CX-qWr" firstAttribute="leading" secondItem="hvw-Vk-jEz" secondAttribute="leading" constant="20" id="qfD-Uw-lWn"/>
+                                        <constraint firstItem="bU2-db-VP5" firstAttribute="trailing" secondItem="RmX-CX-qWr" secondAttribute="trailing" id="rLR-O3-bIY"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="lbLastTrackingInfo" destination="bU2-db-VP5" id="CKS-6h-hdj"/>
@@ -129,7 +146,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="213" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-VC-RbW">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="213" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-VC-RbW">
                                             <rect key="frame" x="18" y="2" width="213" height="60"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -138,9 +155,12 @@
                                             <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="80" translatesAutoresizingMaskIntoConstraints="NO" id="T87-YU-RzR">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="80" translatesAutoresizingMaskIntoConstraints="NO" id="T87-YU-RzR">
                                             <rect key="frame" x="230" y="2" width="80" height="60"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="7DH-VE-bfk"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -148,6 +168,15 @@
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="dLS-VC-RbW" firstAttribute="centerY" secondItem="PcD-qg-Zay" secondAttribute="centerY" id="G6y-gY-ot4"/>
+                                        <constraint firstAttribute="trailing" secondItem="T87-YU-RzR" secondAttribute="trailing" constant="10" id="JNa-Ka-sVD"/>
+                                        <constraint firstItem="T87-YU-RzR" firstAttribute="baseline" secondItem="dLS-VC-RbW" secondAttribute="baseline" id="eXE-i7-hhT"/>
+                                        <constraint firstItem="dLS-VC-RbW" firstAttribute="leading" secondItem="PcD-qg-Zay" secondAttribute="leading" constant="18" id="fPC-jF-EZ9"/>
+                                        <constraint firstItem="dLS-VC-RbW" firstAttribute="top" secondItem="PcD-qg-Zay" secondAttribute="top" constant="2" id="gv5-hG-aiz"/>
+                                        <constraint firstItem="T87-YU-RzR" firstAttribute="top" secondItem="dLS-VC-RbW" secondAttribute="top" id="hpr-Yp-OBO"/>
+                                        <constraint firstAttribute="trailing" secondItem="dLS-VC-RbW" secondAttribute="trailing" constant="89" id="lKl-J0-PWh"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="lbDate" destination="T87-YU-RzR" id="OEe-0O-bAo"/>
