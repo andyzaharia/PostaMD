@@ -78,8 +78,15 @@
                                          completionHandler(UIBackgroundFetchResultFailed);
                                      }
                                      
-                                     application.applicationIconBadgeNumber = (count >= 0) ? count : 0;
-                                 }];
+                                     if (count > 0) {
+                                         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                                         localNotification.fireDate = [NSDate date];
+                                         localNotification.alertBody = @"You have movement!";
+                                         localNotification.soundName = UILocalNotificationDefaultSoundName;
+                                         localNotification.applicationIconBadgeNumber = count;
+                                         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                     }
+                                 }];    
 }
 
 @end
