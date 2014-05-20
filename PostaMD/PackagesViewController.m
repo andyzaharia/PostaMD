@@ -131,7 +131,7 @@
     if ([trackingNumbers count]) {
         [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
         [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
-        [SVProgressHUD show];
+        [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
         
         [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
     }
