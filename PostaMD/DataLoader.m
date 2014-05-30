@@ -19,7 +19,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
 {
     if (!sharedDateFormatter) {
         sharedDateFormatter = [[NSDateFormatter alloc] init];
-        [sharedDateFormatter setDateFormat:@"M/dd/yyyy hh:mm:ss a"];
+        [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - hh:mm"];
     }
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -28,7 +28,8 @@ static NSDateFormatter *sharedDateFormatter = nil;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary *parameters = @{@"itemid": trackID};
     
-    [manager        POST: @"http://www.posta.md:8081/IPSWeb_item_events.asp"
+    NSString *path = [NSString stringWithFormat: @"http://www.posta.md/ro/tracking?id=%@", trackID];
+    [manager        POST: path
               parameters: parameters
          timeoutInterval: 5.0
                  success: ^(AFHTTPRequestOperation *operation, NSData *data) {
@@ -37,15 +38,22 @@ static NSDateFormatter *sharedDateFormatter = nil;
               [context performBlock:^{
                   
                   //NSString *responseString = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding];
-                                    
+                  //NSLog(@"Response: %@", responseString);
+                  
                   TFHpple *doc = [[TFHpple alloc] initWithHTMLData: data];
                   
-                  NSArray *elements  = [doc searchWithXPathQuery: @"//table[@id='200']"];
-                  TFHppleElement *table = [elements firstObject];
-                  TFHppleElement *tableBody = [table firstChildWithTagName:@"tbody"];
-                  NSArray *childs = [tableBody childrenWithTagName:@"tr"];
-
+                  NSArray *elements  = [doc searchWithXPathQuery: @"//div[@class='tracking-table']"];
+                  __block TFHppleElement *mainDiv = nil;
+                  [elements enumerateObjectsUsingBlock:^(TFHppleElement *element, NSUInteger idx, BOOL *stop) {
+                      NSArray *childs = [element childrenWithClassName:@"row clearfix"];
+                      if ([childs count] > 0) {
+                          mainDiv = element;
+                          *stop = YES;
+                      }
+                  }];
                   
+                  NSArray *childs = [mainDiv childrenWithClassName:@"row clearfix"];
+
                   Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackID inContext: context];
                   if (!package) {
                       package = [Package createEntityInContext: context];
@@ -53,57 +61,40 @@ static NSDateFormatter *sharedDateFormatter = nil;
                   
                   __block BOOL _hasNewData = NO;
                   
-                  childs = [childs subarrayWithRange:NSMakeRange(2, [childs count] - 2)];
                   [childs enumerateObjectsUsingBlock:^(TFHppleElement *e, NSUInteger idx, BOOL *stop) {
                       
-                      __block TrackingInfo *info = nil;
                       __block BOOL _receivedByUser = NO;
                       
-                      NSArray *tdChilds = [e childrenWithTagName:@"td"];
-                      [tdChilds enumerateObjectsUsingBlock:^(TFHppleElement *td, NSUInteger idx, BOOL *stop) {
-                          if (idx == 0) {
-                              info = [TrackingInfo findFirstByAttribute: @"dateStr"
-                                                              withValue: [td text]
-                                                              inContext: context];
-                              
-                              if (!info) {
-                                  info = [TrackingInfo createEntityInContext: context];
-                                  _hasNewData = YES;
-                              }
-                              
-                              info.package = package;
-                          }
+                      TFHppleElement *dateElement = [e firstChildWithClassName:@"cell tracking-result-header-date"];
+                      TFHppleElement *countryElement = [e firstChildWithClassName:@"cell tracking-result-header-country"];
+                      TFHppleElement *locationElement = [e firstChildWithClassName:@"cell tracking-result-header-location"];
+                      TFHppleElement *eventElement = [e firstChildWithClassName:@"cell tracking-result-header-event"];
+                      TFHppleElement *infoExtraElement = [e firstChildWithClassName:@"cell tracking-result-header-extra"];
+                      
+                      NSString *dateString = [dateElement text];
+                      NSString *countryString = [countryElement text];
+                      NSString *localityString = [locationElement text];
+                      NSString *eventString = [eventElement text];
+                      NSString *extraInfoString = [infoExtraElement text];
+                      NSDate *date = [sharedDateFormatter dateFromString: dateString];
+                      
+                      TrackingInfo *info = [TrackingInfo findFirstByAttribute: @"date"
+                                                                    withValue: date
+                                                                    inContext: context];
+                      
+                      if (!info) {
+                          info = [TrackingInfo createEntityInContext: context];
+                          info.localityStr = localityString;
+                          info.countryStr = countryString;
+                          info.eventStr = eventString;
+                          info.infoStr = extraInfoString;
+                          info.dateStr = dateString;
+                          info.date = date;
                           
-                          if (info) {
-                              switch (idx) {
-                                  case 0: {
-                                      info.dateStr = [td text];
-                                      info.date = [sharedDateFormatter dateFromString: [td text]];
-                                  } break;
-                                  case 1:
-                                      info.countryStr = [td text];
-                                      break;
-                                  case 2:
-                                      info.localityStr = [td text];
-                                      break;
-                                  case 3: {
-                                      info.eventStr = [td text];
-                                      
-                                      if (!_receivedByUser && [info.eventStr isEqualToString:@"Livrarea destinatarului"]) {
-                                          _receivedByUser = YES;
-                                      }
-                                  }
-                                      break;
-                                  case 4:
-                                      info.infoStr = [td text];
-                                      break;
-                                  default:
-                                      break;
-                              }
-                          }
-                          
-                          //NSLog(@"TD %@", [td text]);
-                      }];
+                          _hasNewData = YES;
+                      }
+                      
+                      info.package = package;
                       
                       if (_receivedByUser) {
                           package.received = @(YES);
