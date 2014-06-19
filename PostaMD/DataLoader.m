@@ -19,7 +19,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
 {
     if (!sharedDateFormatter) {
         sharedDateFormatter = [[NSDateFormatter alloc] init];
-        [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - hh:mm"];
+        [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
     }
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -78,6 +78,10 @@ static NSDateFormatter *sharedDateFormatter = nil;
                       NSString *extraInfoString = [infoExtraElement text];
                       NSDate *date = [sharedDateFormatter dateFromString: dateString];
                       
+                      if ([eventString isEqualToString:@"Livrarea destinatarului"]) {
+                          _receivedByUser = YES;
+                      }
+                                            
                       TrackingInfo *info = [TrackingInfo findFirstByAttribute: @"date"
                                                                     withValue: date
                                                                     inContext: context];
