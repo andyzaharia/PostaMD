@@ -81,10 +81,10 @@ static NSDateFormatter *sharedDateFormatter = nil;
                       if ([eventString isEqualToString:@"Livrarea destinatarului"]) {
                           _receivedByUser = YES;
                       }
-                                            
-                      TrackingInfo *info = [TrackingInfo findFirstByAttribute: @"date"
-                                                                    withValue: date
-                                                                    inContext: context];
+                      
+                      NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(date == %@) AND (eventStr LIKE %@)", date, eventString];
+                      
+                      TrackingInfo *info = [TrackingInfo findFirstWithPredicate:predicate inContext: context];
                       
                       if (!info) {
                           info = [TrackingInfo createEntityInContext: context];
