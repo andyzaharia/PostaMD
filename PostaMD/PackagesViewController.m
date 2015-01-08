@@ -93,25 +93,25 @@
 -(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
 {
     __weak PackagesViewController *weakSelf = self;
-    [DataLoader getTrackingInfoForItemWithID: trackingNumbers[index]
-                                      onDone: ^(id data) {
-                                          [trackingNumbers removeObjectAtIndex: index];
+    [[DataLoader shared] getTrackingInfoForItemWithID: trackingNumbers[index]
+                                               onDone: ^(id data) {
+                                              [trackingNumbers removeObjectAtIndex: index];
+                                              
+                                              if ([trackingNumbers count] == 0) {
+                                                  [SVProgressHUD dismiss];
+                                              } else {
+                                                  [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                              }
                                           
-                                          if ([trackingNumbers count] == 0) {
-                                              [SVProgressHUD dismiss];
-                                          } else {
-                                              [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
-                                          }
+                                               } onFailure:^(NSError *error) {
+                                                   [trackingNumbers removeObjectAtIndex: index];
                                           
-                                      } onFailure:^(NSError *error) {
-                                          [trackingNumbers removeObjectAtIndex: index];
-                                          
-                                          if ([trackingNumbers count] == 0) {
-                                              [SVProgressHUD dismiss];
-                                          } else {
-                                              [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
-                                          }
-                                      }];
+                                                   if ([trackingNumbers count] == 0) {
+                                                       [SVProgressHUD dismiss];
+                                                   } else {
+                                                       [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                                   }
+                                               }];
 }
 
 - (IBAction)refreshPackages:(id)sender {
@@ -238,7 +238,7 @@
 
 -(void) configureCell: (PackageCell *) cell forIndexPath: (NSIndexPath *) indexPath
 {
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: YES];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
     Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
     NSArray *items = [package.info allObjects];
     items = [items sortedArrayUsingDescriptors:@[descriptor]];
@@ -274,6 +274,7 @@
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
+        default:;
     }
 }
 

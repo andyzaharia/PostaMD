@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "Package.h"
 #import "DataLoader.h"
+#import "SVProgressHUD.h"
 
 @implementation AppDelegate
 
@@ -18,6 +18,14 @@
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
     
     // Override point for customization after application launch.
+    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
+    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+    
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
+        [application registerUserNotificationSettings: settings];
+    }
+    
     return YES;
 }
 							
@@ -67,26 +75,60 @@
             [trackingNumbers addObject: package.trackingNumber];
         }
     }];
-    
-    [DataLoader getTrackingInfoForItems: trackingNumbers
-                        backgroundFetch: YES
-                                 onDone: ^(NSInteger count) {
-                                     if (count >= 0) {
-                                         UIBackgroundFetchResult result = (count > 0) ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData;
-                                         completionHandler(result);
-                                     } else {
-                                         completionHandler(UIBackgroundFetchResultFailed);
-                                     }
-                                     
-                                     if (count > 0) {
-                                         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-                                         localNotification.fireDate = [NSDate date];
-                                         localNotification.alertBody = @"You have movement!";
-                                         localNotification.soundName = UILocalNotificationDefaultSoundName;
-                                         localNotification.applicationIconBadgeNumber = count;
-                                         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-                                     }
-                                 }];    
+
+    [[DataLoader shared] getTrackingInfoForItems: trackingNumbers
+                                          onDone: ^(NSDictionary *info) {
+                                             NSInteger newEvents = [info count];
+                                             if (newEvents >= 0) {
+                                                 UIBackgroundFetchResult result = (newEvents > 0) ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData;
+                                                 completionHandler(result);
+                                             } else {
+                                                 completionHandler(UIBackgroundFetchResultNoData);
+                                             }
+                                             
+                                             if (newEvents > 0) {
+                                                 
+                                                 NSString *messageBody = @"";
+                                                 if (newEvents == 1) {
+                                                     NSArray *allKeys = [info allKeys];
+                                                     NSString *firstTrackingId = [allKeys firstObject];
+                                                     
+                                                     Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:firstTrackingId];
+                                                     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
+                                                     NSArray *items = [package.info allObjects];
+                                                     NSArray *events = [items sortedArrayUsingDescriptors:@[descriptor]];
+
+                                                     if ([events count]) {
+                                                         TrackingInfo *lastEvent = [events lastObject];
+                                                         messageBody = [NSString stringWithFormat:@"%@ - %@.", package.name, lastEvent.eventStr];
+                                                     }
+                                                 } else {
+                                                     NSArray *allKeys = [info allKeys];
+                                                     
+                                                     NSMutableString *bodyStr = [NSMutableString stringWithFormat:@"Updates in "];
+                                                     [allKeys enumerateObjectsUsingBlock:^(NSString *trackingId, NSUInteger idx, BOOL *stop) {
+                                                         Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackingId];
+                                                         if (idx < newEvents - 1) {
+                                                             [bodyStr appendFormat:@"%@, ", package.name];
+                                                         } else {
+                                                             [bodyStr appendFormat:@"%@.", package.name];
+                                                         }
+                                                     }];
+                                                     messageBody = bodyStr;
+                                                 }
+                                                 
+                                                 if ([messageBody length]) {
+                                                     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                                                     localNotification.fireDate = [NSDate date];
+                                                     localNotification.alertBody = messageBody;
+                                                     localNotification.soundName = UILocalNotificationDefaultSoundName;
+                                                     localNotification.applicationIconBadgeNumber = newEvents;
+                                                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                                 }
+                                             }
+                                          } onFailure:^(NSError *error) {
+                                              completionHandler(UIBackgroundFetchResultFailed);
+                                          }];
 }
 
 @end

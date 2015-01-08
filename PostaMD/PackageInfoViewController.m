@@ -65,7 +65,7 @@
 {
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"package == %@", self.package];
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: YES];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"TrackingInfo"];
     [request setFetchBatchSize: 20];
@@ -178,14 +178,14 @@
     
     __weak PackageInfoViewController *weakSelf = self;
     
-    [DataLoader getTrackingInfoForItemWithID: self.package.trackingNumber
-                                      onDone: ^(id data) {
-                                          [SVProgressHUD dismiss];
-                                          [weakSelf loadData];
+    [[DataLoader shared] getTrackingInfoForItemWithID: self.package.trackingNumber
+                                               onDone: ^(id data) {
+                                                   [SVProgressHUD dismiss];
+                                                   [weakSelf loadData];
                                           
-                                      } onFailure:^(NSError *error) {
-                                          [SVProgressHUD dismiss];
-                                      }];
+                                               } onFailure:^(NSError *error) {
+                                                   [SVProgressHUD dismiss];
+                                               }];
 }
 
 -(void) configureCell: (TrackingInfoCell *) cell forIndexPath: (NSIndexPath *) indexPath
@@ -194,6 +194,7 @@
 
     cell.lbInfo.text = lastTrackInfo.eventStr;
     cell.lbDate.text = lastTrackInfo.dateStr;
+    cell.lbCountry.text = lastTrackInfo.countryStr;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -215,6 +216,8 @@
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
+            
+        default: ;
     }
 }
 
