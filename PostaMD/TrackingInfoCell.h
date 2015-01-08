@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lbInfo;
 @property (weak, nonatomic) IBOutlet UILabel *lbDate;
+@property (weak, nonatomic) IBOutlet UILabel *lbCountry;
 
 @end

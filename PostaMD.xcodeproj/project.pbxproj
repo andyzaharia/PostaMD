@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFF6142AB6A4544B4F1A441 /* libPods.a */; };
-		7552383818C2013B00B55DE1 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383718C2013B00B55DE1 /* DataLoader.m */; };
-		7552383B18C214C700B55DE1 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383A18C214C700B55DE1 /* TrackingInfo.m */; };
+		7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
+		7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
 		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
 		7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
@@ -20,6 +20,7 @@
 		755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
 		755851B818C13D5B00AA0553 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
 		755851BB18C13E1900AA0553 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
+		7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7572219B1A5F3A3E00BE901A /* TrackingInfo.m */; };
 		75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
 		75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11418C12AE200DB1856 /* CoreGraphics.framework */; };
 		75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11618C12AE200DB1856 /* UIKit.framework */; };
@@ -48,11 +49,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		7552383618C2013B00B55DE1 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
-		7552383718C2013B00B55DE1 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
-		7552383918C214C700B55DE1 /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
-		7552383A18C214C700B55DE1 /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
+		22674D4A95F21EC5EA6ED3D4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7507FA171A5F212600A2B5FE /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
+		7507FA181A5F212600A2B5FE /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
+		7507FA1D1A5F261600A2B5FE /* PackageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageParser.h; sourceTree = "<group>"; };
+		7507FA1E1A5F261600A2B5FE /* PackageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageParser.m; sourceTree = "<group>"; };
 		7552383C18C2376900B55DE1 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
 		7552383D18C2376900B55DE1 /* PackageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageInfoViewController.m; sourceTree = "<group>"; };
 		7552383F18C241A000B55DE1 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
@@ -71,6 +72,9 @@
 		755851B718C13D5B00AA0553 /* PackageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCell.m; sourceTree = "<group>"; };
 		755851B918C13E1900AA0553 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
 		755851BA18C13E1900AA0553 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
+		757221961A5F392500BE901A /* DataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		7572219A1A5F3A3E00BE901A /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
+		7572219B1A5F3A3E00BE901A /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
 		75EBA10F18C12AE200DB1856 /* PostaMD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaMD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EBA11218C12AE200DB1856 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75EBA11418C12AE200DB1856 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -92,6 +96,7 @@
 		75EBA13D18C12AE200DB1856 /* PostaMDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostaMDTests.m; sourceTree = "<group>"; };
 		75F72D0619118637009EDF97 /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
 		75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
+		C7ACE575CC81C94FE43DBCE5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CDFF6142AB6A4544B4F1A441 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -121,11 +126,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		349BD76BF80ECCA24E742120 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				22674D4A95F21EC5EA6ED3D4 /* Pods.debug.xcconfig */,
+				C7ACE575CC81C94FE43DBCE5 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7507FA161A5F212600A2B5FE /* DataLoader */ = {
+			isa = PBXGroup;
+			children = (
+				7507FA171A5F212600A2B5FE /* DataLoader.h */,
+				7507FA181A5F212600A2B5FE /* DataLoader.m */,
+				7507FA1D1A5F261600A2B5FE /* PackageParser.h */,
+				7507FA1E1A5F261600A2B5FE /* PackageParser.m */,
+			);
+			path = DataLoader;
+			sourceTree = "<group>";
+		};
 		75320A6F18C8A76A00ADA656 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				7552383918C214C700B55DE1 /* TrackingInfo.h */,
-				7552383A18C214C700B55DE1 /* TrackingInfo.m */,
+				7572219A1A5F3A3E00BE901A /* TrackingInfo.h */,
+				7572219B1A5F3A3E00BE901A /* TrackingInfo.m */,
 				755851B918C13E1900AA0553 /* Package.h */,
 				755851BA18C13E1900AA0553 /* Package.m */,
 			);
@@ -163,6 +188,10 @@
 				755851B418C13C0100AA0553 /* PackagesViewController.m */,
 				7552383C18C2376900B55DE1 /* PackageInfoViewController.h */,
 				7552383D18C2376900B55DE1 /* PackageInfoViewController.m */,
+				755851B618C13D5B00AA0553 /* PackageCell.h */,
+				755851B718C13D5B00AA0553 /* PackageCell.m */,
+				7552383F18C241A000B55DE1 /* TrackingInfoCell.h */,
+				7552384018C241A000B55DE1 /* TrackingInfoCell.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -175,7 +204,7 @@
 				75EBA13718C12AE200DB1856 /* PostaMDTests */,
 				75EBA11118C12AE200DB1856 /* Frameworks */,
 				75EBA11018C12AE200DB1856 /* Products */,
-				3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */,
+				349BD76BF80ECCA24E742120 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,6 +233,7 @@
 		75EBA11818C12AE200DB1856 /* PostaMD */ = {
 			isa = PBXGroup;
 			children = (
+				7507FA161A5F212600A2B5FE /* DataLoader */,
 				75BB1B7118F45358003B2DA9 /* View Controllers */,
 				75EBA12118C12AE200DB1856 /* AppDelegate.h */,
 				75EBA12218C12AE200DB1856 /* AppDelegate.m */,
@@ -211,12 +241,6 @@
 				75EBA12A18C12AE200DB1856 /* Images.xcassets */,
 				7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */,
 				75320A6F18C8A76A00ADA656 /* Entities */,
-				755851B618C13D5B00AA0553 /* PackageCell.h */,
-				755851B718C13D5B00AA0553 /* PackageCell.m */,
-				7552383618C2013B00B55DE1 /* DataLoader.h */,
-				7552383718C2013B00B55DE1 /* DataLoader.m */,
-				7552383F18C241A000B55DE1 /* TrackingInfoCell.h */,
-				7552384018C241A000B55DE1 /* TrackingInfoCell.m */,
 				75EBA11918C12AE200DB1856 /* Supporting Files */,
 			);
 			path = PostaMD;
@@ -310,6 +334,7 @@
 				ORGANIZATIONNAME = "Andrei Zaharia";
 				TargetAttributes = {
 					75EBA10E18C12AE200DB1856 = {
+						DevelopmentTeam = WYQJU87AXN;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -374,7 +399,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		98860E089F614FDC963B25EF /* Check Pods Manifest.lock */ = {
@@ -402,18 +427,19 @@
 				755851B818C13D5B00AA0553 /* PackageCell.m in Sources */,
 				7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */,
 				75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */,
+				7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */,
 				755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */,
 				7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */,
 				755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */,
+				7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */,
 				755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */,
 				75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
 				755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */,
-				7552383B18C214C700B55DE1 /* TrackingInfo.m in Sources */,
-				7552383818C2013B00B55DE1 /* DataLoader.m in Sources */,
 				75EBA11F18C12AE200DB1856 /* main.m in Sources */,
 				755851BB18C13E1900AA0553 /* Package.m in Sources */,
+				7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,10 +561,11 @@
 		};
 		75EBA14218C12AE200DB1856 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */;
+			baseConfigurationReference = 22674D4A95F21EC5EA6ED3D4 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
 				INFOPLIST_FILE = "PostaMD/PostaMD-Info.plist";
@@ -550,7 +577,7 @@
 		};
 		75EBA14318C12AE200DB1856 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3BFFBBE5863E4BA293F6823B /* Pods.xcconfig */;
+			baseConfigurationReference = C7ACE575CC81C94FE43DBCE5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -642,9 +669,10 @@
 		7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				757221961A5F392500BE901A /* DataModel 2.xcdatamodel */,
 				7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */;
+			currentVersion = 757221961A5F392500BE901A /* DataModel 2.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
