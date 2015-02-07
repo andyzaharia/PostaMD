@@ -245,7 +245,11 @@
     
     TrackingInfo *lastTrackInfo = [items lastObject];
     if (lastTrackInfo) {
-        cell.lbLastTrackingInfo.text = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+        NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+        if ([lastTrackInfo.localityStr length]) {
+            trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+        }
+        cell.lbLastTrackingInfo.text = trackingStr;
     } else {
         cell.lbLastTrackingInfo.text = @"";
     }

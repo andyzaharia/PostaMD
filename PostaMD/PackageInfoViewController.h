@@ -12,7 +12,6 @@
 
 @interface PackageInfoViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *lbTrackingNumber;
-@property (nonatomic, strong) Package *package;
+@property (nonatomic, weak) Package *package;
 
 @end

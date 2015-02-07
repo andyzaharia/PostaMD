@@ -14,6 +14,7 @@
 @interface PackageInfoViewController () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong)           NSFetchedResultsController          *fetchedResultsController;
+@property (weak, nonatomic) IBOutlet UITextField *tfTrackingNumber;
 
 @end
 
@@ -33,7 +34,7 @@
     [super viewDidLoad];
     
     self.title = self.package.name;
-    self.lbTrackingNumber.text = self.package.trackingNumber;
+    self.tfTrackingNumber.text = self.package.trackingNumber;
 
     if ([self.package.received boolValue]) {
         self.navigationItem.rightBarButtonItem = nil;
@@ -116,6 +117,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([self.tfTrackingNumber isFirstResponder]) {
+        [self.tfTrackingNumber resignFirstResponder];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
 
@@ -194,7 +199,7 @@
 
     cell.lbInfo.text = lastTrackInfo.eventStr;
     cell.lbDate.text = lastTrackInfo.dateStr;
-    cell.lbCountry.text = lastTrackInfo.countryStr;
+    cell.lbCountry.text = [lastTrackInfo.countryStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -251,6 +256,20 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlockAndWait:^{
+        self.package.trackingNumber = self.tfTrackingNumber.text;
+        [context save: nil];
+    }];
+    
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
