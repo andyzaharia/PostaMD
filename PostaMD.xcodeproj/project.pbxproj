@@ -10,6 +10,8 @@
 		68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFF6142AB6A4544B4F1A441 /* libPods.a */; };
 		7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
 		7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
+		751DEBEC1A862C720092A935 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEA1A862C720092A935 /* Crashlytics.framework */; };
+		751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEB1A862C720092A935 /* Fabric.framework */; };
 		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
 		7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
@@ -54,6 +56,8 @@
 		7507FA181A5F212600A2B5FE /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
 		7507FA1D1A5F261600A2B5FE /* PackageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageParser.h; sourceTree = "<group>"; };
 		7507FA1E1A5F261600A2B5FE /* PackageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageParser.m; sourceTree = "<group>"; };
+		751DEBEA1A862C720092A935 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		751DEBEB1A862C720092A935 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		7552383C18C2376900B55DE1 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
 		7552383D18C2376900B55DE1 /* PackageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageInfoViewController.m; sourceTree = "<group>"; };
 		7552383F18C241A000B55DE1 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
@@ -105,10 +109,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */,
 				755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */,
 				75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */,
 				75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */,
 				75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */,
+				751DEBEC1A862C720092A935 /* Crashlytics.framework in Frameworks */,
 				68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +226,8 @@
 		75EBA11118C12AE200DB1856 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				751DEBEA1A862C720092A935 /* Crashlytics.framework */,
+				751DEBEB1A862C720092A935 /* Fabric.framework */,
 				755851AB18C13A6100AA0553 /* CoreData.framework */,
 				75EBA11218C12AE200DB1856 /* Foundation.framework */,
 				75EBA11418C12AE200DB1856 /* CoreGraphics.framework */,
@@ -296,6 +304,7 @@
 				75EBA10C18C12AE200DB1856 /* Frameworks */,
 				75EBA10D18C12AE200DB1856 /* Resources */,
 				1AA923A5EA5C4970A377EA4E /* Copy Pods Resources */,
+				751DEBE91A862C550092A935 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -401,6 +410,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		751DEBE91A862C550092A935 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
 		};
 		98860E089F614FDC963B25EF /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -566,6 +588,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
 				INFOPLIST_FILE = "PostaMD/PostaMD-Info.plist";
@@ -583,6 +609,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
 				INFOPLIST_FILE = "PostaMD/PostaMD-Info.plist";
