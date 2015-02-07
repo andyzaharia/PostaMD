@@ -81,14 +81,16 @@
 
 }
 
-- (IBAction)pasteTrackingNumber:(id)sender {
-    if (![self.tfTrackingNumber isFirstResponder]) {
-        [self.tfTrackingNumber becomeFirstResponder];
+- (IBAction)pasteText:(id)sender {
+    
+    if ([self.tfTrackingNumber isFirstResponder]) {
+        [self.tfTrackingNumber paste: sender];
     }
     
-    [self.tfTrackingNumber paste: sender];
-    
-    [self.tfName becomeFirstResponder];
+    if ([self.tfName isFirstResponder]) {
+        [self.tfName paste: sender];
+    }
+
 }
 
 @end

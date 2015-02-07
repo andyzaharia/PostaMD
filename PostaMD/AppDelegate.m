@@ -104,7 +104,8 @@
 
                                                      if ([events count]) {
                                                          TrackingInfo *lastEvent = [events lastObject];
-                                                         messageBody = [NSString stringWithFormat:@"%@ - %@.", package.name, lastEvent.eventStr];
+                                                         NSString *localityStr = [lastEvent.localityStr length] ? [NSString stringWithFormat:@"(%@)", lastEvent.localityStr] : @"";
+                                                         messageBody = [NSString stringWithFormat:@"%@ - %@%@.", package.name, lastEvent.eventStr, localityStr];
                                                      }
                                                  } else {
                                                      NSArray *allKeys = [info allKeys];
