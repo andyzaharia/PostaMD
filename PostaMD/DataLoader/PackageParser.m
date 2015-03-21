@@ -60,14 +60,20 @@ static NSDateFormatter *sharedDateFormatter = nil;
         NSString *eventString = [eventElement text];
         NSString *extraInfoString = [infoExtraElement text];
         NSDate *date = [sharedDateFormatter dateFromString: dateString];
-                
+        
         if ([eventString isEqualToString:@"Livrarea destinatarului"]) {
             _receivedByUser = YES;
         }
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(date == %@) AND (eventStr LIKE %@)", date, eventString];
+        NSPredicate *trackingPredicate = nil;
+        if (date) {
+            trackingPredicate = [NSPredicate predicateWithFormat:@"(date == %@) AND (eventStr LIKE %@) AND (countryStr LIKE %@)", date, eventString, countryString];
+        } else {
+            // Fall back on checking 3 properties
+            trackingPredicate = [NSPredicate predicateWithFormat:@"(countryStr LIKE %@) AND (eventStr LIKE %@) AND (localityStr LIKE %@)", countryString, eventString, localityString];
+        }
         
-        TrackingInfo *info = [TrackingInfo findFirstWithPredicate:predicate inContext: context];
+        TrackingInfo *info = [TrackingInfo findFirstWithPredicate:trackingPredicate inContext: context];
         
         if (!info) {
             NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];

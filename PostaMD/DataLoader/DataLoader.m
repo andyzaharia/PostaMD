@@ -97,8 +97,9 @@
     NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
     [context performBlock:^{
         
-        __block NSMutableArray      *_packagesWithUpdates = [NSMutableArray array];
-        __block NSMutableDictionary *_packageEventsDic = [NSMutableDictionary dictionary];
+        __block BOOL                 _stoppedWithError      = NO;
+        __block NSMutableArray      *_packagesWithUpdates   = [NSMutableArray array];
+        __block NSMutableDictionary *_packageEventsDic      = [NSMutableDictionary dictionary];
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
@@ -139,16 +140,19 @@
                         }
                     });
                     
+                    _stoppedWithError = YES;
                     *stop = YES;
                 }
             }
         }];
         
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            if (onDone) {
-                onDone(_packageEventsDic);
-            }
-        });
+        if (!_stoppedWithError) {
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                if (onDone) {
+                    onDone(_packageEventsDic);
+                }
+            });
+        }
     }];
 }
 
