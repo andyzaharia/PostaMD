@@ -135,7 +135,7 @@
         <!--About-->
         <scene sceneID="jR8-Sf-1sz">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="wuz-nF-bBH" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="wuz-nF-bBH" customClass="AboutViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="alM-xH-IJ0"/>
                         <viewControllerLayoutGuide type="bottom" id="coI-ry-T0c"/>
@@ -170,6 +170,9 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="sXp-qe-mcW"/>
                                         </constraints>
                                         <state key="normal" title="Contact Me"/>
+                                        <connections>
+                                            <action selector="contactMe:" destination="wuz-nF-bBH" eventType="touchUpInside" id="QH2-DE-Edx"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <animations/>
