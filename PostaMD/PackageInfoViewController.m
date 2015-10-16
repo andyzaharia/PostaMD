@@ -10,6 +10,7 @@
 #import "TrackingInfoCell.h"
 #import "DataLoader.h"
 #import "SVProgressHUD.h"
+#import "UITableView+RemoveSeparators.h"
 
 @interface PackageInfoViewController () <NSFetchedResultsControllerDelegate>
 
@@ -58,7 +59,8 @@
                                         [weakSelf.tableView reloadData];
                                     });
                                 }];
-
+    
+    [self.tableView removeExtraSeparators];
     [self loadData];
 }
 

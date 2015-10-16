@@ -13,6 +13,7 @@
 #import "DataLoader.h"
 #import "PackageInfoViewController.h"
 #import "SVProgressHUD.h"
+#import "UITableView+RemoveSeparators.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
 
@@ -56,6 +57,12 @@
                                     });
                                 }];
 
+    [self.tableView removeExtraSeparators];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 -(void) loadData
