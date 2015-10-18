@@ -12,6 +12,7 @@
 #import "Package.h"
 #import "DataLoader.h"
 #import "SVProgressHUD.h"
+#import "UIAlertView+Alert.h"
 
 @interface AddPackageViewController ()
 
@@ -26,6 +27,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //TODO: Disable landscape screen in this controller.
     
     self.tfName.layer.borderWidth = 1.0;
     self.tfName.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1.000] CGColor];
@@ -46,11 +49,27 @@
     
     [self.view endEditing: YES];
     
-    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
-    [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+    __block BOOL itemAlreadyExists = NO;
+    __block NSString *alreadyExistingPackageName = nil;
     
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlockAndWait:^{
+        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:self.tfTrackingNumber.text inContext: context];
+        if (package) {
+            itemAlreadyExists = YES;
+            alreadyExistingPackageName = package.name;
+        }
+    }];
+    
+    if (itemAlreadyExists) {
+        NSString *message = NSLocalizedString(@"An item with this tracking number already exists.", nil);
+        if (alreadyExistingPackageName.length) {
+            message = [message stringByAppendingFormat:@"\n The item is called %@.", alreadyExistingPackageName];
+        }
+        [UIAlertView info: message];
+        return;
+    }
+    
     [context performBlockAndWait:^{
         Package *package = [Package createEntityInContext: context];
         package.name = self.tfName.text;
@@ -59,6 +78,9 @@
         [context save];
     }];
     
+    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
+    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+    [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
     
     __weak AddPackageViewController *weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID: self.tfTrackingNumber.text
@@ -69,6 +91,8 @@
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
                                                    [SVProgressHUD dismiss];
                                                }];
+    
+    [[DataLoader shared] syncWithCloudKit];
 }
 
 - (void)didReceiveMemoryWarning

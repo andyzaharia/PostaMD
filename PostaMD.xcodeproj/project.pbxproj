@@ -12,12 +12,17 @@
 		7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
 		751DEBEC1A862C720092A935 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEA1A862C720092A935 /* Crashlytics.framework */; };
 		751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEB1A862C720092A935 /* Fabric.framework */; };
+		75322EC21BD3E4BF00839E76 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75322EC11BD3E4BF00839E76 /* CloudKit.framework */; };
+		75322ECE1BD3E8DA00839E76 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */; settings = {ASSET_TAGS = (); }; };
+		75322ECF1BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC71BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m */; settings = {ASSET_TAGS = (); }; };
+		75322ED01BD3E8DA00839E76 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC91BD3E8DA00839E76 /* NSManagedObjectContext+Custom.m */; settings = {ASSET_TAGS = (); }; };
+		75322ED11BD3E8DA00839E76 /* NSManagedObjectContextOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECB1BD3E8DA00839E76 /* NSManagedObjectContextOperation.m */; settings = {ASSET_TAGS = (); }; };
+		75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */; settings = {ASSET_TAGS = (); }; };
+		75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */; settings = {ASSET_TAGS = (); }; };
+		75322ED81BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */; settings = {ASSET_TAGS = (); }; };
 		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
 		7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
-		755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */; };
-		755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */; };
-		755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */; };
 		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
 		755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
 		755851B818C13D5B00AA0553 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
@@ -62,17 +67,28 @@
 		7507FA1E1A5F261600A2B5FE /* PackageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageParser.m; sourceTree = "<group>"; };
 		751DEBEA1A862C720092A935 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		751DEBEB1A862C720092A935 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		75322EC01BD3E4BA00839E76 /* PostaMD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PostaMD.entitlements; sourceTree = "<group>"; };
+		75322EC11BD3E4BF00839E76 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		75322EC31BD3E7DA00839E76 /* DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		75322EC41BD3E8DA00839E76 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
+		75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
+		75322EC61BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataCustom.h"; sourceTree = "<group>"; };
+		75322EC71BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataCustom.m"; sourceTree = "<group>"; };
+		75322EC81BD3E8DA00839E76 /* NSManagedObjectContext+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Custom.h"; sourceTree = "<group>"; };
+		75322EC91BD3E8DA00839E76 /* NSManagedObjectContext+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Custom.m"; sourceTree = "<group>"; };
+		75322ECA1BD3E8DA00839E76 /* NSManagedObjectContextOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSManagedObjectContextOperation.h; sourceTree = "<group>"; };
+		75322ECB1BD3E8DA00839E76 /* NSManagedObjectContextOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSManagedObjectContextOperation.m; sourceTree = "<group>"; };
+		75322ECC1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+Custom.h"; sourceTree = "<group>"; };
+		75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+Custom.m"; sourceTree = "<group>"; };
+		75322ED31BD3F8FA00839E76 /* NSManagedObject+CloudKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CloudKit.h"; sourceTree = "<group>"; };
+		75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CloudKit.m"; sourceTree = "<group>"; };
+		75322ED61BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+CloudKit.h"; sourceTree = "<group>"; };
+		75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+CloudKit.m"; sourceTree = "<group>"; };
 		7552383C18C2376900B55DE1 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
 		7552383D18C2376900B55DE1 /* PackageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageInfoViewController.m; sourceTree = "<group>"; };
 		7552383F18C241A000B55DE1 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
 		7552384018C241A000B55DE1 /* TrackingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfoCell.m; sourceTree = "<group>"; };
 		7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		755851A218C13A0900AA0553 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
-		755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
-		755851A418C13A0900AA0553 /* NSManagedObjectContext+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Custom.h"; sourceTree = "<group>"; };
-		755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Custom.m"; sourceTree = "<group>"; };
-		755851A618C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+Custom.h"; sourceTree = "<group>"; };
-		755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+Custom.m"; sourceTree = "<group>"; };
 		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		755851B318C13C0100AA0553 /* PackagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagesViewController.h; sourceTree = "<group>"; };
 		755851B418C13C0100AA0553 /* PackagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackagesViewController.m; sourceTree = "<group>"; };
@@ -123,6 +139,7 @@
 				75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */,
 				751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */,
 				755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */,
+				75322EC21BD3E4BF00839E76 /* CloudKit.framework in Frameworks */,
 				75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */,
 				75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */,
 				75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */,
@@ -167,6 +184,7 @@
 		75320A6F18C8A76A00ADA656 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */,
 				7572219A1A5F3A3E00BE901A /* TrackingInfo.h */,
 				7572219B1A5F3A3E00BE901A /* TrackingInfo.m */,
 				755851B918C13E1900AA0553 /* Package.h */,
@@ -189,12 +207,20 @@
 		755851A118C13A0900AA0553 /* ZACoreData */ = {
 			isa = PBXGroup;
 			children = (
-				755851A218C13A0900AA0553 /* NSManagedObject+CoreData.h */,
-				755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */,
-				755851A418C13A0900AA0553 /* NSManagedObjectContext+Custom.h */,
-				755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */,
-				755851A618C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.h */,
-				755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */,
+				75322EC41BD3E8DA00839E76 /* NSManagedObject+CoreData.h */,
+				75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */,
+				75322EC61BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.h */,
+				75322EC71BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m */,
+				75322EC81BD3E8DA00839E76 /* NSManagedObjectContext+Custom.h */,
+				75322EC91BD3E8DA00839E76 /* NSManagedObjectContext+Custom.m */,
+				75322ECA1BD3E8DA00839E76 /* NSManagedObjectContextOperation.h */,
+				75322ECB1BD3E8DA00839E76 /* NSManagedObjectContextOperation.m */,
+				75322ECC1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.h */,
+				75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */,
+				75322ED31BD3F8FA00839E76 /* NSManagedObject+CloudKit.h */,
+				75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */,
+				75322ED61BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.h */,
+				75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */,
 			);
 			path = ZACoreData;
 			sourceTree = "<group>";
@@ -260,6 +286,7 @@
 		75EBA11118C12AE200DB1856 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75322EC11BD3E4BF00839E76 /* CloudKit.framework */,
 				75A26E321BD1916600C8F75C /* MessageUI.framework */,
 				751DEBEA1A862C720092A935 /* Crashlytics.framework */,
 				751DEBEB1A862C720092A935 /* Fabric.framework */,
@@ -282,7 +309,6 @@
 				75EBA12218C12AE200DB1856 /* AppDelegate.m */,
 				75EBA12418C12AE200DB1856 /* Main.storyboard */,
 				75EBA12A18C12AE200DB1856 /* Images.xcassets */,
-				7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */,
 				75320A6F18C8A76A00ADA656 /* Entities */,
 				75EBA11918C12AE200DB1856 /* Supporting Files */,
 			);
@@ -292,6 +318,7 @@
 		75EBA11918C12AE200DB1856 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				75322EC01BD3E4BA00839E76 /* PostaMD.entitlements */,
 				75EBA11A18C12AE200DB1856 /* PostaMD-Info.plist */,
 				75EBA11B18C12AE200DB1856 /* InfoPlist.strings */,
 				75EBA11E18C12AE200DB1856 /* main.m */,
@@ -381,6 +408,9 @@
 						DevelopmentTeam = WYQJU87AXN;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -481,24 +511,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75322ECF1BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m in Sources */,
 				75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */,
 				755851B818C13D5B00AA0553 /* PackageCell.m in Sources */,
 				7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */,
 				75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */,
+				75322ED01BD3E8DA00839E76 /* NSManagedObjectContext+Custom.m in Sources */,
 				75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */,
 				7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */,
-				755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */,
 				7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */,
 				75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */,
-				755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */,
 				7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */,
 				755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */,
+				75322ED11BD3E8DA00839E76 /* NSManagedObjectContextOperation.m in Sources */,
 				75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
-				755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */,
+				75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */,
+				75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				75EBA11F18C12AE200DB1856 /* main.m in Sources */,
 				755851BB18C13E1900AA0553 /* Package.m in Sources */,
+				75322ED81BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m in Sources */,
+				75322ECE1BD3E8DA00839E76 /* NSManagedObject+CoreData.m in Sources */,
 				7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,7 +660,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
+				CODE_SIGN_ENTITLEMENTS = PostaMD/PostaMD.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,7 +674,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4c545290-5ef4-4dec-ab7e-5af131d7b5f6";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -649,8 +685,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia";
+				CODE_SIGN_ENTITLEMENTS = PostaMD/PostaMD.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -662,7 +699,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "369f2127-89db-4366-92d0-e241a9052d31";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -745,10 +782,11 @@
 		7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				75322EC31BD3E7DA00839E76 /* DataModel 3.xcdatamodel */,
 				757221961A5F392500BE901A /* DataModel 2.xcdatamodel */,
 				7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 757221961A5F392500BE901A /* DataModel 2.xcdatamodel */;
+			currentVersion = 75322EC31BD3E7DA00839E76 /* DataModel 3.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

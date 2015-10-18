@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A284" minimumToolsVersion="Xcode 4.3">
     <entity name="Package" representedClassName="Package" syncable="YES">
+        <attribute name="cloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastChecked" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,7 +20,7 @@
         <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="info" inverseEntity="Package" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Package" positionX="0" positionY="0" width="128" height="133"/>
+        <element name="Package" positionX="0" positionY="0" width="128" height="150"/>
         <element name="TrackingInfo" positionX="0" positionY="0" width="128" height="163"/>
     </elements>
 </model>

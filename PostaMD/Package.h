@@ -15,10 +15,12 @@
 
 @property (nonatomic, retain) NSDate    * date;
 @property (nonatomic, retain) NSString  * name;
+@property (nonatomic, retain) NSString  * cloudID;
 @property (nonatomic, retain) NSString  * trackingNumber;
-@property (nonatomic, retain) NSDate * lastChecked;
-@property (nonatomic, retain) NSNumber * received;
-@property (nonatomic, retain) NSSet *info;
+@property (nonatomic, retain) NSDate    * lastChecked;
+@property (nonatomic, retain) NSNumber  * received;
+@property (nonatomic, retain) NSSet     * info;
+
 @end
 
 @interface Package (CoreDataGeneratedAccessors)
