@@ -29,5 +29,6 @@ typedef void (^OnFetchSuccessEx)(NSDictionary *info);
                          onDone: (OnFetchSuccessEx) onDone
                       onFailure: (OnFailure) onFailure;
 
+-(void) syncWithCloudKit;
 
 @end

@@ -14,6 +14,7 @@
 
 @dynamic date;
 @dynamic name;
+@dynamic cloudID;
 @dynamic trackingNumber;
 @dynamic lastChecked;
 @dynamic received;

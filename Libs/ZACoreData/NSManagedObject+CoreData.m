@@ -122,7 +122,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: className];
     [request setPredicate: predicate];
     
-    [context performBlock:^{
+    [context performBlockAndWait:^{
         NSArray *items = [context executeFetchRequest:request error: nil];
         [items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [context deleteObject: obj];
@@ -140,6 +140,15 @@
     
     NSManagedObject *object = [[NSClassFromString(className) alloc] initWithEntity: entityInfo
                                                     insertIntoManagedObjectContext: context];
+    
+//    if ([className isEqualToString: @"User"]) {
+//        NSLog(@"Created a new user");
+//    }
+//    
+//    if ([className isEqualToString: @"ChatRoom"]) {
+//        NSLog(@"Created a new chatroom");
+//    }
+    
     return object;
 }
 

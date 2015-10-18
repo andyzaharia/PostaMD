@@ -21,6 +21,8 @@
     [NSPersistentStoreCoordinator setDataModelName:@"DataModel" withStoreName:@"data.sqlite"];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
     
+    [DataLoader shared];
+    
     // Override point for customization after application launch.
     [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
     [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
@@ -30,9 +32,16 @@
         [application registerUserNotificationSettings: settings];
     }
     
+//    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+//        NSArray *packages = [Package findAllInContext: moc];
+//        [packages enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL * _Nonnull stop) {
+//            package.cloudID = @"";
+//        }];
+//    }];
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

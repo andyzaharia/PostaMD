@@ -10,10 +10,16 @@
 #import "AFHTTPRequestOperationManager+Synchronous.h"
 #import "PackageParser.h"
 
+#import "NSManagedObjectContext+Custom.h"
+#import <CloudKit/CloudKit.h>
+
 @interface DataLoader ()
 {
-    NSOperationQueue              *_operationQueue;
+    NSOperationQueue                *_operationQueue;
 }
+
+@property (nonatomic, strong)       CKDatabase       *privateDB;
+@property (nonatomic, strong)       NSOperationQueue *cloudKitQueue;
 
 @end
 
@@ -34,6 +40,11 @@
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
         [_operationQueue setMaxConcurrentOperationCount: 2];
+        
+        self.privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
+        self.cloudKitQueue = [[NSOperationQueue alloc] init];
+        
+        [self syncWithCloudKit];
     }
     return self;
 }
@@ -152,6 +163,117 @@
                     onDone(_packageEventsDic);
                 }
             });
+        }
+    }];
+}
+
+#pragma mark - Sync
+
+-(void) syncWithCloudKit
+{
+    CKDatabase *privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
+    [context performBlock:^{
+        
+        NSMutableArray *operations = [NSMutableArray array];
+        __block NSOperation *_lastOperation = nil;
+        
+        
+        // Check the existing packages for cloudID presence on local side.
+        // if a package has a cloudID but that id is missing in Cloud then we must delete the local one.
+        //
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"length(cloudID) > 0"];
+        NSArray *packages = [Package findAllWithPredicate:predicate inContext: context];
+        NSArray *localPackageTrackingNumbers = [packages valueForKeyPath:@"cloudID"];
+        if (packages.count) {
+            predicate = [NSPredicate predicateWithFormat:@"(trackingNumber IN %@)", localPackageTrackingNumbers];
+            
+            CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Package" predicate:predicate];
+            CKQueryOperation *fetchOperation = [[CKQueryOperation alloc] initWithQuery: query];
+            
+            __block NSMutableArray *packagesToDelete = [localPackageTrackingNumbers mutableCopy];
+            [fetchOperation setRecordFetchedBlock:^(CKRecord * _Nonnull record) {
+                NSString *trackingNumber = record[@"trackingNumber"];
+                [packagesToDelete removeObject: trackingNumber];
+            }];
+            
+            [fetchOperation setQueryCompletionBlock:^(CKQueryCursor * _Nullable cursor, NSError * _Nullable error) {
+                if (!error && packagesToDelete.count) {
+                    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                        [packagesToDelete enumerateObjectsUsingBlock:^(NSString *trackingNumber, NSUInteger idx, BOOL * _Nonnull stop) {
+                            NSPredicate *deletePredicate = [NSPredicate predicateWithFormat:@"trackingNumber == %@", trackingNumber];
+                            [Package deleteAllMatchingPredicate:deletePredicate inContext: moc];
+                        }];
+                    }];
+                }
+            }];
+            
+            [operations addObject: fetchOperation];
+            _lastOperation = fetchOperation;
+        }
+        
+        packages = [Package findAllInContext: context];
+        // Upload to CloudKit the new items
+        [packages enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (package.cloudID.length == 0) {
+                // We must sync this package
+                NSString *trackingNumber = package.trackingNumber;
+                
+                CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: trackingNumber];
+                CKRecord *cloudPackage = [[CKRecord alloc] initWithRecordType:@"Package" recordID: recordID];
+                cloudPackage[@"name"]               = package.name;
+                cloudPackage[@"date"]               = package.date;
+                cloudPackage[@"trackingNumber"]     = package.trackingNumber;
+                cloudPackage[@"lastChecked"]        = package.lastChecked;
+                cloudPackage[@"received"]           = package.received;
+                
+                CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:@[cloudPackage] recordIDsToDelete: nil];
+                operation.savePolicy = CKRecordSaveAllKeys;
+                operation.database = privateDB;
+                if(_lastOperation) [operation addDependency:_lastOperation];
+                
+                [operation setModifyRecordsCompletionBlock:^(NSArray<CKRecord *> * _Nullable savedRecords, NSArray<CKRecordID *> * _Nullable deletedRecordIDs, NSError * _Nullable error) {
+                    if (error == nil) {
+                        [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                            Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumber inContext: moc];
+                            package.cloudID = trackingNumber;
+                        }];
+                    } else {
+                        NSLog(@"Error: %@", error.localizedDescription);
+                    }
+                }];
+                
+                _lastOperation = operation;
+                [operations addObject: operation];
+            }
+        }];
+        
+        // Download the missing local items
+        localPackageTrackingNumbers = [packages valueForKeyPath:@"trackingNumber"];
+        predicate = localPackageTrackingNumbers.count ? [NSPredicate predicateWithFormat:@"NOT (trackingNumber IN %@)", localPackageTrackingNumbers] : [NSPredicate predicateWithValue: YES];
+        CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Package" predicate:predicate];
+        CKQueryOperation *fetchOperation = [[CKQueryOperation alloc] initWithQuery: query];
+        [fetchOperation setRecordFetchedBlock:^(CKRecord * _Nonnull record) {
+            [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                NSString *trackingNumber = record[@"trackingNumber"];
+                if (trackingNumber.length) {
+                    Package *package = [Package createEntityInContext: moc];
+                    package.name            = record[@"name"];
+                    package.date            = record[@"date"];
+                    package.trackingNumber  = trackingNumber;
+                    package.lastChecked     = record[@"lastChecked"];
+                    package.received        = record[@"received"];
+                    package.cloudID         = record[@"trackingNumber"];
+                }
+            }];
+        }];
+        if(_lastOperation) [fetchOperation addDependency:_lastOperation];
+        [operations addObject: fetchOperation];
+        _lastOperation = fetchOperation;
+        
+        if (operations.count) {
+            [self.cloudKitQueue addOperations:operations waitUntilFinished: NO];
         }
     }];
 }

@@ -14,10 +14,12 @@
 #import "PackageInfoViewController.h"
 #import "SVProgressHUD.h"
 #import "UITableView+RemoveSeparators.h"
+#import "NSManagedObjectContext+CloudKit.h"
+#import "UIAlertView+Alert.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong)           NSFetchedResultsController          *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController    *fetchedResultsController;
 
 @end
 
@@ -58,6 +60,10 @@
                                 }];
 
     [self.tableView removeExtraSeparators];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents: UIControlEventValueChanged];
+    [self.tableView addSubview: self.refreshControl];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -97,6 +103,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -
+
+-(void) refreshData
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
+    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    if (itemsToFetch) {
+        [self refreshDataWithHud: NO];
+    } else {
+        [self.refreshControl endRefreshing];
+    }
+}
+
+-(void) refreshDataWithHud: (BOOL) withHudPresent
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
+    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    
+    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: itemsToFetch];
+    for (int i = 0; i < itemsToFetch; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
+        Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
+        if (!package.received.boolValue || (package.info.count == 0)) {
+            [trackingNumbers addObject: package.trackingNumber];
+        }
+    }
+    
+    if ([trackingNumbers count]) {
+        if (withHudPresent) {
+            [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
+            [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+            [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+            
+            [self.navigationItem.rightBarButtonItem setEnabled: NO];
+        }
+        
+        [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+    }
+    
+    [[DataLoader shared] syncWithCloudKit];
+}
+
 -(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
 {
     __weak PackagesViewController *weakSelf = self;
@@ -106,6 +154,8 @@
                                               
                                               if ([trackingNumbers count] == 0) {
                                                   [SVProgressHUD dismiss];
+                                                  [weakSelf.navigationItem.rightBarButtonItem setEnabled: YES];
+                                                  if (weakSelf.refreshControl.refreshing) [weakSelf.refreshControl endRefreshing];
                                               } else {
                                                   [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
                                               }
@@ -115,6 +165,8 @@
                                           
                                                    if ([trackingNumbers count] == 0) {
                                                        [SVProgressHUD dismiss];
+                                                       [weakSelf.navigationItem.rightBarButtonItem setEnabled: YES];
+                                                       if (weakSelf.refreshControl.refreshing) [weakSelf.refreshControl endRefreshing];
                                                    } else {
                                                        [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
                                                    }
@@ -122,26 +174,7 @@
 }
 
 - (IBAction)refreshPackages:(id)sender {
-    
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
-    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
-    
-    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: itemsToFetch];
-    for (int i = 0; i < itemsToFetch; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
-        Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-        if (![package.received boolValue]) {
-            [trackingNumbers addObject: package.trackingNumber];
-        }
-    }
-    
-    if ([trackingNumbers count]) {
-        [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-        [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
-        [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-        
-        [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
-    }
+    [self refreshDataWithHud: YES];
 }
 
 #pragma mark -
@@ -186,16 +219,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -204,14 +227,27 @@
         Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
         
         NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-        [context performBlockAndWait:^{
-            [context deleteObject: package];
-            [context save];
+        [context performBlock:^{
+            if (package.cloudID.length) {
+                [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
+                [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+                [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+                
+                [context cloudKitDeleteObject:package
+                        andRecordNameProperty:@"cloudID"
+                                   completion:^(NSError *error) {
+                                       dispatch_async(dispatch_get_main_queue(), ^(void){
+                                           [SVProgressHUD dismiss];
+                                           if (error) [UIAlertView error: error.localizedDescription];
+                                       });
+                                   }];
+            } else {
+                [context deleteObject: package];
+            }
+            
+            [context save: nil];
         }];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 
 
@@ -219,6 +255,7 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+ 
 }
 */
 
