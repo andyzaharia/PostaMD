@@ -271,10 +271,10 @@
 				75EBA12818C12AE200DB1856 /* AddPackageViewController.m */,
 				755851B318C13C0100AA0553 /* PackagesViewController.h */,
 				755851B418C13C0100AA0553 /* PackagesViewController.m */,
-				7552383C18C2376900B55DE1 /* PackageInfoViewController.h */,
-				7552383D18C2376900B55DE1 /* PackageInfoViewController.m */,
 				755851B618C13D5B00AA0553 /* PackageCell.h */,
 				755851B718C13D5B00AA0553 /* PackageCell.m */,
+				7552383C18C2376900B55DE1 /* PackageInfoViewController.h */,
+				7552383D18C2376900B55DE1 /* PackageInfoViewController.m */,
 				7552383F18C241A000B55DE1 /* TrackingInfoCell.h */,
 				7552384018C241A000B55DE1 /* TrackingInfoCell.m */,
 				75A26E2F1BD190EF00C8F75C /* AboutViewController.h */,
@@ -292,7 +292,6 @@
 				75EBA11118C12AE200DB1856 /* Frameworks */,
 				75EBA11018C12AE200DB1856 /* Products */,
 				349BD76BF80ECCA24E742120 /* Pods */,
-				750A6F561BE0034C0071FD7B /* PostaRO-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -341,6 +340,7 @@
 		75EBA11918C12AE200DB1856 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				750A6F561BE0034C0071FD7B /* PostaRO-Info.plist */,
 				75EBA11A18C12AE200DB1856 /* PostaMD-Info.plist */,
 				75EBA11B18C12AE200DB1856 /* InfoPlist.strings */,
 				75EBA11E18C12AE200DB1856 /* main.m */,

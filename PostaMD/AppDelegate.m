@@ -30,9 +30,19 @@
         [application registerUserNotificationSettings: settings];
     }
     
+//    NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
+//    [ctx performBlockAndWait:^{
+//        [TrackingInfo deleteAllMatchingPredicate: [NSPredicate predicateWithValue:YES] inContext: ctx];
+//        NSArray *items = [Package findAllInContext: ctx];
+//        [items enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL * _Nonnull stop) {
+//            package.received = @NO;
+//        }];
+//        [ctx save: nil];
+//    }];
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

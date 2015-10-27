@@ -63,33 +63,33 @@
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
         NSError *error = nil;
-        NSData *data = [manager syncPOST: path
-                              parameters: parameters
-                               operation: NULL
-                                   error: &error];
+        NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
         
         if (data) {
+            NSInteger __block initialEventsCount = 0;
+            
             NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
-            [context performBlock:^{
+            [context performBlockAndWait:^{
                 
                 Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: context];
-                NSInteger initialEventsCount = [package.info count];
+                initialEventsCount = [package.info count];
                 
                 [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: context];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-                    
+                [context save: nil];
+            }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
+                [ctx performBlockAndWait:^{
                     Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                    [ctx refreshObject:pkg mergeChanges: YES];
+                    //[ctx refreshObject:pkg mergeChanges: YES];
                     
                     NSInteger afterUpdateEventsCount = [pkg.info count];
                     
-                    if (onDone) {
-                        onDone(@(initialEventsCount < afterUpdateEventsCount));
-                    }
-                });
-            }];
+                    if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
+                    [ctx save: nil];
+                }];
+            });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 //Run UI Updates
@@ -113,33 +113,29 @@
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
         NSError *error = nil;
-        NSData *data = [manager syncPOST: path
-                              parameters: parameters
-                               operation: NULL
-                                   error: &error];
+        NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
         
         if (data) {
             NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
-            [context performBlock:^{
+            [context performBlockAndWait:^{
                 
                 Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: context];
                 NSInteger initialEventsCount = [package.info count];
                 
-                [PackageParser parseRoPackageTrackingInfoWithData: data
-                                                andTrackingNumber: trackID
-                                                        inContext: context];
+                [PackageParser parseRoPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: context];
+                [context save: nil];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-                    
-                    Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                    [ctx refreshObject:pkg mergeChanges: YES];
-                    
-                    NSInteger afterUpdateEventsCount = [pkg.info count];
-                    
-                    if (onDone) {
-                        onDone(@(initialEventsCount < afterUpdateEventsCount));
-                    }
+                    [ctx performBlockAndWait:^{
+                        Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
+                        [ctx refreshObject:pkg mergeChanges: YES];
+                        
+                        NSInteger afterUpdateEventsCount = [pkg.info count];
+                        
+                        if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
+                        [ctx save: nil];
+                    }];
                 });
             }];
         } else {
