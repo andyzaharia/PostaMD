@@ -1,9 +1,9 @@
 //
 //  NSManagedObject+CoreData.h
-//  GolfOle
+//  
 //
 //  Created by Admin on 16.10.2012.
-//  Copyright (c) 2012 StaS Bandol. All rights reserved.
+//  Copyright (c) 2012 Andrei Zaharia. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>

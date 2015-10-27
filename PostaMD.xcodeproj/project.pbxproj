@@ -16,16 +16,13 @@
 		750A6F331BE0034C0071FD7B /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
 		750A6F341BE0034C0071FD7B /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12818C12AE200DB1856 /* AddPackageViewController.m */; };
 		750A6F351BE0034C0071FD7B /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
-		750A6F361BE0034C0071FD7B /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */; };
 		750A6F371BE0034C0071FD7B /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		750A6F381BE0034C0071FD7B /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
-		750A6F391BE0034C0071FD7B /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */; };
 		750A6F3A1BE0034C0071FD7B /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
 		750A6F3B1BE0034C0071FD7B /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7572219B1A5F3A3E00BE901A /* TrackingInfo.m */; };
 		750A6F3C1BE0034C0071FD7B /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
 		750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */; };
 		750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12218C12AE200DB1856 /* AppDelegate.m */; };
-		750A6F3F1BE0034C0071FD7B /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */; };
 		750A6F401BE0034C0071FD7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA11E18C12AE200DB1856 /* main.m */; };
 		750A6F411BE0034C0071FD7B /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
 		750A6F421BE0034C0071FD7B /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
@@ -45,9 +42,6 @@
 		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
 		7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
-		755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */; };
-		755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */; };
-		755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */; };
 		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
 		755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
 		755851B818C13D5B00AA0553 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
@@ -57,6 +51,16 @@
 		75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E301BD190EF00C8F75C /* AboutViewController.m */; };
 		75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
 		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
+		75DE1F7E1BE02AB800145EA3 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F751BE02AB800145EA3 /* NSManagedObject+CoreData.m */; };
+		75DE1F7F1BE02AB800145EA3 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F751BE02AB800145EA3 /* NSManagedObject+CoreData.m */; };
+		75DE1F801BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F771BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m */; };
+		75DE1F811BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F771BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m */; };
+		75DE1F821BE02AB800145EA3 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F791BE02AB800145EA3 /* NSManagedObjectContext+Custom.m */; };
+		75DE1F831BE02AB800145EA3 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F791BE02AB800145EA3 /* NSManagedObjectContext+Custom.m */; };
+		75DE1F841BE02AB800145EA3 /* NSManagedObjectContextOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F7B1BE02AB800145EA3 /* NSManagedObjectContextOperation.m */; };
+		75DE1F851BE02AB800145EA3 /* NSManagedObjectContextOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F7B1BE02AB800145EA3 /* NSManagedObjectContextOperation.m */; };
+		75DE1F861BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F7D1BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m */; };
+		75DE1F871BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE1F7D1BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m */; };
 		75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
 		75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11418C12AE200DB1856 /* CoreGraphics.framework */; };
 		75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11618C12AE200DB1856 /* UIKit.framework */; };
@@ -99,12 +103,6 @@
 		7552383F18C241A000B55DE1 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
 		7552384018C241A000B55DE1 /* TrackingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfoCell.m; sourceTree = "<group>"; };
 		7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		755851A218C13A0900AA0553 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
-		755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
-		755851A418C13A0900AA0553 /* NSManagedObjectContext+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Custom.h"; sourceTree = "<group>"; };
-		755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Custom.m"; sourceTree = "<group>"; };
-		755851A618C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+Custom.h"; sourceTree = "<group>"; };
-		755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+Custom.m"; sourceTree = "<group>"; };
 		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		755851B318C13C0100AA0553 /* PackagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagesViewController.h; sourceTree = "<group>"; };
 		755851B418C13C0100AA0553 /* PackagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackagesViewController.m; sourceTree = "<group>"; };
@@ -122,6 +120,16 @@
 		75A26E321BD1916600C8F75C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		75A26E351BD191BF00C8F75C /* UIAlertView+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Alert.h"; sourceTree = "<group>"; };
 		75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Alert.m"; sourceTree = "<group>"; };
+		75DE1F741BE02AB800145EA3 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
+		75DE1F751BE02AB800145EA3 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
+		75DE1F761BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataCustom.h"; sourceTree = "<group>"; };
+		75DE1F771BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataCustom.m"; sourceTree = "<group>"; };
+		75DE1F781BE02AB800145EA3 /* NSManagedObjectContext+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Custom.h"; sourceTree = "<group>"; };
+		75DE1F791BE02AB800145EA3 /* NSManagedObjectContext+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Custom.m"; sourceTree = "<group>"; };
+		75DE1F7A1BE02AB800145EA3 /* NSManagedObjectContextOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSManagedObjectContextOperation.h; sourceTree = "<group>"; };
+		75DE1F7B1BE02AB800145EA3 /* NSManagedObjectContextOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSManagedObjectContextOperation.m; sourceTree = "<group>"; };
+		75DE1F7C1BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+Custom.h"; sourceTree = "<group>"; };
+		75DE1F7D1BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+Custom.m"; sourceTree = "<group>"; };
 		75EBA10F18C12AE200DB1856 /* PostaMD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaMD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EBA11218C12AE200DB1856 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75EBA11418C12AE200DB1856 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -236,12 +244,16 @@
 		755851A118C13A0900AA0553 /* ZACoreData */ = {
 			isa = PBXGroup;
 			children = (
-				755851A218C13A0900AA0553 /* NSManagedObject+CoreData.h */,
-				755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */,
-				755851A418C13A0900AA0553 /* NSManagedObjectContext+Custom.h */,
-				755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */,
-				755851A618C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.h */,
-				755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */,
+				75DE1F741BE02AB800145EA3 /* NSManagedObject+CoreData.h */,
+				75DE1F751BE02AB800145EA3 /* NSManagedObject+CoreData.m */,
+				75DE1F761BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.h */,
+				75DE1F771BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m */,
+				75DE1F781BE02AB800145EA3 /* NSManagedObjectContext+Custom.h */,
+				75DE1F791BE02AB800145EA3 /* NSManagedObjectContext+Custom.m */,
+				75DE1F7A1BE02AB800145EA3 /* NSManagedObjectContextOperation.h */,
+				75DE1F7B1BE02AB800145EA3 /* NSManagedObjectContextOperation.m */,
+				75DE1F7C1BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.h */,
+				75DE1F7D1BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m */,
 			);
 			path = ZACoreData;
 			sourceTree = "<group>";
@@ -604,24 +616,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75DE1F811BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m in Sources */,
 				750A6F301BE0034C0071FD7B /* AboutViewController.m in Sources */,
 				750A6F311BE0034C0071FD7B /* PackageCell.m in Sources */,
 				750A6F321BE0034C0071FD7B /* PackageInfoViewController.m in Sources */,
 				750A6F331BE0034C0071FD7B /* UITableView+RemoveSeparators.m in Sources */,
+				75DE1F831BE02AB800145EA3 /* NSManagedObjectContext+Custom.m in Sources */,
 				750A6F341BE0034C0071FD7B /* AddPackageViewController.m in Sources */,
 				750A6F351BE0034C0071FD7B /* PackageParser.m in Sources */,
-				750A6F361BE0034C0071FD7B /* NSManagedObject+CoreData.m in Sources */,
 				750A6F371BE0034C0071FD7B /* TrackingInfoCell.m in Sources */,
 				750A6F381BE0034C0071FD7B /* UIAlertView+Alert.m in Sources */,
-				750A6F391BE0034C0071FD7B /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				750A6F3A1BE0034C0071FD7B /* DataModel.xcdatamodeld in Sources */,
 				750A6F3B1BE0034C0071FD7B /* TrackingInfo.m in Sources */,
 				750A6F3C1BE0034C0071FD7B /* PackagesViewController.m in Sources */,
+				75DE1F851BE02AB800145EA3 /* NSManagedObjectContextOperation.m in Sources */,
 				750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */,
-				750A6F3F1BE0034C0071FD7B /* NSManagedObjectContext+Custom.m in Sources */,
+				75DE1F871BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				750A6F401BE0034C0071FD7B /* main.m in Sources */,
 				750A6F411BE0034C0071FD7B /* Package.m in Sources */,
+				75DE1F7F1BE02AB800145EA3 /* NSManagedObject+CoreData.m in Sources */,
 				750A6F421BE0034C0071FD7B /* DataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -630,24 +644,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75DE1F801BE02AB800145EA3 /* NSManagedObject+CoreDataCustom.m in Sources */,
 				75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */,
 				755851B818C13D5B00AA0553 /* PackageCell.m in Sources */,
 				7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */,
 				75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */,
+				75DE1F821BE02AB800145EA3 /* NSManagedObjectContext+Custom.m in Sources */,
 				75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */,
 				7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */,
-				755851A818C13A0900AA0553 /* NSManagedObject+CoreData.m in Sources */,
 				7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */,
 				75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */,
-				755851AA18C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */,
 				7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */,
 				755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */,
+				75DE1F841BE02AB800145EA3 /* NSManagedObjectContextOperation.m in Sources */,
 				75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
-				755851A918C13A0900AA0553 /* NSManagedObjectContext+Custom.m in Sources */,
+				75DE1F861BE02AB800145EA3 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				75EBA11F18C12AE200DB1856 /* main.m in Sources */,
 				755851BB18C13E1900AA0553 /* Package.m in Sources */,
+				75DE1F7E1BE02AB800145EA3 /* NSManagedObject+CoreData.m in Sources */,
 				7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
