@@ -1,13 +1,12 @@
 //
 //  NSManagedObject+CoreData.m
-//  GolfOle
+//  
 //
 //  Created by Admin on 16.10.2012.
-//  Copyright (c) 2012 StaS Bandol. All rights reserved.
+//  Copyright (c) 2012 Andrei Zaharia. All rights reserved.
 //
 
 #import "NSManagedObject+CoreDataCustom.h"
-#import "PNIDataLoader.h"
 
 @implementation NSManagedObject (CoreDataCustom)
 
@@ -45,18 +44,21 @@ static NSDateFormatter *_dateFormatter = nil;
                     }
                         else
                             if (type == NSDateAttributeType) {
-                                if (!_dateFormatter) {
-                                    _dateFormatter = [NSDateFormatter new];
-                                    [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                                    [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-                                    [_dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-                                }
+                                @synchronized(_dateFormatter)
+                                {
+                                    if (!_dateFormatter) {
+                                        _dateFormatter = [[NSDateFormatter alloc] init];
+                                        [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                                        [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                                        [_dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+                                    }
 
-                                NSDate *date = [_dateFormatter dateFromString: value];
-                                [self setValue: date forKey: key];
+                                    NSDate *date = [_dateFormatter dateFromString: value];
+                                    [self setValue: date forKey: key];
+                                }
                             }
                             else
-                            [self setValue:value forKey: key];
+                                [self setValue:value forKey: key];
     }
     else
         [self setValue:value forKey: key];
@@ -92,7 +94,14 @@ static NSDateFormatter *_dateFormatter = nil;
 
 -(void) setListToRelationName: (NSString *) relName list: (NSArray *) items clean: (BOOL) clean
 {
-    SEL addSelector = NSSelectorFromString([NSString stringWithFormat:@"add%@:", [relName capitalizedString]]);
+    if ([relName length] == 0) {
+        return;
+    }
+    
+    NSString *capitalisedSelStr = [relName stringByReplacingCharactersInRange: NSMakeRange(0,1)
+                                                                   withString: [[relName substringToIndex:1] capitalizedString]];
+    
+    SEL addSelector = NSSelectorFromString([NSString stringWithFormat:@"add%@:", capitalisedSelStr]);
     NSSet *existingObjects = [self valueForKey: relName];
     
     if(clean) {
