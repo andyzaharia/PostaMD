@@ -13,7 +13,7 @@
 
 static NSDateFormatter *sharedDateFormatter = nil;
 
-+(NSArray *) parsePackageTrackingInfoWithData: (NSData *)data
++(NSArray *) parseMdPackageTrackingInfoWithData: (NSData *)data
                             andTrackingNumber: (NSString *) trackingId
                                     inContext: (NSManagedObjectContext *) context
 {
@@ -109,6 +109,98 @@ static NSDateFormatter *sharedDateFormatter = nil;
     [context save];
 
     return _newTrackingEvents;
+}
+
++(NSArray *) parseRoPackageTrackingInfoWithData: (NSData *)data
+                              andTrackingNumber: (NSString *) trackingId
+                                      inContext: (NSManagedObjectContext *) context
+{
+    if (!sharedDateFormatter) {
+        sharedDateFormatter = [[NSDateFormatter alloc] init];
+        [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
+    }
+    
+    NSError *error;
+    NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSNumber *found = json[@"found"];
+    if (found.boolValue) {
+        // Go Ahead...
+        NSString *detailsStr = json[@"details"];
+        
+        NSMutableString *detailsStrM = [detailsStr mutableCopy];
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[bntr\\\\" options:0 error:nil];
+        [regex replaceMatchesInString:detailsStrM options:0 range:NSMakeRange(0, [detailsStrM length]) withTemplate:@""];
+        
+        NSData *data = [detailsStrM dataUsingEncoding: NSUTF8StringEncoding];
+        TFHpple *doc = [[TFHpple alloc] initWithHTMLData:data];
+        
+        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingId inContext: context];
+        if (!package) package = [Package createEntityInContext: context];
+        
+        __block NSMutableArray *_newTrackingEvents = [NSMutableArray array];
+        
+        [context performBlockAndWait:^{
+            
+            NSArray *elements  = [doc searchWithXPathQuery: @"//tr"];
+            [elements enumerateObjectsUsingBlock:^(TFHppleElement *event, NSUInteger idx, BOOL * _Nonnull stop) {
+                __block BOOL _receivedByUser = NO;
+                
+                TFHppleElement *dateElement = [[event firstChildWithClassName:@"raport-data"] firstChild];
+                TFHppleElement *timeElement = [[event firstChildWithClassName:@"raport-ora"] firstChild];
+                TFHppleElement *eventElement = [[event firstChildWithClassName:@"raport-starea"] firstChild];
+                
+                NSString *dateStr = [dateElement text];
+                NSString *timeStr = [timeElement text];
+                NSString *eventString = [eventElement text];
+                
+                NSString *completeDateStr = [NSString stringWithFormat:@"%@ - %@", dateStr, timeStr];
+                NSDate *date = [sharedDateFormatter dateFromString: completeDateStr];
+                
+                if (dateStr.length && timeStr.length && eventString.length) {
+                    if ([eventString isEqualToString:@"Predat la destinatar"]) {
+                        _receivedByUser = YES;
+                    }
+                    
+                    NSPredicate *trackingPredicate = [NSPredicate predicateWithFormat:@"(date == %@) AND (eventStr LIKE %@)", date, eventString];
+                    
+                    TrackingInfo *info = [TrackingInfo findFirstWithPredicate:trackingPredicate inContext: context];
+                    
+                    if (!info) {
+                        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
+                        NSArray *items = [package.info allObjects];
+                        NSArray *events = [items sortedArrayUsingDescriptors:@[descriptor]];
+                        NSNumber *lastEventId = @(0);
+                        if ([events count]) {
+                            TrackingInfo *lastEvent = [events lastObject];
+                            lastEventId = @([lastEvent.eventId integerValue] + 1);
+                        }
+                        
+                        info = [TrackingInfo createEntityInContext: context];
+                        info.eventStr = eventString;
+                        info.dateStr = completeDateStr;
+                        info.date = date;
+                        info.eventId = lastEventId;
+                        
+                        [_newTrackingEvents addObject: info];
+                    }
+                    
+                    info.package = package;
+                    
+                    if (_receivedByUser) {
+                        package.received = @(YES);
+                    }
+                }
+            }];
+
+            [context save: nil];
+        }];
+        
+        return _newTrackingEvents;
+    } else {
+        // Item not found...
+    }
+    
+    return @[];
 }
 
 @end
