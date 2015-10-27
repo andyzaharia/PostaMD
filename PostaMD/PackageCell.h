@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbName;
 @property (weak, nonatomic) IBOutlet UILabel *lbLastTrackingInfo;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lastTrackingInfoHeightConstraint;
+
 @end

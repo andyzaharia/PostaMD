@@ -104,9 +104,7 @@ static NSDateFormatter *sharedDateFormatter = nil;
         }
     }];
     
-    
     package.lastChecked = [NSDate date];
-    [context save];
 
     return _newTrackingEvents;
 }
@@ -191,8 +189,6 @@ static NSDateFormatter *sharedDateFormatter = nil;
                     }
                 }
             }];
-
-            [context save: nil];
         }];
         
         return _newTrackingEvents;

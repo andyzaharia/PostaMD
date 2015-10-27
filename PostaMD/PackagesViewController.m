@@ -266,8 +266,10 @@
             trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
         }
         cell.lbLastTrackingInfo.text = trackingStr;
+        cell.lastTrackingInfoHeightConstraint.constant = 21.0;
     } else {
         cell.lbLastTrackingInfo.text = @"";
+        cell.lastTrackingInfoHeightConstraint.constant = 0.0;
     }
     
     cell.lbName.text = package.name;
