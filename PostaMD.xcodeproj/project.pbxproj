@@ -10,6 +10,36 @@
 		68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFF6142AB6A4544B4F1A441 /* libPods.a */; };
 		7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
 		7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
+		750A6F301BE0034C0071FD7B /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E301BD190EF00C8F75C /* AboutViewController.m */; };
+		750A6F311BE0034C0071FD7B /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
+		750A6F321BE0034C0071FD7B /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
+		750A6F331BE0034C0071FD7B /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
+		750A6F341BE0034C0071FD7B /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12818C12AE200DB1856 /* AddPackageViewController.m */; };
+		750A6F351BE0034C0071FD7B /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
+		750A6F361BE0034C0071FD7B /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A318C13A0900AA0553 /* NSManagedObject+CoreData.m */; };
+		750A6F371BE0034C0071FD7B /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
+		750A6F381BE0034C0071FD7B /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
+		750A6F391BE0034C0071FD7B /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A718C13A0900AA0553 /* NSPersistentStoreCoordinator+Custom.m */; };
+		750A6F3A1BE0034C0071FD7B /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
+		750A6F3B1BE0034C0071FD7B /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7572219B1A5F3A3E00BE901A /* TrackingInfo.m */; };
+		750A6F3C1BE0034C0071FD7B /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
+		750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */; };
+		750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12218C12AE200DB1856 /* AppDelegate.m */; };
+		750A6F3F1BE0034C0071FD7B /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851A518C13A0900AA0553 /* NSManagedObjectContext+Custom.m */; };
+		750A6F401BE0034C0071FD7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA11E18C12AE200DB1856 /* main.m */; };
+		750A6F411BE0034C0071FD7B /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
+		750A6F421BE0034C0071FD7B /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
+		750A6F441BE0034C0071FD7B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
+		750A6F451BE0034C0071FD7B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEB1A862C720092A935 /* Fabric.framework */; };
+		750A6F461BE0034C0071FD7B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
+		750A6F471BE0034C0071FD7B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11418C12AE200DB1856 /* CoreGraphics.framework */; };
+		750A6F481BE0034C0071FD7B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11618C12AE200DB1856 /* UIKit.framework */; };
+		750A6F491BE0034C0071FD7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
+		750A6F4A1BE0034C0071FD7B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEA1A862C720092A935 /* Crashlytics.framework */; };
+		750A6F4B1BE0034C0071FD7B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFF6142AB6A4544B4F1A441 /* libPods.a */; };
+		750A6F4D1BE0034C0071FD7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12A18C12AE200DB1856 /* Images.xcassets */; };
+		750A6F4E1BE0034C0071FD7B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA11B18C12AE200DB1856 /* InfoPlist.strings */; };
+		750A6F4F1BE0034C0071FD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12418C12AE200DB1856 /* Main.storyboard */; };
 		751DEBEC1A862C720092A935 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEA1A862C720092A935 /* Crashlytics.framework */; };
 		751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEB1A862C720092A935 /* Fabric.framework */; };
 		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
@@ -23,10 +53,10 @@
 		755851B818C13D5B00AA0553 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
 		755851BB18C13E1900AA0553 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
 		7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7572219B1A5F3A3E00BE901A /* TrackingInfo.m */; };
-		75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; settings = {ASSET_TAGS = (); }; };
-		75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E301BD190EF00C8F75C /* AboutViewController.m */; settings = {ASSET_TAGS = (); }; };
+		75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
+		75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E301BD190EF00C8F75C /* AboutViewController.m */; };
 		75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
-		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; settings = {ASSET_TAGS = (); }; };
+		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
 		75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
 		75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11418C12AE200DB1856 /* CoreGraphics.framework */; };
 		75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11618C12AE200DB1856 /* UIKit.framework */; };
@@ -60,6 +90,8 @@
 		7507FA181A5F212600A2B5FE /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
 		7507FA1D1A5F261600A2B5FE /* PackageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageParser.h; sourceTree = "<group>"; };
 		7507FA1E1A5F261600A2B5FE /* PackageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageParser.m; sourceTree = "<group>"; };
+		750A6F551BE0034C0071FD7B /* PostaRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		750A6F561BE0034C0071FD7B /* PostaRO-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PostaRO-Info.plist"; path = "/Volumes/Data/Projects/PostaMD/PostaRO-Info.plist"; sourceTree = "<absolute>"; };
 		751DEBEA1A862C720092A935 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		751DEBEB1A862C720092A935 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		7552383C18C2376900B55DE1 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
@@ -116,6 +148,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		750A6F431BE0034C0071FD7B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				750A6F441BE0034C0071FD7B /* MessageUI.framework in Frameworks */,
+				750A6F451BE0034C0071FD7B /* Fabric.framework in Frameworks */,
+				750A6F461BE0034C0071FD7B /* CoreData.framework in Frameworks */,
+				750A6F471BE0034C0071FD7B /* CoreGraphics.framework in Frameworks */,
+				750A6F481BE0034C0071FD7B /* UIKit.framework in Frameworks */,
+				750A6F491BE0034C0071FD7B /* Foundation.framework in Frameworks */,
+				750A6F4A1BE0034C0071FD7B /* Crashlytics.framework in Frameworks */,
+				750A6F4B1BE0034C0071FD7B /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75EBA10C18C12AE200DB1856 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +292,7 @@
 				75EBA11118C12AE200DB1856 /* Frameworks */,
 				75EBA11018C12AE200DB1856 /* Products */,
 				349BD76BF80ECCA24E742120 /* Pods */,
+				750A6F561BE0034C0071FD7B /* PostaRO-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -253,6 +301,7 @@
 			children = (
 				75EBA10F18C12AE200DB1856 /* PostaMD.app */,
 				75EBA13018C12AE200DB1856 /* PostaMDTests.xctest */,
+				750A6F551BE0034C0071FD7B /* PostaRO.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,6 +379,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		750A6F2D1BE0034C0071FD7B /* PostaRO */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 750A6F521BE0034C0071FD7B /* Build configuration list for PBXNativeTarget "PostaRO" */;
+			buildPhases = (
+				750A6F2E1BE0034C0071FD7B /* Check Pods Manifest.lock */,
+				750A6F2F1BE0034C0071FD7B /* Sources */,
+				750A6F431BE0034C0071FD7B /* Frameworks */,
+				750A6F4C1BE0034C0071FD7B /* Resources */,
+				750A6F501BE0034C0071FD7B /* Copy Pods Resources */,
+				750A6F511BE0034C0071FD7B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PostaRO;
+			productName = PostaMD;
+			productReference = 750A6F551BE0034C0071FD7B /* PostaRO.app */;
+			productType = "com.apple.product-type.application";
+		};
 		75EBA10E18C12AE200DB1856 /* PostaMD */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75EBA14118C12AE200DB1856 /* Build configuration list for PBXNativeTarget "PostaMD" */;
@@ -405,11 +474,22 @@
 			targets = (
 				75EBA10E18C12AE200DB1856 /* PostaMD */,
 				75EBA12F18C12AE200DB1856 /* PostaMDTests */,
+				750A6F2D1BE0034C0071FD7B /* PostaRO */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		750A6F4C1BE0034C0071FD7B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				750A6F4D1BE0034C0071FD7B /* Images.xcassets in Resources */,
+				750A6F4E1BE0034C0071FD7B /* InfoPlist.strings in Resources */,
+				750A6F4F1BE0034C0071FD7B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75EBA10D18C12AE200DB1856 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -446,6 +526,49 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		750A6F2E1BE0034C0071FD7B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		750A6F501BE0034C0071FD7B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		750A6F511BE0034C0071FD7B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
+		};
 		751DEBE91A862C550092A935 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -477,6 +600,32 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		750A6F2F1BE0034C0071FD7B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				750A6F301BE0034C0071FD7B /* AboutViewController.m in Sources */,
+				750A6F311BE0034C0071FD7B /* PackageCell.m in Sources */,
+				750A6F321BE0034C0071FD7B /* PackageInfoViewController.m in Sources */,
+				750A6F331BE0034C0071FD7B /* UITableView+RemoveSeparators.m in Sources */,
+				750A6F341BE0034C0071FD7B /* AddPackageViewController.m in Sources */,
+				750A6F351BE0034C0071FD7B /* PackageParser.m in Sources */,
+				750A6F361BE0034C0071FD7B /* NSManagedObject+CoreData.m in Sources */,
+				750A6F371BE0034C0071FD7B /* TrackingInfoCell.m in Sources */,
+				750A6F381BE0034C0071FD7B /* UIAlertView+Alert.m in Sources */,
+				750A6F391BE0034C0071FD7B /* NSPersistentStoreCoordinator+Custom.m in Sources */,
+				750A6F3A1BE0034C0071FD7B /* DataModel.xcdatamodeld in Sources */,
+				750A6F3B1BE0034C0071FD7B /* TrackingInfo.m in Sources */,
+				750A6F3C1BE0034C0071FD7B /* PackagesViewController.m in Sources */,
+				750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */,
+				750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */,
+				750A6F3F1BE0034C0071FD7B /* NSManagedObjectContext+Custom.m in Sources */,
+				750A6F401BE0034C0071FD7B /* main.m in Sources */,
+				750A6F411BE0034C0071FD7B /* Package.m in Sources */,
+				750A6F421BE0034C0071FD7B /* DataLoader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75EBA10B18C12AE200DB1856 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -549,6 +698,53 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		750A6F531BE0034C0071FD7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22674D4A95F21EC5EA6ED3D4 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
+				INFOPLIST_FILE = "PostaRO-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4c545290-5ef4-4dec-ab7e-5af131d7b5f6";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		750A6F541BE0034C0071FD7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7ACE575CC81C94FE43DBCE5 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
+				INFOPLIST_FILE = "PostaRO-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f0fd0d0d-7eee-4952-8663-2cffd50f4b56";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		75EBA13F18C12AE200DB1856 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -712,6 +908,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		750A6F521BE0034C0071FD7B /* Build configuration list for PBXNativeTarget "PostaRO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				750A6F531BE0034C0071FD7B /* Debug */,
+				750A6F541BE0034C0071FD7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		75EBA10A18C12AE200DB1856 /* Build configuration list for PBXProject "PostaMD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -22,8 +22,8 @@
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
     
     // Override point for customization after application launch.
-    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+    [SVProgressHUD setBackgroundColor: [UIColor blackColor]];
+    [SVProgressHUD setForegroundColor: [UIColor whiteColor]];
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];

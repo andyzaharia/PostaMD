@@ -179,8 +179,7 @@
  */
 
 - (IBAction)refreshData:(id)sender {
-    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+
     [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
     
     __weak PackageInfoViewController *weakSelf = self;

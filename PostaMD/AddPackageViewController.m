@@ -11,7 +11,7 @@
 #import "TFHpple.h"
 #import "Package.h"
 #import "DataLoader.h"
-#import "SVProgressHUD.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface AddPackageViewController ()
 
@@ -45,9 +45,7 @@
 - (IBAction)save:(id)sender {
     
     [self.view endEditing: YES];
-    
-    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+
     [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
     
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];

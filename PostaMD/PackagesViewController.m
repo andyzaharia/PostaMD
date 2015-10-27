@@ -65,20 +65,27 @@
     [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+}
+
 -(void) loadData
 {
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     NSPredicate *predicate = [NSPredicate predicateWithValue: YES];
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: NO];
+    
+    NSSortDescriptor *sortByReceived = [[NSSortDescriptor alloc] initWithKey:@"received" ascending: YES];
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: NO];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
     [request setFetchBatchSize: 20];
     [request setPredicate: predicate];
-    [request setSortDescriptors: @[sort]];
+    [request setSortDescriptors: @[sortByReceived, sortByDate]];
     
     NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest: request
                                                                                  managedObjectContext: context
-                                                                                   sectionNameKeyPath: nil
+                                                                                   sectionNameKeyPath: @"received"
                                                                                             cacheName: nil];
     self.fetchedResultsController = controller;
     NSError *error;
@@ -136,10 +143,7 @@
     }
     
     if ([trackingNumbers count]) {
-        [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-        [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
         [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-        
         [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
     }
 }
@@ -165,6 +169,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [[self.fetchedResultsController sections] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return (section == 0) ? NSLocalizedString(@"Waiting", nil) : NSLocalizedString(@"Received", nil);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
