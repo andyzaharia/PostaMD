@@ -29,6 +29,10 @@
     
     [self.tableView removeExtraSeparators];
     [self loadData];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents: UIControlEventValueChanged];
+    [self.tableView addSubview: self.refreshControl];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -95,7 +99,19 @@
                                                }];
 }
 
-- (IBAction)refreshPackages:(id)sender {
+-(void) refreshData
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
+    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    if (itemsToFetch) {
+        [self refreshDataWithHud: NO];
+    } else {
+        [self.refreshControl endRefreshing];
+    }
+}
+
+-(void) refreshDataWithHud: (BOOL) withHudPresent
+{
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
     __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
     
@@ -103,15 +119,24 @@
     for (int i = 0; i < itemsToFetch; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
         Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-        if (![package.received boolValue]) {
+        if (!package.received.boolValue || (package.info.count == 0)) {
             [trackingNumbers addObject: package.trackingNumber];
         }
     }
     
     if ([trackingNumbers count]) {
-        [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+        if (withHudPresent) {
+            [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+            
+            [self.navigationItem.rightBarButtonItem setEnabled: NO];
+        }
+        
         [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
     }
+}
+
+- (IBAction)refreshPackages:(id)sender {
+    [self refreshDataWithHud: YES];
 }
 
 #pragma mark -

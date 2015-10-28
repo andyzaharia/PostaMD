@@ -485,8 +485,8 @@
 			projectRoot = "";
 			targets = (
 				75EBA10E18C12AE200DB1856 /* PostaMD */,
-				75EBA12F18C12AE200DB1856 /* PostaMDTests */,
 				750A6F2D1BE0034C0071FD7B /* PostaRO */,
+				75EBA12F18C12AE200DB1856 /* PostaMDTests */,
 			);
 		};
 /* End PBXProject section */
