@@ -39,7 +39,7 @@
     @autoreleasepool {
         
         if (!self.isCancelled) {
-            [_context performBlockAndWait:^{
+            [_context performBlock:^{
                 
                 _operationBlock(_context);
             

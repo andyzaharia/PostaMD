@@ -22,7 +22,6 @@ static NSDateFormatter *sharedDateFormatter = nil;
         [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
     }
     
-    
     TFHpple *doc = [[TFHpple alloc] initWithHTMLData: data];
     
     NSArray *elements  = [doc searchWithXPathQuery: @"//div[@class='tracking-table']"];

@@ -17,47 +17,18 @@
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong)           NSFetchedResultsController          *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController          *fetchedResultsController;
 
 @end
 
 @implementation PackagesViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self loadData];
     
-    __weak PackagesViewController *weakSelf = self;
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserverForName:NSManagedObjectContextDidSaveNotification
-                                    object:context
-                                     queue:nil
-                                usingBlock:^(NSNotification *note) {
-                                    NSManagedObjectContext *savedContext = [note object];
-                                    if (savedContext == context) {
-                                        return;
-                                    }
-                                    
-                                    dispatch_sync(dispatch_get_main_queue(), ^{
-                                        [weakSelf.tableView reloadData];
-                                    });
-                                }];
-
     [self.tableView removeExtraSeparators];
+    [self loadData];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -73,24 +44,20 @@
 -(void) loadData
 {
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-    NSPredicate *predicate = [NSPredicate predicateWithValue: YES];
     
     NSSortDescriptor *sortByReceived = [[NSSortDescriptor alloc] initWithKey:@"received" ascending: YES];
     NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: NO];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
-    [request setFetchBatchSize: 20];
-    [request setPredicate: predicate];
     [request setSortDescriptors: @[sortByReceived, sortByDate]];
     
-    NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest: request
-                                                                                 managedObjectContext: context
-                                                                                   sectionNameKeyPath: @"received"
-                                                                                            cacheName: nil];
-    self.fetchedResultsController = controller;
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                        managedObjectContext:context
+                                                                          sectionNameKeyPath:@"received"
+                                                                                   cacheName:nil];
+    self.fetchedResultsController.delegate = self;
     NSError *error;
-    controller.delegate = self;
-    if (![[self fetchedResultsController] performFetch:&error]) {
+    if (![self.fetchedResultsController performFetch:&error]) {
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
@@ -129,7 +96,6 @@
 }
 
 - (IBAction)refreshPackages:(id)sender {
-    
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
     __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
     
@@ -195,16 +161,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -215,7 +171,7 @@
         NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
         [context performBlockAndWait:^{
             [context deleteObject: package];
-            [context save];
+            [context save: nil];
         }];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -223,58 +179,31 @@
     }   
 }
 
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
-
 -(void) configureCell: (PackageCell *) cell forIndexPath: (NSIndexPath *) indexPath
 {
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
     Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-    NSArray *items = [package.info allObjects];
-    items = [items sortedArrayUsingDescriptors:@[descriptor]];
-    
-    TrackingInfo *lastTrackInfo = [items lastObject];
-    if (lastTrackInfo) {
-        NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
-        if ([lastTrackInfo.localityStr length]) {
-            trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+    [package.managedObjectContext performBlockAndWait:^{
+        NSArray *items = [package.info allObjects];
+        items = [items sortedArrayUsingDescriptors:@[descriptor]];
+        
+        TrackingInfo *lastTrackInfo = [items lastObject];
+        if (lastTrackInfo) {
+            NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+            if ([lastTrackInfo.localityStr length]) {
+                trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+            }
+            cell.lbLastTrackingInfo.text = trackingStr;
+            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+        } else {
+            cell.lbLastTrackingInfo.text = @"";
+            cell.lastTrackingInfoHeightConstraint.constant = 0.0;
         }
-        cell.lbLastTrackingInfo.text = trackingStr;
-        cell.lastTrackingInfoHeightConstraint.constant = 21.0;
-    } else {
-        cell.lbLastTrackingInfo.text = @"";
-        cell.lastTrackingInfoHeightConstraint.constant = 0.0;
-    }
-    
-    cell.lbName.text = package.name;
-    cell.lbTrackingNumber.text = package.trackingNumber;
-    cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.lbName.text = package.name;
+        cell.lbTrackingNumber.text = package.trackingNumber;
+        cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+    }];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

@@ -19,6 +19,8 @@
     [Fabric with:@[CrashlyticsKit]];
 
     [NSPersistentStoreCoordinator setDataModelName:@"DataModel" withStoreName:@"data.sqlite"];
+    [NSManagedObjectContext contextForMainThread];
+    
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
     
     // Override point for customization after application launch.
@@ -29,16 +31,6 @@
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
         [application registerUserNotificationSettings: settings];
     }
-    
-//    NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-//    [ctx performBlockAndWait:^{
-//        [TrackingInfo deleteAllMatchingPredicate: [NSPredicate predicateWithValue:YES] inContext: ctx];
-//        NSArray *items = [Package findAllInContext: ctx];
-//        [items enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL * _Nonnull stop) {
-//            package.received = @NO;
-//        }];
-//        [ctx save: nil];
-//    }];
     
     return YES;
 }

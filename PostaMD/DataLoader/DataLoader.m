@@ -56,7 +56,8 @@
     NSDictionary *parameters = @{@"itemid": trackID};
     NSString *path = [NSString stringWithFormat: @"http://www.posta.md/ro/tracking?id=%@", trackID];
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        
         //Background Thread
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
@@ -67,29 +68,26 @@
         
         if (data) {
             NSInteger __block initialEventsCount = 0;
-            
-            NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
-            [context performBlockAndWait:^{
-                
-                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: context];
+
+            [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
                 initialEventsCount = [package.info count];
+                [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
+            } onSaved:^{
                 
-                [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: context];
-                [context save: nil];
-            }];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
                 NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
                 [ctx performBlockAndWait:^{
                     Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                    //[ctx refreshObject:pkg mergeChanges: YES];
+                    [ctx refreshObject:pkg mergeChanges: YES];
                     
                     NSInteger afterUpdateEventsCount = [pkg.info count];
                     
                     if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
                     [ctx save: nil];
                 }];
-            });
+                
+            }];
+            
         } else {
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 //Run UI Updates
@@ -106,7 +104,7 @@
     NSDictionary *parameters = @{@"awb": trackID};
     NSString *path = @"https://www.posta-romana.ro/cnpr-app/modules/track-and-trace/ajax/status.php";
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
@@ -116,27 +114,25 @@
         NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
         
         if (data) {
-            NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
-            [context performBlockAndWait:^{
+            NSInteger __block initialEventsCount = 0;
+            
+            [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
+                initialEventsCount = [package.info count];
+                [PackageParser parseRoPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
+            } onSaved:^{
                 
-                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: context];
-                NSInteger initialEventsCount = [package.info count];
+                NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
+                [ctx performBlockAndWait:^{
+                    Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
+                    [ctx refreshObject:pkg mergeChanges: YES];
+                    
+                    NSInteger afterUpdateEventsCount = [pkg.info count];
+                    
+                    if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
+                    [ctx save: nil];
+                }];
                 
-                [PackageParser parseRoPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: context];
-                [context save: nil];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-                    [ctx performBlockAndWait:^{
-                        Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                        [ctx refreshObject:pkg mergeChanges: YES];
-                        
-                        NSInteger afterUpdateEventsCount = [pkg.info count];
-                        
-                        if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
-                        [ctx save: nil];
-                    }];
-                });
             }];
         } else {
             dispatch_async(dispatch_get_main_queue(), ^(void){
