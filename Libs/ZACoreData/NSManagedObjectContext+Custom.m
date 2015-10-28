@@ -87,24 +87,22 @@ static NSOperationQueue         *_operationQueue;
                                             return;
                                         }
                                         
-                                        NSArray *updatedObjects = note.userInfo[NSUpdatedObjectsKey];
                                         NSArray *insertedObjects = note.userInfo[NSInsertedObjectsKey];
                                         NSArray *deletedObjects = note.userInfo[NSDeletedObjectsKey];
+                                        NSArray *updatedObjects = note.userInfo[NSUpdatedObjectsKey];
                                         
                                         //NSLog(@"DidSave: Inserted(%d) Deleted(%d) Updated(%d)", [insertedObjects count], [deletedObjects count], [updatedObjects count]);
-                                        
                                         if ([updatedObjects count] || [insertedObjects count] || [deletedObjects count]) {
-                                            [weakCtxRef performBlock:^{
-                                                
-                                                // http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different                                                
-                                                dispatch_async(dispatch_get_main_queue(), ^(void){
-                                                    for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey]) {
-                                                        [[weakCtxRef objectWithID:[object objectID]] willAccessValueForKey:nil];
-                                                    }
-                                                    
-                                                    [weakCtxRef mergeChangesFromContextDidSaveNotification: note];
-                                                });
-                                            }];
+                                            // http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
+                                            for (NSManagedObject *object in updatedObjects) {
+                                                [[weakCtxRef objectWithID:[object objectID]] willAccessValueForKey:nil];
+                                            }
+                                            
+                                            for (NSManagedObject *object in insertedObjects) {
+                                                [[weakCtxRef objectWithID:[object objectID]] willAccessValueForKey:nil];
+                                            }
+                                            
+                                            [weakCtxRef mergeChangesFromContextDidSaveNotification: note];
                                         }
 
         }];
@@ -146,6 +144,17 @@ static NSOperationQueue         *_operationQueue;
     }
 }
 
++ (NSManagedObjectContext *) privateManagedContext
+{
+    if(![NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator]) return nil;
+    
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSPrivateQueueConcurrencyType];
+    context.parentContext = [NSManagedObjectContext contextForMainThread];
+    context.undoManager = nil;
+    
+    return context;
+}
+
 + (void) cleanContextsForCurrentThread
 {
     if (_managedObjectContextsDictionary) {
@@ -169,11 +178,8 @@ static NSOperationQueue         *_operationQueue;
         if (!backgroundContext) {
             backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             backgroundContext.parentContext = [NSManagedObjectContext contextForMainThread];
-            //backgroundContext.persistentStoreCoordinator = [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator];
-            //[backgroundContext setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
+            [backgroundContext setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
             backgroundContext.undoManager = nil;
-            
-            //[_managedObjectContextsDictionary setObject:backgroundContext forKey: backgroundThreadContextKey];
         }
         
         return backgroundContext;
@@ -195,38 +201,6 @@ static NSOperationQueue         *_operationQueue;
     [thread setName:@""];
     
     [_operationQueue cancelAllOperations];
-}
-
-#pragma mark -
-
--(void) save
-{
-    if ([self hasChanges]) {
-        [self save: nil];
-        
-        NSManagedObjectContext *parentContext = self.parentContext;
-        if (parentContext) {
-            [parentContext performBlockAndWait:^{
-                if ([parentContext hasChanges]) {
-                    NSError *error = nil;
-                    [parentContext save: &error];
-                    
-                    if (error) {
-                        NSDictionary *userInfo = [error userInfo];
-                        NSArray *conflicts = userInfo[@"conflictList"];
-                        
-                        if ([conflicts count]) {
-                            [conflicts enumerateObjectsUsingBlock:^(NSDictionary *conflict, NSUInteger idx, BOOL *stop) {
-                                NSLog(@"Conflict: %@", conflict);
-                            }];
-                        }
-                        
-                        NSLog(@"Error: %@", [error localizedDescription]);
-                    }
-                }
-            }];
-        }
-    }
 }
 
 #pragma mark - ObjectWith

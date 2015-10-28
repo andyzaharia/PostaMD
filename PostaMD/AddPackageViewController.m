@@ -54,11 +54,17 @@
         package.name = self.tfName.text;
         package.trackingNumber = self.tfTrackingNumber.text;
         package.date = [NSDate date];
-        [context save];
+        package.received = @(NO);
+        
+        NSError *error;
+        [context save: &error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
     }];
     
-    
-    __weak AddPackageViewController *weakSelf = self;
+    AddPackageViewController *__weak weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID: self.tfTrackingNumber.text
                                                onDone:^(id data) {
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
@@ -67,12 +73,6 @@
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
                                                    [SVProgressHUD dismiss];
                                                }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)postTrack:(id)sender {

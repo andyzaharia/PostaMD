@@ -141,14 +141,6 @@
     NSManagedObject *object = [[NSClassFromString(className) alloc] initWithEntity: entityInfo
                                                     insertIntoManagedObjectContext: context];
     
-//    if ([className isEqualToString: @"User"]) {
-//        NSLog(@"Created a new user");
-//    }
-//    
-//    if ([className isEqualToString: @"ChatRoom"]) {
-//        NSLog(@"Created a new chatroom");
-//    }
-    
     return object;
 }
 

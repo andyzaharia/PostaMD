@@ -18,14 +18,13 @@ typedef void (^OnSaved)(void);
 + (NSManagedObjectContext *) contextForCurrentThread;
 + (void) cleanContextsForCurrentThread;
 
++ (NSManagedObjectContext *) privateManagedContext;
 + (NSManagedObjectContext *) contextForBackgroundThread;
 + (NSManagedObjectContext *) masterWriterPrivateContext;
 
 + (void) resetStack;
 
 - (NSManagedObject *)objectWithURI:(NSURL *)uri;
-
--(void) save;
 
 // Background Operations
 + (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved;
