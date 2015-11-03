@@ -83,7 +83,7 @@
                                               [trackingNumbers removeObjectAtIndex: index];
                                               
                                               if ([trackingNumbers count] == 0) {
-                                                  [SVProgressHUD dismiss];
+                                                  [weakSelf didFinishDownloading];
                                               } else {
                                                   [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
                                               }
@@ -92,11 +92,18 @@
                                                    [trackingNumbers removeObjectAtIndex: index];
                                           
                                                    if ([trackingNumbers count] == 0) {
-                                                       [SVProgressHUD dismiss];
+                                                       [weakSelf didFinishDownloading];
                                                    } else {
                                                        [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
                                                    }
                                                }];
+}
+
+-(void) didFinishDownloading
+{
+    [SVProgressHUD dismiss];
+    [self.refreshControl endRefreshing];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
 }
 
 -(void) refreshData
@@ -127,7 +134,6 @@
     if ([trackingNumbers count]) {
         if (withHudPresent) {
             [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-            
             [self.navigationItem.rightBarButtonItem setEnabled: NO];
         }
         
