@@ -732,7 +732,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4c545290-5ef4-4dec-ab7e-5af131d7b5f6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -756,7 +755,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f0fd0d0d-7eee-4952-8663-2cffd50f4b56";
+				PROVISIONING_PROFILE = "2a036ddd-39d3-45ce-a59d-38dc09b65b0e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -850,7 +849,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4c545290-5ef4-4dec-ab7e-5af131d7b5f6";
+				PROVISIONING_PROFILE = "6a1052ae-8fd1-429f-b332-b5a9f39e51b1";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
