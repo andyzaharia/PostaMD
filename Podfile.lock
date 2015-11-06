@@ -22,6 +22,11 @@ PODS:
   - AFNetworking/UIKit (2.6.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Crashlytics (3.4.0):
+    - Fabric (~> 1.6.0)
+  - Fabric (1.6.0):
+    - Fabric/Base (= 1.6.0)
+  - Fabric/Base (1.6.0)
   - hpple (0.2.0)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
@@ -35,6 +40,8 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - AFNetworking-Synchronous/2.x
+  - Crashlytics
+  - Fabric
   - hpple
   - ReactiveCocoa (~> 2)
   - SVProgressHUD
@@ -42,6 +49,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   AFNetworking-Synchronous: 29531ad341ec465a4ff9b66dea9cf7272080e12e
+  Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
+  Fabric: d737eda3a26ac940a5430230eedb35f16b226131
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
