@@ -108,8 +108,9 @@
 
 -(void) refreshData
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
-    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
+    NSInteger itemsToFetch = [Package countOfEntitiesWithPredicate: predicate];
+    
     if (itemsToFetch) {
         [self refreshDataWithHud: NO];
     } else {
@@ -119,8 +120,8 @@
 
 -(void) refreshDataWithHud: (BOOL) withHudPresent
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
-    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
+    NSInteger itemsToFetch = [Package countOfEntitiesWithPredicate: predicate];
     
     NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: itemsToFetch];
     for (int i = 0; i < itemsToFetch; i++) {
