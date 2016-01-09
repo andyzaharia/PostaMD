@@ -10,21 +10,12 @@
 		68DFEC9587F64C46BBAA22C5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFF6142AB6A4544B4F1A441 /* libPods.a */; };
 		7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
 		7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
-		750A6F301BE0034C0071FD7B /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E301BD190EF00C8F75C /* AboutViewController.m */; };
-		750A6F311BE0034C0071FD7B /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
-		750A6F321BE0034C0071FD7B /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
 		750A6F331BE0034C0071FD7B /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
-		750A6F341BE0034C0071FD7B /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12818C12AE200DB1856 /* AddPackageViewController.m */; };
 		750A6F351BE0034C0071FD7B /* PackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA1E1A5F261600A2B5FE /* PackageParser.m */; };
-		750A6F371BE0034C0071FD7B /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		750A6F381BE0034C0071FD7B /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
-		750A6F3A1BE0034C0071FD7B /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
-		750A6F3B1BE0034C0071FD7B /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7572219B1A5F3A3E00BE901A /* TrackingInfo.m */; };
-		750A6F3C1BE0034C0071FD7B /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
 		750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */; };
 		750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12218C12AE200DB1856 /* AppDelegate.m */; };
 		750A6F401BE0034C0071FD7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA11E18C12AE200DB1856 /* main.m */; };
-		750A6F411BE0034C0071FD7B /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
 		750A6F421BE0034C0071FD7B /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7507FA181A5F212600A2B5FE /* DataLoader.m */; };
 		750A6F441BE0034C0071FD7B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
 		750A6F451BE0034C0071FD7B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEB1A862C720092A935 /* Fabric.framework */; };
@@ -46,8 +37,6 @@
 		75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */; };
 		75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */; };
 		75322ED81BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */; };
-		7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552383D18C2376900B55DE1 /* PackageInfoViewController.m */; };
-		7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552384018C241A000B55DE1 /* TrackingInfoCell.m */; };
 		7552AEF31C417E4E000E02A8 /* NSManagedObjectContext+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */; };
 		7552AEF41C417E50000E02A8 /* NSManagedObject+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */; };
 		7552AEF51C417E53000E02A8 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */; };
@@ -56,14 +45,26 @@
 		7552AEF81C417E57000E02A8 /* NSManagedObjectContext+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC91BD3E8DA00839E76 /* NSManagedObjectContext+Custom.m */; };
 		7552AEF91C417E5A000E02A8 /* NSManagedObject+CoreDataCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC71BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m */; };
 		7552AEFA1C417E5C000E02A8 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */; };
-		7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */; };
+		7552AEFF1C4186E0000E02A8 /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AEFE1C4186E0000E02A8 /* AddPackageViewController.m */; };
+		7552AF001C4186E0000E02A8 /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AEFE1C4186E0000E02A8 /* AddPackageViewController.m */; };
+		7552AF041C4186FE000E02A8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF031C4186FE000E02A8 /* AboutViewController.m */; };
+		7552AF051C4186FE000E02A8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF031C4186FE000E02A8 /* AboutViewController.m */; };
+		7552AF091C418716000E02A8 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF081C418716000E02A8 /* PackageInfoViewController.m */; };
+		7552AF0A1C418716000E02A8 /* PackageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF081C418716000E02A8 /* PackageInfoViewController.m */; };
+		7552AF0D1C418730000E02A8 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF0C1C418730000E02A8 /* TrackingInfoCell.m */; };
+		7552AF0E1C418730000E02A8 /* TrackingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF0C1C418730000E02A8 /* TrackingInfoCell.m */; };
+		7552AF141C41874B000E02A8 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF111C41874B000E02A8 /* PackageCell.m */; };
+		7552AF151C41874B000E02A8 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF111C41874B000E02A8 /* PackageCell.m */; };
+		7552AF161C41874B000E02A8 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF131C41874B000E02A8 /* PackagesViewController.m */; };
+		7552AF171C41874B000E02A8 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF131C41874B000E02A8 /* PackagesViewController.m */; };
+		7552AF211C41876C000E02A8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF191C41876C000E02A8 /* DataModel.xcdatamodeld */; };
+		7552AF221C41876C000E02A8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF191C41876C000E02A8 /* DataModel.xcdatamodeld */; };
+		7552AF231C41876C000E02A8 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF1E1C41876C000E02A8 /* Package.m */; };
+		7552AF241C41876C000E02A8 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF1E1C41876C000E02A8 /* Package.m */; };
+		7552AF251C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
+		7552AF261C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
-		755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B418C13C0100AA0553 /* PackagesViewController.m */; };
-		755851B818C13D5B00AA0553 /* PackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851B718C13D5B00AA0553 /* PackageCell.m */; };
-		755851BB18C13E1900AA0553 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 755851BA18C13E1900AA0553 /* Package.m */; };
-		7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7572219B1A5F3A3E00BE901A /* TrackingInfo.m */; };
 		75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
-		75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E301BD190EF00C8F75C /* AboutViewController.m */; };
 		75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
 		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
 		75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
@@ -73,7 +74,6 @@
 		75EBA11F18C12AE200DB1856 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA11E18C12AE200DB1856 /* main.m */; };
 		75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12218C12AE200DB1856 /* AppDelegate.m */; };
 		75EBA12618C12AE200DB1856 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12418C12AE200DB1856 /* Main.storyboard */; };
-		75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA12818C12AE200DB1856 /* AddPackageViewController.m */; };
 		75EBA12B18C12AE200DB1856 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12A18C12AE200DB1856 /* Images.xcassets */; };
 		75EBA13218C12AE200DB1856 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA13118C12AE200DB1856 /* XCTest.framework */; };
 		75EBA13318C12AE200DB1856 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EBA11218C12AE200DB1856 /* Foundation.framework */; };
@@ -105,7 +105,6 @@
 		751DEBEB1A862C720092A935 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		75322EC01BD3E4BA00839E76 /* PostaMD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PostaMD.entitlements; sourceTree = "<group>"; };
 		75322EC11BD3E4BF00839E76 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		75322EC31BD3E7DA00839E76 /* DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		75322EC41BD3E8DA00839E76 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
 		75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
 		75322EC61BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataCustom.h"; sourceTree = "<group>"; };
@@ -120,25 +119,28 @@
 		75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CloudKit.m"; sourceTree = "<group>"; };
 		75322ED61BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+CloudKit.h"; sourceTree = "<group>"; };
 		75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+CloudKit.m"; sourceTree = "<group>"; };
-		7552383C18C2376900B55DE1 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
-		7552383D18C2376900B55DE1 /* PackageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageInfoViewController.m; sourceTree = "<group>"; };
-		7552383F18C241A000B55DE1 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
-		7552384018C241A000B55DE1 /* TrackingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfoCell.m; sourceTree = "<group>"; };
-		7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		7552AEFD1C4186E0000E02A8 /* AddPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPackageViewController.h; sourceTree = "<group>"; };
+		7552AEFE1C4186E0000E02A8 /* AddPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPackageViewController.m; sourceTree = "<group>"; };
+		7552AF021C4186FE000E02A8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		7552AF031C4186FE000E02A8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		7552AF071C418716000E02A8 /* PackageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageInfoViewController.h; sourceTree = "<group>"; };
+		7552AF081C418716000E02A8 /* PackageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageInfoViewController.m; sourceTree = "<group>"; };
+		7552AF0B1C418730000E02A8 /* TrackingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfoCell.h; sourceTree = "<group>"; };
+		7552AF0C1C418730000E02A8 /* TrackingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfoCell.m; sourceTree = "<group>"; };
+		7552AF101C41874B000E02A8 /* PackageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCell.h; sourceTree = "<group>"; };
+		7552AF111C41874B000E02A8 /* PackageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCell.m; sourceTree = "<group>"; };
+		7552AF121C41874B000E02A8 /* PackagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagesViewController.h; sourceTree = "<group>"; };
+		7552AF131C41874B000E02A8 /* PackagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackagesViewController.m; sourceTree = "<group>"; };
+		7552AF1A1C41876C000E02A8 /* DataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		7552AF1B1C41876C000E02A8 /* DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		7552AF1C1C41876C000E02A8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		7552AF1D1C41876C000E02A8 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
+		7552AF1E1C41876C000E02A8 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
+		7552AF1F1C41876C000E02A8 /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
+		7552AF201C41876C000E02A8 /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
 		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		755851B318C13C0100AA0553 /* PackagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagesViewController.h; sourceTree = "<group>"; };
-		755851B418C13C0100AA0553 /* PackagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackagesViewController.m; sourceTree = "<group>"; };
-		755851B618C13D5B00AA0553 /* PackageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCell.h; sourceTree = "<group>"; };
-		755851B718C13D5B00AA0553 /* PackageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCell.m; sourceTree = "<group>"; };
-		755851B918C13E1900AA0553 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
-		755851BA18C13E1900AA0553 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
-		757221961A5F392500BE901A /* DataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 2.xcdatamodel"; sourceTree = "<group>"; };
-		7572219A1A5F3A3E00BE901A /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
-		7572219B1A5F3A3E00BE901A /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
 		75A26E2C1BD18B3900C8F75C /* UITableView+RemoveSeparators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RemoveSeparators.h"; sourceTree = "<group>"; };
 		75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RemoveSeparators.m"; sourceTree = "<group>"; };
-		75A26E2F1BD190EF00C8F75C /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
-		75A26E301BD190EF00C8F75C /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		75A26E321BD1916600C8F75C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		75A26E351BD191BF00C8F75C /* UIAlertView+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Alert.h"; sourceTree = "<group>"; };
 		75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Alert.m"; sourceTree = "<group>"; };
@@ -153,8 +155,6 @@
 		75EBA12118C12AE200DB1856 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		75EBA12218C12AE200DB1856 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		75EBA12518C12AE200DB1856 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		75EBA12718C12AE200DB1856 /* AddPackageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddPackageViewController.h; sourceTree = "<group>"; };
-		75EBA12818C12AE200DB1856 /* AddPackageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddPackageViewController.m; sourceTree = "<group>"; };
 		75EBA12A18C12AE200DB1856 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		75EBA13018C12AE200DB1856 /* PostaMDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostaMDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EBA13118C12AE200DB1856 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -232,16 +232,67 @@
 			path = DataLoader;
 			sourceTree = "<group>";
 		};
-		75320A6F18C8A76A00ADA656 /* Entities */ = {
+		7552AEFB1C4186E0000E02A8 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */,
-				7572219A1A5F3A3E00BE901A /* TrackingInfo.h */,
-				7572219B1A5F3A3E00BE901A /* TrackingInfo.m */,
-				755851B918C13E1900AA0553 /* Package.h */,
-				755851BA18C13E1900AA0553 /* Package.m */,
+				7552AF0F1C41874B000E02A8 /* PackagesViewController */,
+				7552AF061C418716000E02A8 /* PackageInfoViewController */,
+				7552AF011C4186FE000E02A8 /* AboutViewController */,
+				7552AEFC1C4186E0000E02A8 /* AddPackageViewController */,
 			);
-			name = Entities;
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		7552AEFC1C4186E0000E02A8 /* AddPackageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7552AEFD1C4186E0000E02A8 /* AddPackageViewController.h */,
+				7552AEFE1C4186E0000E02A8 /* AddPackageViewController.m */,
+			);
+			path = AddPackageViewController;
+			sourceTree = "<group>";
+		};
+		7552AF011C4186FE000E02A8 /* AboutViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7552AF021C4186FE000E02A8 /* AboutViewController.h */,
+				7552AF031C4186FE000E02A8 /* AboutViewController.m */,
+			);
+			path = AboutViewController;
+			sourceTree = "<group>";
+		};
+		7552AF061C418716000E02A8 /* PackageInfoViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7552AF071C418716000E02A8 /* PackageInfoViewController.h */,
+				7552AF081C418716000E02A8 /* PackageInfoViewController.m */,
+				7552AF0B1C418730000E02A8 /* TrackingInfoCell.h */,
+				7552AF0C1C418730000E02A8 /* TrackingInfoCell.m */,
+			);
+			path = PackageInfoViewController;
+			sourceTree = "<group>";
+		};
+		7552AF0F1C41874B000E02A8 /* PackagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7552AF101C41874B000E02A8 /* PackageCell.h */,
+				7552AF111C41874B000E02A8 /* PackageCell.m */,
+				7552AF121C41874B000E02A8 /* PackagesViewController.h */,
+				7552AF131C41874B000E02A8 /* PackagesViewController.m */,
+			);
+			path = PackagesViewController;
+			sourceTree = "<group>";
+		};
+		7552AF181C41876C000E02A8 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7552AF191C41876C000E02A8 /* DataModel.xcdatamodeld */,
+				7552AF1D1C41876C000E02A8 /* Package.h */,
+				7552AF1E1C41876C000E02A8 /* Package.m */,
+				7552AF1F1C41876C000E02A8 /* TrackingInfo.h */,
+				7552AF201C41876C000E02A8 /* TrackingInfo.m */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		755851A018C13A0900AA0553 /* Libs */ = {
@@ -294,25 +345,6 @@
 			path = "UIAlertView+Alert";
 			sourceTree = "<group>";
 		};
-		75BB1B7118F45358003B2DA9 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				75EBA12718C12AE200DB1856 /* AddPackageViewController.h */,
-				75EBA12818C12AE200DB1856 /* AddPackageViewController.m */,
-				755851B318C13C0100AA0553 /* PackagesViewController.h */,
-				755851B418C13C0100AA0553 /* PackagesViewController.m */,
-				755851B618C13D5B00AA0553 /* PackageCell.h */,
-				755851B718C13D5B00AA0553 /* PackageCell.m */,
-				7552383C18C2376900B55DE1 /* PackageInfoViewController.h */,
-				7552383D18C2376900B55DE1 /* PackageInfoViewController.m */,
-				7552383F18C241A000B55DE1 /* TrackingInfoCell.h */,
-				7552384018C241A000B55DE1 /* TrackingInfoCell.m */,
-				75A26E2F1BD190EF00C8F75C /* AboutViewController.h */,
-				75A26E301BD190EF00C8F75C /* AboutViewController.m */,
-			);
-			name = "View Controllers";
-			sourceTree = "<group>";
-		};
 		75EBA10618C12AE200DB1856 = {
 			isa = PBXGroup;
 			children = (
@@ -355,13 +387,13 @@
 		75EBA11818C12AE200DB1856 /* PostaMD */ = {
 			isa = PBXGroup;
 			children = (
+				7552AF181C41876C000E02A8 /* CoreData */,
 				7507FA161A5F212600A2B5FE /* DataLoader */,
-				75BB1B7118F45358003B2DA9 /* View Controllers */,
+				7552AEFB1C4186E0000E02A8 /* View Controllers */,
 				75EBA12118C12AE200DB1856 /* AppDelegate.h */,
 				75EBA12218C12AE200DB1856 /* AppDelegate.m */,
 				75EBA12418C12AE200DB1856 /* Main.storyboard */,
 				75EBA12A18C12AE200DB1856 /* Images.xcassets */,
-				75320A6F18C8A76A00ADA656 /* Entities */,
 				75EBA11918C12AE200DB1856 /* Supporting Files */,
 			);
 			path = PostaMD;
@@ -638,28 +670,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				750A6F301BE0034C0071FD7B /* AboutViewController.m in Sources */,
 				7552AEF51C417E53000E02A8 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				7552AEF91C417E5A000E02A8 /* NSManagedObject+CoreDataCustom.m in Sources */,
+				7552AF241C41876C000E02A8 /* Package.m in Sources */,
 				7552AEF31C417E4E000E02A8 /* NSManagedObjectContext+CloudKit.m in Sources */,
-				750A6F311BE0034C0071FD7B /* PackageCell.m in Sources */,
-				750A6F321BE0034C0071FD7B /* PackageInfoViewController.m in Sources */,
 				750A6F331BE0034C0071FD7B /* UITableView+RemoveSeparators.m in Sources */,
-				750A6F341BE0034C0071FD7B /* AddPackageViewController.m in Sources */,
 				750A6F351BE0034C0071FD7B /* PackageParser.m in Sources */,
-				750A6F371BE0034C0071FD7B /* TrackingInfoCell.m in Sources */,
+				7552AF001C4186E0000E02A8 /* AddPackageViewController.m in Sources */,
 				750A6F381BE0034C0071FD7B /* UIAlertView+Alert.m in Sources */,
 				7552AEFA1C417E5C000E02A8 /* NSManagedObject+CoreData.m in Sources */,
-				750A6F3A1BE0034C0071FD7B /* DataModel.xcdatamodeld in Sources */,
-				750A6F3B1BE0034C0071FD7B /* TrackingInfo.m in Sources */,
-				750A6F3C1BE0034C0071FD7B /* PackagesViewController.m in Sources */,
+				7552AF221C41876C000E02A8 /* DataModel.xcdatamodeld in Sources */,
+				7552AF171C41874B000E02A8 /* PackagesViewController.m in Sources */,
+				7552AF0A1C418716000E02A8 /* PackageInfoViewController.m in Sources */,
+				7552AF151C41874B000E02A8 /* PackageCell.m in Sources */,
 				7552AEF61C417E55000E02A8 /* NSManagedObjectContextOperation.m in Sources */,
 				750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */,
+				7552AF261C41876C000E02A8 /* TrackingInfo.m in Sources */,
+				7552AF051C4186FE000E02A8 /* AboutViewController.m in Sources */,
 				7552AEF71C417E57000E02A8 /* NSManagedObjectContext+Custom.m in Sources */,
 				7552AEF41C417E50000E02A8 /* NSManagedObject+CloudKit.m in Sources */,
 				750A6F401BE0034C0071FD7B /* main.m in Sources */,
-				750A6F411BE0034C0071FD7B /* Package.m in Sources */,
+				7552AF0E1C418730000E02A8 /* TrackingInfoCell.m in Sources */,
 				750A6F421BE0034C0071FD7B /* DataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -669,27 +701,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				75322ECF1BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m in Sources */,
-				75A26E311BD190EF00C8F75C /* AboutViewController.m in Sources */,
-				755851B818C13D5B00AA0553 /* PackageCell.m in Sources */,
-				7552383E18C2376900B55DE1 /* PackageInfoViewController.m in Sources */,
 				75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */,
-				75EBA12918C12AE200DB1856 /* AddPackageViewController.m in Sources */,
+				7552AF231C41876C000E02A8 /* Package.m in Sources */,
 				7507FA1F1A5F261600A2B5FE /* PackageParser.m in Sources */,
-				7552384118C241A000B55DE1 /* TrackingInfoCell.m in Sources */,
 				75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */,
+				7552AEFF1C4186E0000E02A8 /* AddPackageViewController.m in Sources */,
 				7552AEF81C417E57000E02A8 /* NSManagedObjectContext+Custom.m in Sources */,
-				7558519F18C139EB00AA0553 /* DataModel.xcdatamodeld in Sources */,
-				7572219C1A5F3A3E00BE901A /* TrackingInfo.m in Sources */,
-				755851B518C13C0100AA0553 /* PackagesViewController.m in Sources */,
+				7552AF161C41874B000E02A8 /* PackagesViewController.m in Sources */,
+				7552AF211C41876C000E02A8 /* DataModel.xcdatamodeld in Sources */,
+				7552AF091C418716000E02A8 /* PackageInfoViewController.m in Sources */,
 				75322ED11BD3E8DA00839E76 /* NSManagedObjectContextOperation.m in Sources */,
+				7552AF141C41874B000E02A8 /* PackageCell.m in Sources */,
 				75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
 				75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */,
 				75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
+				7552AF251C41876C000E02A8 /* TrackingInfo.m in Sources */,
+				7552AF041C4186FE000E02A8 /* AboutViewController.m in Sources */,
 				75EBA11F18C12AE200DB1856 /* main.m in Sources */,
-				755851BB18C13E1900AA0553 /* Package.m in Sources */,
 				75322ED81BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m in Sources */,
 				75322ECE1BD3E8DA00839E76 /* NSManagedObject+CoreData.m in Sources */,
+				7552AF0D1C418730000E02A8 /* TrackingInfoCell.m in Sources */,
 				7507FA191A5F212600A2B5FE /* DataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -864,8 +896,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PostaMD/PostaMD.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -877,7 +909,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6a1052ae-8fd1-429f-b332-b5a9f39e51b1";
+				PROVISIONING_PROFILE = "a5235bd2-6c8f-4b0c-b7d7-c7f68c10ec17";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -991,14 +1023,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		7558519D18C139EB00AA0553 /* DataModel.xcdatamodeld */ = {
+		7552AF191C41876C000E02A8 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				75322EC31BD3E7DA00839E76 /* DataModel 3.xcdatamodel */,
-				757221961A5F392500BE901A /* DataModel 2.xcdatamodel */,
-				7558519E18C139EB00AA0553 /* DataModel.xcdatamodel */,
+				7552AF1A1C41876C000E02A8 /* DataModel 2.xcdatamodel */,
+				7552AF1B1C41876C000E02A8 /* DataModel 3.xcdatamodel */,
+				7552AF1C1C41876C000E02A8 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 75322EC31BD3E7DA00839E76 /* DataModel 3.xcdatamodel */;
+			currentVersion = 7552AF1B1C41876C000E02A8 /* DataModel 3.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

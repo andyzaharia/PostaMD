@@ -14,6 +14,8 @@
 #import "PackageInfoViewController.h"
 #import "SVProgressHUD.h"
 #import "UITableView+RemoveSeparators.h"
+#import "NSManagedObjectContext+CloudKit.h"
+#import "UIAlertView+Alert.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
 
@@ -74,6 +76,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark -
 
 -(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
 {
@@ -142,6 +146,30 @@
     }
 }
 
+-(void) deletePackage: (Package *) package
+{
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlock:^{
+        if (package.cloudID.length) {
+            [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+            
+            [context cloudKitDeleteObject:package
+                    andRecordNameProperty:@"cloudID"
+                               completion:^(NSError *error) {
+                                   dispatch_async(dispatch_get_main_queue(), ^(void){
+                                       [SVProgressHUD dismiss];
+                                       if (error) [UIAlertView error: error.localizedDescription];
+                                   });
+                               }];
+        } else {
+            [context deleteObject: package];
+        }
+        [context save: nil];
+    }];
+}
+
+#pragma mark - Actions
+
 - (IBAction)refreshPackages:(id)sender {
     [self refreshDataWithHud: YES];
 }
@@ -199,14 +227,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-        [context performBlockAndWait:^{
-            [context deleteObject: package];
-            [context save: nil];
-        }];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        [self deletePackage: package];
+    }  else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
