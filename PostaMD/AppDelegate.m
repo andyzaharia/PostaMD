@@ -19,13 +19,15 @@
     [Fabric with:@[CrashlyticsKit]];
 
     [NSPersistentStoreCoordinator setDataModelName:@"DataModel" withStoreName:@"data.sqlite"];
+    [NSManagedObjectContext contextForMainThread];
+    
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
     
     [DataLoader shared];
     
     // Override point for customization after application launch.
-    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
+    [SVProgressHUD setBackgroundColor: [UIColor blackColor]];
+    [SVProgressHUD setForegroundColor: [UIColor whiteColor]];
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];

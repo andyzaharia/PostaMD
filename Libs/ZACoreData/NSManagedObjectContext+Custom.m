@@ -1,6 +1,6 @@
 //
 //  NSManagedObjectContext+Custom.m
-//  CocoaPodsManager
+//  
 //
 //  Created by Andrei Zaharia on 9/18/13.
 //  Copyright (c) 2013 Andy. All rights reserved.
@@ -146,6 +146,17 @@ static NSOperationQueue         *_operationQueue;
     }
 }
 
++ (NSManagedObjectContext *) privateManagedContext
+{
+    if(![NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator]) return nil;
+    
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSPrivateQueueConcurrencyType];
+    context.parentContext = [NSManagedObjectContext contextForMainThread];
+    context.undoManager = nil;
+    
+    return context;
+}
+
 + (void) cleanContextsForCurrentThread
 {
     if (_managedObjectContextsDictionary) {
@@ -169,11 +180,8 @@ static NSOperationQueue         *_operationQueue;
         if (!backgroundContext) {
             backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             backgroundContext.parentContext = [NSManagedObjectContext contextForMainThread];
-            //backgroundContext.persistentStoreCoordinator = [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator];
-            //[backgroundContext setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
+            [backgroundContext setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
             backgroundContext.undoManager = nil;
-            
-            //[_managedObjectContextsDictionary setObject:backgroundContext forKey: backgroundThreadContextKey];
         }
         
         return backgroundContext;
@@ -197,9 +205,46 @@ static NSOperationQueue         *_operationQueue;
     [_operationQueue cancelAllOperations];
 }
 
+#pragma mark - ObjectWith
+
+- (NSManagedObject *)objectWithURI:(NSURL *)uri
+{
+    NSManagedObjectContext *moc = self;
+    
+    NSManagedObjectID *objectID = [[moc persistentStoreCoordinator] managedObjectIDForURIRepresentation:uri];
+    
+    if (!objectID) {
+        return nil;
+    }
+    
+    NSManagedObject *objectForID = [moc objectWithID:objectID];
+    if (![objectForID isFault]) {
+        return objectForID;
+    }
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[objectID entity]];
+    
+    // Equivalent to
+    // predicate = [NSPredicate predicateWithFormat:@"SELF = %@", objectForID];
+    NSPredicate *predicate = [NSComparisonPredicate predicateWithLeftExpression: [NSExpression expressionForEvaluatedObject]
+                                                                rightExpression: [NSExpression expressionForConstantValue:objectForID]
+                                                                       modifier: NSDirectPredicateModifier
+                                                                           type: NSEqualToPredicateOperatorType
+                                                                        options: 0];
+    [request setPredicate:predicate];
+    
+    NSArray *results = [moc executeFetchRequest:request error:nil];
+    if ([results count] > 0) {
+        return [results objectAtIndex:0];
+    }
+    
+    return nil;
+}
+
 #pragma mark -
 
--(void) save
++ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved
 {
     if ([self hasChanges]) {
         [self save: nil];
@@ -270,6 +315,11 @@ static NSOperationQueue         *_operationQueue;
 
 + (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved
 {
+    if (!_operationQueue) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 1;
+    }
+    
     if (!_operationQueue) {
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.maxConcurrentOperationCount = 1;

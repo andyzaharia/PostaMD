@@ -1,6 +1,6 @@
 //
 //  NSManagedObjectContext+Custom.h
-//  CocoaPodsManager
+//  
 //
 //  Created by Andrei Zaharia on 9/18/13.
 //  Copyright (c) 2013 Andy. All rights reserved.
@@ -18,6 +18,7 @@ typedef void (^OnSaved)(void);
 + (NSManagedObjectContext *) contextForCurrentThread;
 + (void) cleanContextsForCurrentThread;
 
++ (NSManagedObjectContext *) privateManagedContext;
 + (NSManagedObjectContext *) contextForBackgroundThread;
 + (NSManagedObjectContext *) masterWriterPrivateContext;
 
@@ -26,6 +27,10 @@ typedef void (^OnSaved)(void);
 - (NSManagedObject *)objectWithURI:(NSURL *)uri;
 
 -(void) save;
+
+// Background Operations
++ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved;
++ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block;
 
 // Background Operations
 + (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved;

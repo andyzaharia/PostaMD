@@ -13,8 +13,12 @@
 @interface PackageParser : NSObject
 
 // Returns the newly found events
-+(NSArray *) parsePackageTrackingInfoWithData: (NSData *)data
++(NSArray *) parseMdPackageTrackingInfoWithData: (NSData *)data
                             andTrackingNumber: (NSString *) trackingId
                                     inContext: (NSManagedObjectContext *) context;
+
++(NSArray *) parseRoPackageTrackingInfoWithData: (NSData *)data
+                              andTrackingNumber: (NSString *) trackingId
+                                      inContext: (NSManagedObjectContext *) context;
 
 @end
