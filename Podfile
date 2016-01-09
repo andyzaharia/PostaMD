@@ -6,3 +6,8 @@ pod 'hpple'
 pod 'AFNetworking'
 pod 'SVProgressHUD'
 pod 'AFNetworking-Synchronous/2.x'
+pod 'ReactiveCocoa',                  '~>2'
+pod 'Fabric'
+pod 'Crashlytics'
+
+#pod 'GDCoreDataConcurrencyDebugging'

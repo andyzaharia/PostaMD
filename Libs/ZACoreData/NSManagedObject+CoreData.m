@@ -1,6 +1,6 @@
 //
 //  NSManagedObject+CoreData.m
-//  CocoaPodsManager
+//  
 //
 //  Created by Andrei Zaharia on 9/17/13.
 //  Copyright (c) 2013 Andy. All rights reserved.
@@ -140,14 +140,6 @@
     
     NSManagedObject *object = [[NSClassFromString(className) alloc] initWithEntity: entityInfo
                                                     insertIntoManagedObjectContext: context];
-    
-//    if ([className isEqualToString: @"User"]) {
-//        NSLog(@"Created a new user");
-//    }
-//    
-//    if ([className isEqualToString: @"ChatRoom"]) {
-//        NSLog(@"Created a new chatroom");
-//    }
     
     return object;
 }

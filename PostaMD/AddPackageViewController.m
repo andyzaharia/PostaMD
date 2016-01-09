@@ -11,7 +11,7 @@
 #import "TFHpple.h"
 #import "Package.h"
 #import "DataLoader.h"
-#import "SVProgressHUD.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "UIAlertView+Alert.h"
 
 @interface AddPackageViewController ()
@@ -27,8 +27,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-    //TODO: Disable landscape screen in this controller.
     
     self.tfName.layer.borderWidth = 1.0;
     self.tfName.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1.000] CGColor];
@@ -49,8 +47,18 @@
     
     [self.view endEditing: YES];
     
-    __block BOOL itemAlreadyExists = NO;
-    __block NSString *alreadyExistingPackageName = nil;
+    if (self.tfTrackingNumber.text.length == 0) {
+        [UIAlertView info: NSLocalizedString(@"Empty tracking number not allowed.", nil)];
+        return;
+    }
+
+    if (self.tfName.text.length == 0) {
+        [UIAlertView info: NSLocalizedString(@"Empty name not allowed.", nil)];
+        return;
+    }
+    
+    BOOL __block itemAlreadyExists = NO;
+    NSString *__block alreadyExistingPackageName = nil;
     
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     [context performBlockAndWait:^{
@@ -69,20 +77,25 @@
         [UIAlertView info: message];
         return;
     }
-    
+   
     [context performBlockAndWait:^{
         Package *package = [Package createEntityInContext: context];
         package.name = self.tfName.text;
         package.trackingNumber = self.tfTrackingNumber.text;
         package.date = [NSDate date];
-        [context save];
+        package.received = @(NO);
+        
+        NSError *error;
+        [context save: &error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
     }];
     
-    [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-    [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
     [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
     
-    __weak AddPackageViewController *weakSelf = self;
+    AddPackageViewController *__weak weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID: self.tfTrackingNumber.text
                                                onDone:^(id data) {
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
@@ -91,14 +104,6 @@
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
                                                    [SVProgressHUD dismiss];
                                                }];
-    
-    [[DataLoader shared] syncWithCloudKit];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)postTrack:(id)sender {

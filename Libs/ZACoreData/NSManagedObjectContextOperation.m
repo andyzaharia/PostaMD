@@ -1,7 +1,5 @@
 //
 //  NSManagedObjectContextOperation.m
-//  Petcial
-//
 //  Created by Andrei Zaharia on 7/31/14.
 //  Copyright (c) 2014 Andrei Zaharia. All rights reserved.
 //
@@ -39,8 +37,7 @@
     @autoreleasepool {
         
         if (!self.isCancelled) {
-            [_context performBlockAndWait:^{
-                
+            [_context performBlock:^{
                 _operationBlock(_context);
             
                 if ([_context hasChanges]) {

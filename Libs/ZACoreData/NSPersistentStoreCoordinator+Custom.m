@@ -1,6 +1,6 @@
 //
 //  NSPersistentStoreCoordinator+Custom.m
-//  CocoaPodsManager
+//
 //
 //  Created by Andrei Zaharia on 9/18/13.
 //  Copyright (c) 2013 Andy. All rights reserved.

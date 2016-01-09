@@ -14,52 +14,21 @@
 #import "PackageInfoViewController.h"
 #import "SVProgressHUD.h"
 #import "UITableView+RemoveSeparators.h"
-#import "NSManagedObjectContext+CloudKit.h"
-#import "UIAlertView+Alert.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSFetchedResultsController    *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController          *fetchedResultsController;
 
 @end
 
 @implementation PackagesViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self loadData];
     
-    __weak PackagesViewController *weakSelf = self;
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserverForName:NSManagedObjectContextDidSaveNotification
-                                    object:context
-                                     queue:nil
-                                usingBlock:^(NSNotification *note) {
-                                    NSManagedObjectContext *savedContext = [note object];
-                                    if (savedContext == context) {
-                                        return;
-                                    }
-                                    
-                                    dispatch_sync(dispatch_get_main_queue(), ^{
-                                        [weakSelf.tableView reloadData];
-                                    });
-                                }];
-
     [self.tableView removeExtraSeparators];
+    [self loadData];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents: UIControlEventValueChanged];
@@ -71,25 +40,28 @@
     [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+}
+
 -(void) loadData
 {
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-    NSPredicate *predicate = [NSPredicate predicateWithValue: YES];
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: NO];
+    
+    NSSortDescriptor *sortByReceived = [[NSSortDescriptor alloc] initWithKey:@"received" ascending: YES];
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending: NO];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
-    [request setFetchBatchSize: 20];
-    [request setPredicate: predicate];
-    [request setSortDescriptors: @[sort]];
+    [request setSortDescriptors: @[sortByReceived, sortByDate]];
     
-    NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest: request
-                                                                                 managedObjectContext: context
-                                                                                   sectionNameKeyPath: nil
-                                                                                            cacheName: nil];
-    self.fetchedResultsController = controller;
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                        managedObjectContext:context
+                                                                          sectionNameKeyPath:@"received"
+                                                                                   cacheName:nil];
+    self.fetchedResultsController.delegate = self;
     NSError *error;
-    controller.delegate = self;
-    if (![[self fetchedResultsController] performFetch:&error]) {
+    if (![self.fetchedResultsController performFetch:&error]) {
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
@@ -103,12 +75,42 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark -
+-(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
+{
+    __weak PackagesViewController *weakSelf = self;
+    [[DataLoader shared] getTrackingInfoForItemWithID: trackingNumbers[index]
+                                               onDone: ^(id data) {
+                                              [trackingNumbers removeObjectAtIndex: index];
+                                              
+                                              if ([trackingNumbers count] == 0) {
+                                                  [weakSelf didFinishDownloading];
+                                              } else {
+                                                  [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                              }
+                                          
+                                               } onFailure:^(NSError *error) {
+                                                   [trackingNumbers removeObjectAtIndex: index];
+                                          
+                                                   if ([trackingNumbers count] == 0) {
+                                                       [weakSelf didFinishDownloading];
+                                                   } else {
+                                                       [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                                   }
+                                               }];
+}
+
+-(void) didFinishDownloading
+{
+    [SVProgressHUD dismiss];
+    [self.refreshControl endRefreshing];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
 
 -(void) refreshData
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
-    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
+    NSInteger itemsToFetch = [Package countOfEntitiesWithPredicate: predicate];
+    
     if (itemsToFetch) {
         [self refreshDataWithHud: NO];
     } else {
@@ -118,8 +120,8 @@
 
 -(void) refreshDataWithHud: (BOOL) withHudPresent
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
-    __block NSInteger itemsToFetch = [sectionInfo numberOfObjects];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
+    NSInteger itemsToFetch = [Package countOfEntitiesWithPredicate: predicate];
     
     NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: itemsToFetch];
     for (int i = 0; i < itemsToFetch; i++) {
@@ -132,45 +134,12 @@
     
     if ([trackingNumbers count]) {
         if (withHudPresent) {
-            [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-            [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
             [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-            
             [self.navigationItem.rightBarButtonItem setEnabled: NO];
         }
         
         [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
     }
-    
-    [[DataLoader shared] syncWithCloudKit];
-}
-
--(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
-{
-    __weak PackagesViewController *weakSelf = self;
-    [[DataLoader shared] getTrackingInfoForItemWithID: trackingNumbers[index]
-                                               onDone: ^(id data) {
-                                              [trackingNumbers removeObjectAtIndex: index];
-                                              
-                                              if ([trackingNumbers count] == 0) {
-                                                  [SVProgressHUD dismiss];
-                                                  [weakSelf.navigationItem.rightBarButtonItem setEnabled: YES];
-                                                  if (weakSelf.refreshControl.refreshing) [weakSelf.refreshControl endRefreshing];
-                                              } else {
-                                                  [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
-                                              }
-                                          
-                                               } onFailure:^(NSError *error) {
-                                                   [trackingNumbers removeObjectAtIndex: index];
-                                          
-                                                   if ([trackingNumbers count] == 0) {
-                                                       [SVProgressHUD dismiss];
-                                                       [weakSelf.navigationItem.rightBarButtonItem setEnabled: YES];
-                                                       if (weakSelf.refreshControl.refreshing) [weakSelf.refreshControl endRefreshing];
-                                                   } else {
-                                                       [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
-                                                   }
-                                               }];
 }
 
 - (IBAction)refreshPackages:(id)sender {
@@ -200,6 +169,11 @@
     return [[self.fetchedResultsController sections] count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return (section == 0) ? NSLocalizedString(@"Waiting", nil) : NSLocalizedString(@"Received", nil);
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -227,80 +201,41 @@
         Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
         
         NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-        [context performBlock:^{
-            if (package.cloudID.length) {
-                [[SVProgressHUD appearance] setHudBackgroundColor: [UIColor blackColor]];
-                [[SVProgressHUD appearance] setHudForegroundColor: [UIColor whiteColor]];
-                [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-                
-                [context cloudKitDeleteObject:package
-                        andRecordNameProperty:@"cloudID"
-                                   completion:^(NSError *error) {
-                                       dispatch_async(dispatch_get_main_queue(), ^(void){
-                                           [SVProgressHUD dismiss];
-                                           if (error) [UIAlertView error: error.localizedDescription];
-                                       });
-                                   }];
-            } else {
-                [context deleteObject: package];
-            }
-            
+        [context performBlockAndWait:^{
+            [context deleteObject: package];
             [context save: nil];
         }];
-    }
+    }   
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
 }
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
- 
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 -(void) configureCell: (PackageCell *) cell forIndexPath: (NSIndexPath *) indexPath
 {
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
     Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-    NSArray *items = [package.info allObjects];
-    items = [items sortedArrayUsingDescriptors:@[descriptor]];
-    
-    TrackingInfo *lastTrackInfo = [items lastObject];
-    if (lastTrackInfo) {
-        NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
-        if ([lastTrackInfo.localityStr length]) {
-            trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+    [package.managedObjectContext performBlockAndWait:^{
+        NSArray *items = [package.info allObjects];
+        items = [items sortedArrayUsingDescriptors:@[descriptor]];
+        
+        TrackingInfo *lastTrackInfo = [items lastObject];
+        if (lastTrackInfo) {
+            NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+            if ([lastTrackInfo.localityStr length]) {
+                trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+            }
+            cell.lbLastTrackingInfo.text = trackingStr;
+            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+        } else {
+            cell.lbLastTrackingInfo.text = @"";
+            cell.lastTrackingInfoHeightConstraint.constant = 0.0;
         }
-        cell.lbLastTrackingInfo.text = trackingStr;
-    } else {
-        cell.lbLastTrackingInfo.text = @"";
-    }
-    
-    cell.lbName.text = package.name;
-    cell.lbTrackingNumber.text = package.trackingNumber;
-    cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.lbName.text = package.name;
+        cell.lbTrackingNumber.text = package.trackingNumber;
+        cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+    }];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
