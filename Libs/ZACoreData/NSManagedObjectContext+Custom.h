@@ -26,12 +26,6 @@ typedef void (^OnSaved)(void);
 
 - (NSManagedObject *)objectWithURI:(NSURL *)uri;
 
--(void) save;
-
-// Background Operations
-+ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved;
-+ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block;
-
 // Background Operations
 + (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved;
 + (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block;
