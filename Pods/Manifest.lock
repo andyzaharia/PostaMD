@@ -26,6 +26,7 @@ PODS:
     - Fabric (~> 1.6.0)
   - Fabric (1.6.2)
   - hpple (0.2.0)
+  - MBProgressHUD (0.9.2)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - hpple
+  - MBProgressHUD
   - ReactiveCocoa (~> 2)
   - SVProgressHUD
 
@@ -50,6 +52,7 @@ SPEC CHECKSUMS:
   Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
   Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 

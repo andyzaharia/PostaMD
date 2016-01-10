@@ -104,6 +104,8 @@
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
                                                    [SVProgressHUD dismiss];
                                                }];
+    
+    [[DataLoader shared] syncWithCloudKit];
 }
 
 - (IBAction)postTrack:(id)sender {

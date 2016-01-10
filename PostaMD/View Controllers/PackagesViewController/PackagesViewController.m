@@ -12,12 +12,15 @@
 #import "TrackingInfo.h"
 #import "DataLoader.h"
 #import "PackageInfoViewController.h"
-#import "SVProgressHUD.h"
+#import "MBProgressHUD.h"
 #import "UITableView+RemoveSeparators.h"
 #import "NSManagedObjectContext+CloudKit.h"
 #import "UIAlertView+Alert.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate>
+{
+    NSInteger _totalItemsToRefresh;
+}
 
 @property (nonatomic, strong) NSFetchedResultsController          *fetchedResultsController;
 
@@ -79,22 +82,35 @@
 
 #pragma mark -
 
+-(void) updateHudProgressWithItemsToRefresh: (NSInteger) itemsToRefresh
+{
+    NSArray *huds = [MBProgressHUD allHUDsForView: self.navigationController.view];
+    MBProgressHUD *hud = huds.firstObject;
+    if (hud) {
+        NSInteger refreshedItems = _totalItemsToRefresh - itemsToRefresh;
+        CGFloat progress = (float)refreshedItems / (float)(_totalItemsToRefresh);
+        [hud setProgress: progress];
+    }
+}
+
 -(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
 {
     __weak PackagesViewController *weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID: trackingNumbers[index]
                                                onDone: ^(id data) {
-                                              [trackingNumbers removeObjectAtIndex: index];
-                                              
-                                              if ([trackingNumbers count] == 0) {
-                                                  [weakSelf didFinishDownloading];
-                                              } else {
-                                                  [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
-                                              }
+                                                   [trackingNumbers removeObjectAtIndex: index];
+                                                   [weakSelf updateHudProgressWithItemsToRefresh: trackingNumbers.count];
+                                                   
+                                                   if ([trackingNumbers count] == 0) {
+                                                       [weakSelf didFinishDownloading];
+                                                   } else {
+                                                       [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+                                                   }
                                           
                                                } onFailure:^(NSError *error) {
                                                    [trackingNumbers removeObjectAtIndex: index];
-                                          
+                                                   [weakSelf updateHudProgressWithItemsToRefresh: trackingNumbers.count];
+                                                   
                                                    if ([trackingNumbers count] == 0) {
                                                        [weakSelf didFinishDownloading];
                                                    } else {
@@ -105,7 +121,7 @@
 
 -(void) didFinishDownloading
 {
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated: YES];
     [self.refreshControl endRefreshing];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
 }
@@ -113,9 +129,9 @@
 -(void) refreshData
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
-    NSInteger itemsToFetch = [Package countOfEntitiesWithPredicate: predicate];
+    _totalItemsToRefresh = [Package countOfEntitiesWithPredicate: predicate];
     
-    if (itemsToFetch) {
+    if (_totalItemsToRefresh) {
         [self refreshDataWithHud: NO];
     } else {
         [self.refreshControl endRefreshing];
@@ -125,10 +141,10 @@
 -(void) refreshDataWithHud: (BOOL) withHudPresent
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
-    NSInteger itemsToFetch = [Package countOfEntitiesWithPredicate: predicate];
+    _totalItemsToRefresh = [Package countOfEntitiesWithPredicate: predicate];
     
-    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: itemsToFetch];
-    for (int i = 0; i < itemsToFetch; i++) {
+    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: _totalItemsToRefresh];
+    for (int i = 0; i < _totalItemsToRefresh; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
         Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
         if (!package.received.boolValue || (package.info.count == 0)) {
@@ -137,13 +153,21 @@
     }
     
     if ([trackingNumbers count]) {
+        _totalItemsToRefresh = trackingNumbers.count;
+        
         if (withHudPresent) {
-            [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated: YES];
+            [hud setLabelText: NSLocalizedString(@"Loading...", nil)];
+            [hud setMode: _totalItemsToRefresh <= 1 ? MBProgressHUDModeIndeterminate : MBProgressHUDModeDeterminateHorizontalBar];
+            [hud setDimBackground: YES];
+            
             [self.navigationItem.rightBarButtonItem setEnabled: NO];
         }
         
         [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
     }
+    
+    [[DataLoader shared] syncWithCloudKit];
 }
 
 -(void) deletePackage: (Package *) package
@@ -151,13 +175,13 @@
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     [context performBlock:^{
         if (package.cloudID.length) {
-            [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+            //[SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
             
             [context cloudKitDeleteObject:package
                     andRecordNameProperty:@"cloudID"
                                completion:^(NSError *error) {
                                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                                       [SVProgressHUD dismiss];
+                                       //[SVProgressHUD dismiss];
                                        if (error) [UIAlertView error: error.localizedDescription];
                                    });
                                }];
@@ -250,8 +274,8 @@
             cell.lbLastTrackingInfo.text = trackingStr;
             cell.lastTrackingInfoHeightConstraint.constant = 21.0;
         } else {
-            cell.lbLastTrackingInfo.text = @"";
-            cell.lastTrackingInfoHeightConstraint.constant = 0.0;
+            cell.lbLastTrackingInfo.text = NSLocalizedString(@"No data.", nil);
+            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
         }
         
         cell.lbName.text = package.name;
