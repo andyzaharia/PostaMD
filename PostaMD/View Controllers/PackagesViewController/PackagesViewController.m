@@ -17,11 +17,12 @@
 #import "NSManagedObjectContext+CloudKit.h"
 #import "UIAlertView+Alert.h"
 
-@interface PackagesViewController () <NSFetchedResultsControllerDelegate>
+@interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
 {
     NSInteger _totalItemsToRefresh;
 }
 
+@property (nonatomic, strong) UISearchController                  *searchController;
 @property (nonatomic, strong) NSFetchedResultsController          *fetchedResultsController;
 
 @end
@@ -34,6 +35,13 @@
     
     [self.tableView removeExtraSeparators];
     [self loadData];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController: nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents: UIControlEventValueChanged];
@@ -337,6 +345,29 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    if(searchController.active) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchController.searchBar.text];
+        [self.fetchedResultsController.fetchRequest setPredicate: predicate];
+    } else {
+        [self.fetchedResultsController.fetchRequest setPredicate: nil];
+    }
+    
+    [self.fetchedResultsController performFetch: nil];
+    
+    [UIView transitionWithView:self.tableView
+                      duration:0.15
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [self.tableView reloadData];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
 }
 
 @end
