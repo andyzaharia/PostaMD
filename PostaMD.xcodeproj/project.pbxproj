@@ -275,10 +275,10 @@
 		7552AF0F1C41874B000E02A8 /* PackagesViewController */ = {
 			isa = PBXGroup;
 			children = (
-				7552AF101C41874B000E02A8 /* PackageCell.h */,
-				7552AF111C41874B000E02A8 /* PackageCell.m */,
 				7552AF121C41874B000E02A8 /* PackagesViewController.h */,
 				7552AF131C41874B000E02A8 /* PackagesViewController.m */,
+				7552AF101C41874B000E02A8 /* PackageCell.h */,
+				7552AF111C41874B000E02A8 /* PackageCell.m */,
 			);
 			path = PackagesViewController;
 			sourceTree = "<group>";
