@@ -180,24 +180,26 @@
 
 -(void) deletePackage: (Package *) package
 {
-    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-    [context performBlock:^{
-        if (package.cloudID.length) {
-            //[SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-            
-            [context cloudKitDeleteObject:package
-                    andRecordNameProperty:@"cloudID"
-                               completion:^(NSError *error) {
-                                   dispatch_async(dispatch_get_main_queue(), ^(void){
-                                       //[SVProgressHUD dismiss];
-                                       if (error) [UIAlertView error: error.localizedDescription];
-                                   });
-                               }];
-        } else {
-            [context deleteObject: package];
-        }
-        [context save: nil];
-    }];
+    if(package) {
+        NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+        [context performBlock:^{
+            if (package.cloudID.length) {
+                //[SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+                
+                [context cloudKitDeleteObject:package
+                        andRecordNameProperty:@"cloudID"
+                                   completion:^(NSError *error) {
+                                       dispatch_async(dispatch_get_main_queue(), ^(void){
+                                           //[SVProgressHUD dismiss];
+                                           if (error) [UIAlertView error: error.localizedDescription];
+                                       });
+                                   }];
+            } else {
+                [context deleteObject: package];
+            }
+            [context save: nil];
+        }];
+    }
 }
 
 #pragma mark - Actions
@@ -231,7 +233,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return (section == 0) ? NSLocalizedString(@"Waiting", nil) : NSLocalizedString(@"Received", nil);
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection: section];
+    Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
+    
+    return (package.received.boolValue == NO) ? NSLocalizedString(@"Waiting", nil) : NSLocalizedString(@"Received", nil);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -236,7 +236,7 @@
             // Check the existing packages for cloudID presence on local side.
             // if a package has a cloudID but that id is missing in Cloud then we must delete the local one.
             //
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"length(cloudID) > 0"];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.cloudID.length > 0"];
             NSArray *packages = [Package findAllWithPredicate:predicate inContext: context];
             NSArray *localPackageTrackingNumbers = [packages valueForKeyPath:@"cloudID"];
             if (packages.count) {
