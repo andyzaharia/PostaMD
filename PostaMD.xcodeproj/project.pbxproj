@@ -64,6 +64,7 @@
 		7552AF251C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		7552AF261C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
+		758D496C1C5D61DB007BEA12 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75322EC11BD3E4BF00839E76 /* CloudKit.framework */; };
 		75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
 		75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
 		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
@@ -139,6 +140,7 @@
 		7552AF1F1C41876C000E02A8 /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
 		7552AF201C41876C000E02A8 /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
 		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		758D496B1C5D61D6007BEA12 /* PostaRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PostaRO.entitlements; sourceTree = "<group>"; };
 		75A26E2C1BD18B3900C8F75C /* UITableView+RemoveSeparators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RemoveSeparators.h"; sourceTree = "<group>"; };
 		75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RemoveSeparators.m"; sourceTree = "<group>"; };
 		75A26E321BD1916600C8F75C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -175,6 +177,7 @@
 				750A6F441BE0034C0071FD7B /* MessageUI.framework in Frameworks */,
 				750A6F451BE0034C0071FD7B /* Fabric.framework in Frameworks */,
 				750A6F461BE0034C0071FD7B /* CoreData.framework in Frameworks */,
+				758D496C1C5D61DB007BEA12 /* CloudKit.framework in Frameworks */,
 				750A6F471BE0034C0071FD7B /* CoreGraphics.framework in Frameworks */,
 				750A6F481BE0034C0071FD7B /* UIKit.framework in Frameworks */,
 				750A6F491BE0034C0071FD7B /* Foundation.framework in Frameworks */,
@@ -348,6 +351,7 @@
 		75EBA10618C12AE200DB1856 = {
 			isa = PBXGroup;
 			children = (
+				758D496B1C5D61D6007BEA12 /* PostaRO.entitlements */,
 				755851A018C13A0900AA0553 /* Libs */,
 				75EBA11818C12AE200DB1856 /* PostaMD */,
 				75EBA13718C12AE200DB1856 /* PostaMDTests */,
@@ -511,6 +515,11 @@
 				TargetAttributes = {
 					750A6F2D1BE0034C0071FD7B = {
 						DevelopmentTeam = WYQJU87AXN;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					75EBA10E18C12AE200DB1856 = {
 						DevelopmentTeam = WYQJU87AXN;
@@ -781,7 +790,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = PostaRO.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -793,6 +804,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -803,8 +815,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = PostaRO.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -816,7 +829,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2a036ddd-39d3-45ce-a59d-38dc09b65b0e";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

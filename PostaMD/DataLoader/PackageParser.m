@@ -18,8 +18,11 @@ static NSDateFormatter *sharedDateFormatter = nil;
                                     inContext: (NSManagedObjectContext *) context
 {
     if (!sharedDateFormatter) {
-        sharedDateFormatter = [[NSDateFormatter alloc] init];
-        [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sharedDateFormatter = [[NSDateFormatter alloc] init];
+            [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
+        });
     }
     
     TFHpple *doc = [[TFHpple alloc] initWithHTMLData: data];
@@ -113,8 +116,11 @@ static NSDateFormatter *sharedDateFormatter = nil;
                                       inContext: (NSManagedObjectContext *) context
 {
     if (!sharedDateFormatter) {
-        sharedDateFormatter = [[NSDateFormatter alloc] init];
-        [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sharedDateFormatter = [[NSDateFormatter alloc] init];
+            [sharedDateFormatter setDateFormat:@"dd.MM.yyyy - HH:mm"];
+        });
     }
     
     NSError *error;
