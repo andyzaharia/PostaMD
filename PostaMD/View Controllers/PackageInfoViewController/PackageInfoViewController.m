@@ -196,11 +196,15 @@
 
 -(void) configureCell: (TrackingInfoCell *) cell forIndexPath: (NSIndexPath *) indexPath
 {
-    TrackingInfo *lastTrackInfo = [self.fetchedResultsController objectAtIndexPath: indexPath];
-
-    cell.lbInfo.text = lastTrackInfo.eventStr;
-    cell.lbDate.text = lastTrackInfo.dateStr;
-    cell.lbCountry.text = [lastTrackInfo.countryStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:indexPath.section];
+    
+    if (indexPath.row < [sectionInfo numberOfObjects]) {
+        TrackingInfo *lastTrackInfo = [self.fetchedResultsController objectAtIndexPath: indexPath];
+        
+        cell.lbInfo.text = lastTrackInfo.eventStr;
+        cell.lbDate.text = lastTrackInfo.dateStr;
+        cell.lbCountry.text = [lastTrackInfo.countryStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
