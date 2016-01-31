@@ -101,10 +101,8 @@
 		7507FA1D1A5F261600A2B5FE /* PackageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageParser.h; sourceTree = "<group>"; };
 		7507FA1E1A5F261600A2B5FE /* PackageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageParser.m; sourceTree = "<group>"; };
 		750A6F551BE0034C0071FD7B /* PostaRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		750A6F561BE0034C0071FD7B /* PostaRO-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PostaRO-Info.plist"; path = "/Volumes/Data/Projects/PostaMD/PostaRO-Info.plist"; sourceTree = "<absolute>"; };
 		751DEBEA1A862C720092A935 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		751DEBEB1A862C720092A935 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		75322EC01BD3E4BA00839E76 /* PostaMD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PostaMD.entitlements; sourceTree = "<group>"; };
 		75322EC11BD3E4BF00839E76 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		75322EC41BD3E8DA00839E76 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
 		75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
@@ -140,17 +138,19 @@
 		7552AF1F1C41876C000E02A8 /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
 		7552AF201C41876C000E02A8 /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
 		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		758D496B1C5D61D6007BEA12 /* PostaRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PostaRO.entitlements; sourceTree = "<group>"; };
 		75A26E2C1BD18B3900C8F75C /* UITableView+RemoveSeparators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RemoveSeparators.h"; sourceTree = "<group>"; };
 		75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RemoveSeparators.m"; sourceTree = "<group>"; };
 		75A26E321BD1916600C8F75C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		75A26E351BD191BF00C8F75C /* UIAlertView+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Alert.h"; sourceTree = "<group>"; };
 		75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Alert.m"; sourceTree = "<group>"; };
+		75BA8FA01C5E4F530081AD1D /* PostaMD-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PostaMD-Info.plist"; sourceTree = "<group>"; };
+		75BA8FA11C5E4F530081AD1D /* PostaMD.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PostaMD.entitlements; sourceTree = "<group>"; };
+		75BA8FA21C5E4F530081AD1D /* PostaRO-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PostaRO-Info.plist"; sourceTree = "<group>"; };
+		75BA8FA31C5E4F530081AD1D /* PostaRO.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PostaRO.entitlements; sourceTree = "<group>"; };
 		75EBA10F18C12AE200DB1856 /* PostaMD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaMD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EBA11218C12AE200DB1856 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75EBA11418C12AE200DB1856 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		75EBA11618C12AE200DB1856 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		75EBA11A18C12AE200DB1856 /* PostaMD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PostaMD-Info.plist"; sourceTree = "<group>"; };
 		75EBA11C18C12AE200DB1856 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75EBA11E18C12AE200DB1856 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75EBA12018C12AE200DB1856 /* PostaMD-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PostaMD-Prefix.pch"; sourceTree = "<group>"; };
@@ -348,10 +348,20 @@
 			path = "UIAlertView+Alert";
 			sourceTree = "<group>";
 		};
+		75BA8F9F1C5E4F530081AD1D /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				75BA8FA01C5E4F530081AD1D /* PostaMD-Info.plist */,
+				75BA8FA11C5E4F530081AD1D /* PostaMD.entitlements */,
+				75BA8FA21C5E4F530081AD1D /* PostaRO-Info.plist */,
+				75BA8FA31C5E4F530081AD1D /* PostaRO.entitlements */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		75EBA10618C12AE200DB1856 = {
 			isa = PBXGroup;
 			children = (
-				758D496B1C5D61D6007BEA12 /* PostaRO.entitlements */,
 				755851A018C13A0900AA0553 /* Libs */,
 				75EBA11818C12AE200DB1856 /* PostaMD */,
 				75EBA13718C12AE200DB1856 /* PostaMDTests */,
@@ -406,9 +416,7 @@
 		75EBA11918C12AE200DB1856 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				75322EC01BD3E4BA00839E76 /* PostaMD.entitlements */,
-				750A6F561BE0034C0071FD7B /* PostaRO-Info.plist */,
-				75EBA11A18C12AE200DB1856 /* PostaMD-Info.plist */,
+				75BA8F9F1C5E4F530081AD1D /* Misc */,
 				75EBA11B18C12AE200DB1856 /* InfoPlist.strings */,
 				75EBA11E18C12AE200DB1856 /* main.m */,
 				75EBA12018C12AE200DB1856 /* PostaMD-Prefix.pch */,
