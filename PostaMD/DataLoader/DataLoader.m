@@ -224,7 +224,14 @@
 
 -(void) syncWithCloudKit
 {
-    CKDatabase *privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
+    //CKDatabase *privateDB = [[CKContainer containerWithIdentifier:@"iCloud.com.andyzaharia.posta.Ro"] privateCloudDatabase];
+    CKDatabase *privateDB = nil;
+    if ([DataLoader isRomanianApp]) {
+        privateDB = [[CKContainer containerWithIdentifier:@"iCloud.com.andyzaharia.posta.Ro"] privateCloudDatabase];
+    } else if ([DataLoader isMoldovianApp]) {
+        privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
+    }
+    
     if (privateDB) {
         NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
         [context performBlock:^{
@@ -281,7 +288,8 @@
                     cloudPackage[@"lastChecked"]        = package.lastChecked;
                     cloudPackage[@"received"]           = package.received;
                     
-                    CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:@[cloudPackage] recordIDsToDelete: nil];
+                    CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:@[cloudPackage]
+                                                                                                recordIDsToDelete: nil];
                     operation.savePolicy = CKRecordSaveAllKeys;
                     operation.database = privateDB;
                     if(_lastOperation) [operation addDependency:_lastOperation];
