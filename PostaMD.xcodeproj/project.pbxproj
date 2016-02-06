@@ -30,7 +30,6 @@
 		750A6F4F1BE0034C0071FD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA12418C12AE200DB1856 /* Main.storyboard */; };
 		751DEBEC1A862C720092A935 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEA1A862C720092A935 /* Crashlytics.framework */; };
 		751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751DEBEB1A862C720092A935 /* Fabric.framework */; };
-		75322EC21BD3E4BF00839E76 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75322EC11BD3E4BF00839E76 /* CloudKit.framework */; };
 		75322ECE1BD3E8DA00839E76 /* NSManagedObject+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */; };
 		75322ECF1BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322EC71BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.m */; };
 		75322ED11BD3E8DA00839E76 /* NSManagedObjectContextOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECB1BD3E8DA00839E76 /* NSManagedObjectContextOperation.m */; };
@@ -64,7 +63,6 @@
 		7552AF251C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		7552AF261C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
-		758D496C1C5D61DB007BEA12 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75322EC11BD3E4BF00839E76 /* CloudKit.framework */; };
 		75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
 		75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
 		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
@@ -82,6 +80,8 @@
 		75EBA13C18C12AE200DB1856 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75EBA13A18C12AE200DB1856 /* InfoPlist.strings */; };
 		75EBA13E18C12AE200DB1856 /* PostaMDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EBA13D18C12AE200DB1856 /* PostaMDTests.m */; };
 		75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */; };
+		A10C793F1C5E69BE005E47E9 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */; };
+		A1F7B9FC1C5E660E00F9348B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,7 +103,6 @@
 		750A6F551BE0034C0071FD7B /* PostaRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostaRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		751DEBEA1A862C720092A935 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		751DEBEB1A862C720092A935 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		75322EC11BD3E4BF00839E76 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		75322EC41BD3E8DA00839E76 /* NSManagedObject+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreData.h"; sourceTree = "<group>"; };
 		75322EC51BD3E8DA00839E76 /* NSManagedObject+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreData.m"; sourceTree = "<group>"; };
 		75322EC61BD3E8DA00839E76 /* NSManagedObject+CoreDataCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataCustom.h"; sourceTree = "<group>"; };
@@ -165,6 +164,7 @@
 		75EBA13D18C12AE200DB1856 /* PostaMDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostaMDTests.m; sourceTree = "<group>"; };
 		75F72D0619118637009EDF97 /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
 		75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
+		A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		C7ACE575CC81C94FE43DBCE5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CDFF6142AB6A4544B4F1A441 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -177,7 +177,7 @@
 				750A6F441BE0034C0071FD7B /* MessageUI.framework in Frameworks */,
 				750A6F451BE0034C0071FD7B /* Fabric.framework in Frameworks */,
 				750A6F461BE0034C0071FD7B /* CoreData.framework in Frameworks */,
-				758D496C1C5D61DB007BEA12 /* CloudKit.framework in Frameworks */,
+				A1F7B9FC1C5E660E00F9348B /* CloudKit.framework in Frameworks */,
 				750A6F471BE0034C0071FD7B /* CoreGraphics.framework in Frameworks */,
 				750A6F481BE0034C0071FD7B /* UIKit.framework in Frameworks */,
 				750A6F491BE0034C0071FD7B /* Foundation.framework in Frameworks */,
@@ -190,10 +190,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10C793F1C5E69BE005E47E9 /* CloudKit.framework in Frameworks */,
 				75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */,
 				751DEBED1A862C720092A935 /* Fabric.framework in Frameworks */,
 				755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */,
-				75322EC21BD3E4BF00839E76 /* CloudKit.framework in Frameworks */,
 				75EBA11518C12AE200DB1856 /* CoreGraphics.framework in Frameworks */,
 				75EBA11718C12AE200DB1856 /* UIKit.framework in Frameworks */,
 				75EBA11318C12AE200DB1856 /* Foundation.framework in Frameworks */,
@@ -384,7 +384,7 @@
 		75EBA11118C12AE200DB1856 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				75322EC11BD3E4BF00839E76 /* CloudKit.framework */,
+				A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */,
 				75A26E321BD1916600C8F75C /* MessageUI.framework */,
 				751DEBEA1A862C720092A935 /* Crashlytics.framework */,
 				751DEBEB1A862C720092A935 /* Fabric.framework */,
@@ -484,6 +484,7 @@
 				75EBA10D18C12AE200DB1856 /* Resources */,
 				1AA923A5EA5C4970A377EA4E /* Copy Pods Resources */,
 				751DEBE91A862C550092A935 /* ShellScript */,
+				C3979B73F90F7E580CE9E327 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -653,7 +654,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Pods/Fabric/Fabric.framework/run c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
+			shellScript = "${PODS_ROOT}/Fabric/run c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
 		};
 		751DEBE91A862C550092A935 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -666,7 +667,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Pods/Fabric/Fabric.framework/run c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
 		};
 		98860E089F614FDC963B25EF /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -681,6 +682,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C3979B73F90F7E580CE9E327 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -798,7 +814,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = PostaRO.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaRO.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -808,7 +824,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
-				INFOPLIST_FILE = "PostaRO-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/PostaMD/Misc/PostaRO-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -823,7 +839,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = PostaRO.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaRO.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -833,7 +849,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
-				INFOPLIST_FILE = "PostaRO-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/PostaMD/Misc/PostaRO-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -919,9 +935,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = PostaMD/PostaMD.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
+				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaMD.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -929,11 +945,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
-				INFOPLIST_FILE = "PostaMD/PostaMD-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/PostaMD/Misc/PostaMD-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a5235bd2-6c8f-4b0c-b7d7-c7f68c10ec17";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -944,7 +960,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = PostaMD/PostaMD.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaMD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia";
 				ENABLE_BITCODE = NO;
@@ -954,11 +970,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PostaMD/PostaMD-Prefix.pch";
-				INFOPLIST_FILE = "PostaMD/PostaMD-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/PostaMD/Misc/PostaMD-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "369f2127-89db-4366-92d0-e241a9052d31";
+				PROVISIONING_PROFILE = "657aa079-0c11-4ceb-91dc-38ece827ef55";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
