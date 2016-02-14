@@ -10,6 +10,7 @@
 #import "AFHTTPRequestOperationManager+Synchronous.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "PackageParser.h"
+#import "NSError+CustomError.h"
 
 #import "NSManagedObjectContext+Custom.h"
 #import <CloudKit/CloudKit.h>
@@ -64,96 +65,104 @@
 
 -(void) getMdTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
 {
-    NSDictionary *parameters = @{@"itemid": trackID};
-    NSString *path = [NSString stringWithFormat: @"http://www.posta.md/ro/tracking?id=%@", trackID];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    if (trackID.length <= maxTrackingNumberLength) {
+        NSDictionary *parameters = @{@"itemid": trackID};
+        NSString *path = [NSString stringWithFormat: @"http://www.posta.md/ro/tracking?id=%@", trackID];
         
-        //Background Thread
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        
-        NSError *error = nil;
-        NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
-        
-        if (data) {
-            NSInteger __block initialEventsCount = 0;
-
-            [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
-                initialEventsCount = [package.info count];
-                [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
-            } onSaved:^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            
+            //Background Thread
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
+            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+            
+            NSError *error = nil;
+            NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
+            
+            if (data) {
+                NSInteger __block initialEventsCount = 0;
                 
-                NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-                [ctx performBlockAndWait:^{
-                    Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                    [ctx refreshObject:pkg mergeChanges: YES];
+                [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                    Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
+                    initialEventsCount = [package.info count];
+                    [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
+                } onSaved:^{
                     
-                    NSInteger afterUpdateEventsCount = [pkg.info count];
+                    NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
+                    [ctx performBlockAndWait:^{
+                        Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
+                        [ctx refreshObject:pkg mergeChanges: YES];
+                        
+                        NSInteger afterUpdateEventsCount = [pkg.info count];
+                        
+                        if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
+                        [ctx save: nil];
+                    }];
                     
-                    if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
-                    [ctx save: nil];
                 }];
                 
-            }];
-            
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                //Run UI Updates
-                if (onFailure) {
-                    onFailure(error);
-                }
-            });
-        }
-    });
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    //Run UI Updates
+                    if (onFailure) onFailure(error);
+                });
+            }
+        });
+    } else {
+        NSError *error = [NSError errorWithDescription:@"Tracking number is too long."];
+        if (onFailure) onFailure(error);
+    }
 }
 
 -(void) getRoTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
 {
-    NSDictionary *parameters = @{@"awb": trackID};
-    NSString *path = @"https://www.posta-romana.ro/cnpr-app/modules/track-and-trace/ajax/status.php";
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        //Background Thread
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    if (trackID.length <= maxTrackingNumberLength) {
+        NSDictionary *parameters = @{@"awb": trackID};
+        NSString *path = @"https://www.posta-romana.ro/cnpr-app/modules/track-and-trace/ajax/status.php";
         
-        NSError *error = nil;
-        NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
-        
-        if (data) {
-            NSInteger __block initialEventsCount = 0;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            //Background Thread
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
+            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
             
-            [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
-                initialEventsCount = [package.info count];
-                [PackageParser parseRoPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
-            } onSaved:^{
+            NSError *error = nil;
+            NSData *data = [manager syncPOST: path parameters: parameters operation: NULL error: &error];
+            
+            if (data) {
+                NSInteger __block initialEventsCount = 0;
                 
-                NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-                [ctx performBlockAndWait:^{
-                    Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                    [ctx refreshObject:pkg mergeChanges: YES];
+                [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                    Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
+                    initialEventsCount = [package.info count];
+                    [PackageParser parseRoPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
+                } onSaved:^{
                     
-                    NSInteger afterUpdateEventsCount = [pkg.info count];
+                    NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
+                    [ctx performBlockAndWait:^{
+                        Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
+                        [ctx refreshObject:pkg mergeChanges: YES];
+                        
+                        NSInteger afterUpdateEventsCount = [pkg.info count];
+                        
+                        if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
+                        [ctx save: nil];
+                    }];
                     
-                    if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
-                    [ctx save: nil];
                 }];
-                
-            }];
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                //Run UI Updates
-                if (onFailure) {
-                    onFailure(error);
-                }
-            });
-        }
-    });
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    //Run UI Updates
+                    if (onFailure) {
+                        onFailure(error);
+                    }
+                });
+            }
+        });
+    } else {
+        NSError *error = [NSError errorWithDescription:@"Tracking number is too long."];
+        if (onFailure) onFailure(error);
+    }
 }
 
 -(void) getTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
@@ -279,6 +288,9 @@
                 if (package.cloudID.length == 0) {
                     // We must sync this package
                     NSString *trackingNumber = package.trackingNumber;
+                    if (trackingNumber.length > maxTrackingNumberLength) {
+                        trackingNumber = [trackingNumber substringToIndex: maxTrackingNumberLength];
+                    }
                     
                     CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: trackingNumber];
                     CKRecord *cloudPackage = [[CKRecord alloc] initWithRecordType:@"Package" recordID: recordID];

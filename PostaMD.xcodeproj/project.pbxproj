@@ -63,6 +63,10 @@
 		7552AF251C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		7552AF261C41876C000E02A8 /* TrackingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552AF201C41876C000E02A8 /* TrackingInfo.m */; };
 		755851AC18C13A6100AA0553 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755851AB18C13A6100AA0553 /* CoreData.framework */; };
+		759BCD5D1C70C8D60064B549 /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = 759BCD5C1C70C8D60064B549 /* NSError+CustomError.m */; };
+		759BCD5E1C70C8D60064B549 /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = 759BCD5C1C70C8D60064B549 /* NSError+CustomError.m */; };
+		759BCD611C70CC9F0064B549 /* Package+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 759BCD601C70CC9F0064B549 /* Package+CoreDataProperties.m */; };
+		759BCD621C70CC9F0064B549 /* Package+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 759BCD601C70CC9F0064B549 /* Package+CoreDataProperties.m */; };
 		75A26E2E1BD18B3900C8F75C /* UITableView+RemoveSeparators.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */; };
 		75A26E331BD1916600C8F75C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A26E321BD1916600C8F75C /* MessageUI.framework */; };
 		75A26E371BD191BF00C8F75C /* UIAlertView+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A26E361BD191BF00C8F75C /* UIAlertView+Alert.m */; };
@@ -137,6 +141,10 @@
 		7552AF1F1C41876C000E02A8 /* TrackingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingInfo.h; sourceTree = "<group>"; };
 		7552AF201C41876C000E02A8 /* TrackingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingInfo.m; sourceTree = "<group>"; };
 		755851AB18C13A6100AA0553 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		759BCD5B1C70C8D60064B549 /* NSError+CustomError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+CustomError.h"; sourceTree = "<group>"; };
+		759BCD5C1C70C8D60064B549 /* NSError+CustomError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+CustomError.m"; sourceTree = "<group>"; };
+		759BCD5F1C70CC9F0064B549 /* Package+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Package+CoreDataProperties.h"; sourceTree = "<group>"; };
+		759BCD601C70CC9F0064B549 /* Package+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Package+CoreDataProperties.m"; sourceTree = "<group>"; };
 		75A26E2C1BD18B3900C8F75C /* UITableView+RemoveSeparators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RemoveSeparators.h"; sourceTree = "<group>"; };
 		75A26E2D1BD18B3900C8F75C /* UITableView+RemoveSeparators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RemoveSeparators.m"; sourceTree = "<group>"; };
 		75A26E321BD1916600C8F75C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -292,6 +300,8 @@
 				7552AF191C41876C000E02A8 /* DataModel.xcdatamodeld */,
 				7552AF1D1C41876C000E02A8 /* Package.h */,
 				7552AF1E1C41876C000E02A8 /* Package.m */,
+				759BCD5F1C70CC9F0064B549 /* Package+CoreDataProperties.h */,
+				759BCD601C70CC9F0064B549 /* Package+CoreDataProperties.m */,
 				7552AF1F1C41876C000E02A8 /* TrackingInfo.h */,
 				7552AF201C41876C000E02A8 /* TrackingInfo.m */,
 			);
@@ -301,6 +311,7 @@
 		755851A018C13A0900AA0553 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				759BCD5A1C70C8D60064B549 /* NSError+CustomError */,
 				75A26E341BD191BF00C8F75C /* UIAlertView+Alert */,
 				75A26E2B1BD18B3900C8F75C /* UITableView+RemoveSeparators */,
 				75F72D0519118637009EDF97 /* AFHTTPRequestOperationManager-Timeout */,
@@ -328,6 +339,15 @@
 				75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */,
 			);
 			path = ZACoreData;
+			sourceTree = "<group>";
+		};
+		759BCD5A1C70C8D60064B549 /* NSError+CustomError */ = {
+			isa = PBXGroup;
+			children = (
+				759BCD5B1C70C8D60064B549 /* NSError+CustomError.h */,
+				759BCD5C1C70C8D60064B549 /* NSError+CustomError.m */,
+			);
+			path = "NSError+CustomError";
 			sourceTree = "<group>";
 		};
 		75A26E2B1BD18B3900C8F75C /* UITableView+RemoveSeparators */ = {
@@ -722,9 +742,11 @@
 				7552AEF61C417E55000E02A8 /* NSManagedObjectContextOperation.m in Sources */,
 				750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */,
+				759BCD621C70CC9F0064B549 /* Package+CoreDataProperties.m in Sources */,
 				7552AF261C41876C000E02A8 /* TrackingInfo.m in Sources */,
 				7552AF051C4186FE000E02A8 /* AboutViewController.m in Sources */,
 				7552AEF71C417E57000E02A8 /* NSManagedObjectContext+Custom.m in Sources */,
+				759BCD5E1C70C8D60064B549 /* NSError+CustomError.m in Sources */,
 				7552AEF41C417E50000E02A8 /* NSManagedObject+CloudKit.m in Sources */,
 				750A6F401BE0034C0071FD7B /* main.m in Sources */,
 				7552AF0E1C418730000E02A8 /* TrackingInfoCell.m in Sources */,
@@ -752,9 +774,11 @@
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
 				75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */,
 				75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
+				759BCD611C70CC9F0064B549 /* Package+CoreDataProperties.m in Sources */,
 				7552AF251C41876C000E02A8 /* TrackingInfo.m in Sources */,
 				7552AF041C4186FE000E02A8 /* AboutViewController.m in Sources */,
 				75EBA11F18C12AE200DB1856 /* main.m in Sources */,
+				759BCD5D1C70C8D60064B549 /* NSError+CustomError.m in Sources */,
 				75322ED81BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m in Sources */,
 				75322ECE1BD3E8DA00839E76 /* NSManagedObject+CoreData.m in Sources */,
 				7552AF0D1C418730000E02A8 /* TrackingInfoCell.m in Sources */,

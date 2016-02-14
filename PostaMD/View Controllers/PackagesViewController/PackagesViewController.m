@@ -9,6 +9,7 @@
 #import "PackagesViewController.h"
 #import "PackageCell.h"
 #import "Package.h"
+#import "Package+CoreDataProperties.h"
 #import "TrackingInfo.h"
 #import "DataLoader.h"
 #import "PackageInfoViewController.h"
@@ -180,26 +181,7 @@
 
 -(void) deletePackage: (Package *) package
 {
-    if(package) {
-        NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-        [context performBlock:^{
-            if (package.cloudID.length) {
-                //[SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-                
-                [context cloudKitDeleteObject:package
-                        andRecordNameProperty:@"cloudID"
-                                   completion:^(NSError *error) {
-                                       dispatch_async(dispatch_get_main_queue(), ^(void){
-                                           //[SVProgressHUD dismiss];
-                                           if (error) [UIAlertView error: error.localizedDescription];
-                                       });
-                                   }];
-            } else {
-                [context deleteObject: package];
-            }
-            [context save: nil];
-        }];
-    }
+    if(package) [Package deleteWithItem: package];
 }
 
 #pragma mark - Actions

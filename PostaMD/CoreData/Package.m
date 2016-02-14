@@ -8,16 +8,29 @@
 
 #import "Package.h"
 #import "TrackingInfo.h"
-
+#import "Package+CoreDataProperties.h"
+#import "NSManagedObjectContext+CloudKit.h"
+#import "UIAlertView+Alert.h"
 
 @implementation Package
 
-@dynamic date;
-@dynamic name;
-@dynamic cloudID;
-@dynamic trackingNumber;
-@dynamic lastChecked;
-@dynamic received;
-@dynamic info;
++(void) deleteWithItem:(Package *) item
+{
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlock:^{
+        if (item.cloudID.length) {
+            [context cloudKitDeleteObject:item
+                    andRecordNameProperty:@"cloudID"
+                               completion:^(NSError *error) {
+                                   dispatch_async(dispatch_get_main_queue(), ^(void){
+                                       if (error) [UIAlertView error: error.localizedDescription];
+                                   });
+                               }];
+        } else {
+            [context deleteObject: item];
+        }
+        [context save: nil];
+    }];
+}
 
 @end

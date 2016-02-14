@@ -38,10 +38,12 @@
     self.tfTrackingNumber.text = self.package.trackingNumber;
 
     if ([self.package.received boolValue]) {
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+                                                                                               target:self
+                                                                                               action:@selector(delete:)];
     }
     
-    __weak PackageInfoViewController *weakSelf = self;
+    PackageInfoViewController *__weak weakSelf = self;
     
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     
@@ -94,6 +96,43 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Actions
+
+- (IBAction)refreshData:(id)sender {
+    
+    [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+    
+    __weak PackageInfoViewController *weakSelf = self;
+    
+    [[DataLoader shared] getTrackingInfoForItemWithID: self.package.trackingNumber
+                                               onDone: ^(id data) {
+                                                   [SVProgressHUD dismiss];
+                                                   [weakSelf loadData];
+                                                   
+                                               } onFailure:^(NSError *error) {
+                                                   [SVProgressHUD dismiss];
+                                               }];
+}
+
+-(void) delete:(id)sender
+{
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Are you sure?"
+                                                                        message:nil
+                                                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Yes"
+                                                   style:UIAlertActionStyleDestructive
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                     if(self.package) [Package deleteWithItem: self.package];
+                                                     [self.navigationController popViewControllerAnimated: YES];
+                                                 }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"No"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                     
+                                                 }]];
+    [self presentViewController:controller animated:YES completion: nil];
 }
 
 #pragma mark - Table view data source
@@ -177,22 +216,6 @@
 }
 
  */
-
-- (IBAction)refreshData:(id)sender {
-
-    [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
-    
-    __weak PackageInfoViewController *weakSelf = self;
-    
-    [[DataLoader shared] getTrackingInfoForItemWithID: self.package.trackingNumber
-                                               onDone: ^(id data) {
-                                                   [SVProgressHUD dismiss];
-                                                   [weakSelf loadData];
-                                          
-                                               } onFailure:^(NSError *error) {
-                                                   [SVProgressHUD dismiss];
-                                               }];
-}
 
 -(void) configureCell: (TrackingInfoCell *) cell forIndexPath: (NSIndexPath *) indexPath
 {

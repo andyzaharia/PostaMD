@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
 #import "Package.h"
+#import "Package+CoreDataProperties.h"
 #import "TrackingInfo.h"
 
 typedef void (^OnSuccess)(id data);
@@ -16,6 +17,8 @@ typedef void (^OnFailure)(NSError *error);
 
 typedef void (^OnFetchSuccess)(BOOL didFetchNewData);
 typedef void (^OnFetchSuccessEx)(NSDictionary *info);
+
+static NSInteger maxTrackingNumberLength = 20;
 
 @interface DataLoader : NSObject
 

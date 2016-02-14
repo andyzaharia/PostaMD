@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Package.h"
+#import "Package+CoreDataProperties.h"
 #import "TrackingInfo.h"
 
 @interface PackageParser : NSObject
