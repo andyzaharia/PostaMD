@@ -24,6 +24,8 @@ static NSInteger maxTrackingNumberLength = 20;
 
 +(id) shared;
 
++(NSString *) cloudKitContainerIdentifier;
+
 -(void) getTrackingInfoForItemWithID: (NSString *) trackID
                               onDone: (OnSuccess) onDone
                            onFailure: (OnFailure) onFailure;

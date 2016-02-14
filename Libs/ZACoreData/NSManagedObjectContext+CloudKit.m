@@ -8,12 +8,14 @@
 
 #import "NSManagedObjectContext+CloudKit.h"
 #import <CloudKit/CloudKit.h>
+#import "DataLoader.h"
 
 @implementation NSManagedObjectContext (CloudKit)
 
 -(void) cloudKitDeleteObject: (NSManagedObject *) object andRecordNameProperty: (NSString *) recordName completion: (OnCloudKitOperationCompleted) completionHandler
 {
-    CKDatabase *privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
+    NSString *containerIdentier = [DataLoader cloudKitContainerIdentifier];
+    CKDatabase *privateDB = [[CKContainer containerWithIdentifier: containerIdentier] privateCloudDatabase];
     
     NSString *recordNameValue = [object valueForKeyPath: recordName];
     if (recordNameValue) {

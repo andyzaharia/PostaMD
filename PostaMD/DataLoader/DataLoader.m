@@ -20,7 +20,6 @@
     NSOperationQueue                *_operationQueue;
 }
 
-@property (nonatomic, strong)       CKDatabase       *privateDB;
 @property (nonatomic, strong)       NSOperationQueue *cloudKitQueue;
 
 @end
@@ -48,6 +47,19 @@
     return ![bundleIdentifier hasSuffix:@".ro"];
 }
 
++(NSString *) cloudKitContainerIdentifier
+{
+    if ([DataLoader isRomanianApp]) {
+        return @"iCloud.com.andyzaharia.posta.Ro";
+    } else if ([DataLoader isMoldovianApp]) {
+        return [CKContainer defaultContainer].containerIdentifier;
+    }
+    
+    return nil;
+}
+
+#pragma mark -
+
 -(id) init
 {
     self = [super init];
@@ -55,7 +67,6 @@
         _operationQueue = [[NSOperationQueue alloc] init];
         [_operationQueue setMaxConcurrentOperationCount: 2];
         
-        self.privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
         self.cloudKitQueue = [[NSOperationQueue alloc] init];
         
         [self syncWithCloudKit];
@@ -233,13 +244,8 @@
 
 -(void) syncWithCloudKit
 {
-    //CKDatabase *privateDB = [[CKContainer containerWithIdentifier:@"iCloud.com.andyzaharia.posta.Ro"] privateCloudDatabase];
-    CKDatabase *privateDB = nil;
-    if ([DataLoader isRomanianApp]) {
-        privateDB = [[CKContainer containerWithIdentifier:@"iCloud.com.andyzaharia.posta.Ro"] privateCloudDatabase];
-    } else if ([DataLoader isMoldovianApp]) {
-        privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
-    }
+    NSString *containerIdentier = [DataLoader cloudKitContainerIdentifier];
+    CKDatabase *privateDB = [[CKContainer containerWithIdentifier: containerIdentier] privateCloudDatabase];
     
     if (privateDB) {
         NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
