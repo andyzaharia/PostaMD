@@ -12,6 +12,8 @@ typedef void (^OnCloudKitOperationCompleted)(NSError *error);
 
 @interface NSManagedObjectContext (CloudKit)
 
--(void) cloudKitDeleteObject: (NSManagedObject *) object andRecordNameProperty: (NSString *) recordName completion: (OnCloudKitOperationCompleted) completionHandler;
+-(void) cloudKitDeleteObject: (NSManagedObject *) object
+       andRecordNameProperty: (NSString *) recordName
+                  completion: (OnCloudKitOperationCompleted) completionHandler;
 
 @end
