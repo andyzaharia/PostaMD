@@ -10,11 +10,12 @@
 #import "AFNetworking.h"
 #import "TFHpple.h"
 #import "Package.h"
+#import "Package+CoreDataProperties.h"
 #import "DataLoader.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "UIAlertView+Alert.h"
 
-@interface AddPackageViewController ()
+@interface AddPackageViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *tfName;
 @property (weak, nonatomic) IBOutlet UITextField *tfTrackingNumber;
@@ -61,10 +62,13 @@
     
     BOOL __block itemAlreadyExists = NO;
     NSString *__block alreadyExistingPackageName = nil;
+    NSString *trackingNumberStr = [self.tfTrackingNumber.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     [context performBlockAndWait:^{
-        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:self.tfTrackingNumber.text inContext: context];
+        Package *package = [Package findFirstByAttribute: @"trackingNumber"
+                                               withValue: trackingNumberStr
+                                               inContext: context];
         if (package) {
             itemAlreadyExists = YES;
             alreadyExistingPackageName = package.name;
@@ -83,7 +87,7 @@
     [context performBlockAndWait:^{
         Package *package = [Package createEntityInContext: context];
         package.name = self.tfName.text;
-        package.trackingNumber = self.tfTrackingNumber.text;
+        package.trackingNumber = trackingNumberStr;
         package.date = [NSDate date];
         package.received = @(NO);
         
@@ -98,7 +102,7 @@
     [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
     
     AddPackageViewController *__weak weakSelf = self;
-    [[DataLoader shared] getTrackingInfoForItemWithID: self.tfTrackingNumber.text
+    [[DataLoader shared] getTrackingInfoForItemWithID:trackingNumberStr
                                                onDone:^(id data) {
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
                                                    [SVProgressHUD dismiss];
@@ -124,6 +128,17 @@
         [self.tfName paste: sender];
     }
 
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *freshStr = [textField.text stringByReplacingCharactersInRange:range withString: string];
+    if (textField == self.tfTrackingNumber) {
+        return (freshStr.length < maxTrackingNumberLength);
+    }
+    return YES;
 }
 
 @end

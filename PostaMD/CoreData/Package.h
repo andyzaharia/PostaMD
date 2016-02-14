@@ -13,21 +13,6 @@
 
 @interface Package : NSManagedObject
 
-@property (nonatomic, retain) NSDate    * date;
-@property (nonatomic, retain) NSString  * name;
-@property (nonatomic, retain) NSString  * cloudID;
-@property (nonatomic, retain) NSString  * trackingNumber;
-@property (nonatomic, retain) NSDate    * lastChecked;
-@property (nonatomic, retain) NSNumber  * received;
-@property (nonatomic, retain) NSSet     * info;
-
-@end
-
-@interface Package (CoreDataGeneratedAccessors)
-
-- (void)addInfoObject:(TrackingInfo *)value;
-- (void)removeInfoObject:(TrackingInfo *)value;
-- (void)addInfo:(NSSet *)values;
-- (void)removeInfo:(NSSet *)values;
++(void) deleteWithItem:(Package *) item;
 
 @end

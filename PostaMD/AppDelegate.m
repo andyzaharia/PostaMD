@@ -33,14 +33,7 @@
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
         [application registerUserNotificationSettings: settings];
     }
-    
-//    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-//        NSArray *packages = [Package findAllInContext: moc];
-//        [packages enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL * _Nonnull stop) {
-//            package.cloudID = @"";
-//        }];
-//    }];
-    
+
     return YES;
 }
 
