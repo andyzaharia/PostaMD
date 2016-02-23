@@ -18,7 +18,7 @@ typedef void (^OnFailure)(NSError *error);
 typedef void (^OnFetchSuccess)(BOOL didFetchNewData);
 typedef void (^OnFetchSuccessEx)(NSDictionary *info);
 
-static NSInteger maxTrackingNumberLength = 20;
+static NSInteger maxTrackingNumberLength = 30;
 
 @interface DataLoader : NSObject
 

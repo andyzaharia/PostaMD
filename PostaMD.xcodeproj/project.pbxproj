@@ -864,8 +864,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaRO.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -877,7 +877,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta.ro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2331e149-417f-4dee-a331-d96eb870e2c2";
+				PROVISIONING_PROFILE = "939b586c-5cff-48d5-8854-b7a637879a8b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -985,8 +985,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaMD.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -998,7 +998,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "369f2127-89db-4366-92d0-e241a9052d31";
+				PROVISIONING_PROFILE = "16d8d08a-ce0a-471e-8bf6-062abf4000c4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
