@@ -19,6 +19,10 @@
     
     NSString *recordNameValue = [object valueForKeyPath: recordName];
     if (recordNameValue) {
+        if (recordNameValue.length > maxTrackingNumberLength) {
+            recordNameValue = [recordNameValue substringToIndex: maxTrackingNumberLength];
+        }
+        
         CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: recordNameValue];
         [privateDB deleteRecordWithID:recordID
                     completionHandler:^(CKRecordID * _Nullable recordID, NSError * _Nullable error) {
