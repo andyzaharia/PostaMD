@@ -338,15 +338,6 @@
                                     <action selector="pasteText:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bxg-9M-mRM"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e00-Mn-igz">
-                                <rect key="frame" x="16" y="72" width="289" height="62"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="62" id="eB7-wb-rpC"/>
-                                </constraints>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tracking number" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HUu-4w-0zD">
                                 <rect key="frame" x="16" y="154" width="289" height="62"/>
                                 <constraints>
@@ -358,6 +349,15 @@
                                 <connections>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="gXR-9L-zzb"/>
                                 </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="e00-Mn-igz">
+                                <rect key="frame" x="16" y="72" width="289" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="eB7-wb-rpC"/>
+                                </constraints>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
