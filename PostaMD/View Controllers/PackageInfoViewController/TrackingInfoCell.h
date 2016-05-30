@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TrackingInfo.h"
+
+typedef void (^OnExpandToggle)(void);
 
 @interface TrackingInfoCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *lbInfo;
 @property (weak, nonatomic) IBOutlet UILabel *lbDate;
 @property (weak, nonatomic) IBOutlet UILabel *lbCountry;
+@property (weak, nonatomic) IBOutlet UILabel *lbAdditionalInfo;
+
+@property (nonatomic, copy) OnExpandToggle onExpandToggle;
+
+-(void) configureWithInfo:(TrackingInfo *) trackingInfo expanded: (BOOL) expanded;
 
 @end
