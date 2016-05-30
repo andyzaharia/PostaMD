@@ -14,8 +14,10 @@
 
 @interface PackageInfoViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong)           NSFetchedResultsController          *fetchedResultsController;
-@property (weak, nonatomic) IBOutlet UITextField *tfTrackingNumber;
+@property (nonatomic, strong)           NSFetchedResultsController      *fetchedResultsController;
+@property (weak, nonatomic) IBOutlet    UITextField                     *tfTrackingNumber;
+
+@property (nonatomic, strong) NSMutableArray *cellExpandedState;
 
 @end
 
@@ -37,6 +39,11 @@
     self.title = self.package.name;
     self.tfTrackingNumber.text = self.package.trackingNumber;
 
+    self.tableView.estimatedRowHeight = 66.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.cellExpandedState = [NSMutableArray array];
+    
     if ([self.package.received boolValue]) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
                                                                                                target:self
@@ -162,71 +169,35 @@
         [self.tfTrackingNumber resignFirstResponder];
     }
     
-    [tableView deselectRowAtIndexPath:indexPath animated: YES];
+    //id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:indexPath.section];
+    //TrackingInfo *lastTrackInfo = [self.fetchedResultsController objectAtIndexPath: indexPath];
+    //NSLog(@"%@", lastTrackInfo);
+    
+    NSNumber *expandedState = self.cellExpandedState[indexPath.row];
+    [self.cellExpandedState replaceObjectAtIndex:indexPath.row withObject: @(!expandedState.boolValue)];
+    
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation: UITableViewRowAnimationFade];
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 -(void) configureCell: (TrackingInfoCell *) cell forIndexPath: (NSIndexPath *) indexPath
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:indexPath.section];
+    __weak PackageInfoViewController *weakSelf = self;
     
     if (indexPath.row < [sectionInfo numberOfObjects]) {
-        TrackingInfo *lastTrackInfo = [self.fetchedResultsController objectAtIndexPath: indexPath];
+        TrackingInfo *trackingInfo = [self.fetchedResultsController objectAtIndexPath: indexPath];
         
-        cell.lbInfo.text = lastTrackInfo.eventStr;
-        cell.lbDate.text = lastTrackInfo.dateStr;
-        cell.lbCountry.text = [lastTrackInfo.countryStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+        NSNumber *expandedState = @(NO);
+        if (indexPath.row < self.cellExpandedState.count) {
+            expandedState = self.cellExpandedState[indexPath.row];
+        } else {
+            [self.cellExpandedState addObject: expandedState];
+        }
+        
+        [cell configureWithInfo:trackingInfo expanded: expandedState.boolValue];
+        [cell setOnExpandToggle: ^{
+            [weakSelf tableView:weakSelf.tableView didSelectRowAtIndexPath: indexPath];
+        }];
     }
 }
 
