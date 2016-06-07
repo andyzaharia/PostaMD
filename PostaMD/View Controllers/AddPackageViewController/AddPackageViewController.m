@@ -42,6 +42,7 @@
     
     self.tfTrackingNumber.leftView = [[UIView alloc] initWithFrame: CGRectMake(0.0, 0.0, 10.0, 0.0)];
     self.tfTrackingNumber.leftViewMode = UITextFieldViewModeAlways;
+    self.tfTrackingNumber.keyboardType = UIKeyboardTypeASCIICapable;
     
     //RR123456785RO
 }
@@ -57,6 +58,11 @@
 
     if (self.tfName.text.length == 0) {
         [UIAlertView info: NSLocalizedString(@"Empty name not allowed.", nil)];
+        return;
+    }
+    
+    if (![self isValidTrackingNumber: self.tfTrackingNumber.text]) {
+        [UIAlertView info: NSLocalizedString(@"Invalid tracking number.", nil)];
         return;
     }
     
@@ -127,17 +133,84 @@
     if ([self.tfName isFirstResponder]) {
         [self.tfName paste: sender];
     }
+}
 
+#pragma mark -
+
+-(BOOL) isValidTrackingNumber: (NSString *) trackingNumberStr
+{
+    NSError *error = NULL;
+    NSString *pattern = @"^[A-Z]{2}\\d{9}[A-Z]{2}$";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern: pattern
+                                                                           options: NSRegularExpressionCaseInsensitive
+                                                                             error: &error];
+   
+    NSArray *matches = [regex matchesInString: trackingNumberStr
+                                      options: 0
+                                        range: NSMakeRange(0, trackingNumberStr.length)];
+    return matches.count > 0;
 }
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    textField.placeholder = @"EE123456789XX";
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSString *freshStr = [textField.text stringByReplacingCharactersInRange:range withString: string];
     if (textField == self.tfTrackingNumber) {
-        return (freshStr.length < maxTrackingNumberLength);
+        
+        if ([string isEqualToString:@"\n"]) {
+            if ((self.tfName.text.length > 0) && ([self isValidTrackingNumber: self.tfTrackingNumber.text])) {
+                [self save: nil];
+            }
+        }
+        
+        NSString *freshStr = [textField.text stringByReplacingCharactersInRange:range withString: string];
+
+        NSString *notAllowedStr = [freshStr stringByTrimmingCharactersInSet: [NSCharacterSet alphanumericCharacterSet]];
+        if (notAllowedStr.length > 0) {
+            return NO;
+        }
+        
+        UIKeyboardType keyboardType = UIKeyboardTypeDefault;
+        if ((freshStr.length < 2) || (freshStr.length >= maxTrackingNumberLength - 2)) {
+            //Check if the first 2 chars and the last 2 are letters.
+            if ((freshStr.length > 0) && (freshStr.length <= 2)) {
+                NSString *prefixSubString = [freshStr substringWithRange:NSMakeRange(0, freshStr.length)];
+                NSString *notAllowedStr = [prefixSubString stringByTrimmingCharactersInSet: [NSCharacterSet letterCharacterSet]];
+                if (notAllowedStr.length > 0) {
+                    return NO;
+                }
+            }
+            
+            // Check the last 2 characters.
+            if (freshStr.length > maxTrackingNumberLength - 2) {
+                NSRange range = NSMakeRange(maxTrackingNumberLength - 2 , freshStr.length - (maxTrackingNumberLength - 2));
+                NSString *suffixSubString = [freshStr substringWithRange: range];
+                NSString *notAllowedStr = [suffixSubString stringByTrimmingCharactersInSet: [NSCharacterSet letterCharacterSet]];
+                if (notAllowedStr.length > 0) {
+                    return NO;
+                }
+            }
+            
+            
+            keyboardType = UIKeyboardTypeASCIICapable;
+        } else {
+            keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        }
+        
+        if (keyboardType != textField.keyboardType) {
+            [textField setKeyboardType: keyboardType];
+            [textField reloadInputViews];
+        }
+        
+        
+        return (freshStr.length <= maxTrackingNumberLength);
     }
+    
     return YES;
 }
 
