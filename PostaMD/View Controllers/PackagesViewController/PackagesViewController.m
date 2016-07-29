@@ -17,6 +17,9 @@
 #import "UITableView+RemoveSeparators.h"
 #import "NSManagedObjectContext+CloudKit.h"
 #import "UIAlertView+Alert.h"
+#import "NSString+Utils.h"
+#import "PasteboardSuggestionView.h"
+#import "AddPackageViewController.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
 {
@@ -26,9 +29,13 @@
 @property (nonatomic, strong) UISearchController                  *searchController;
 @property (nonatomic, strong) NSFetchedResultsController          *fetchedResultsController;
 
+@property (nonatomic, strong) PasteboardSuggestionView            *pasteboardView;
+
 @end
 
 @implementation PackagesViewController
+
+static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY";
 
 - (void)viewDidLoad
 {
@@ -57,6 +64,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    [self checkPasteboardValue];
 }
 
 -(void) loadData
@@ -81,6 +90,56 @@
     }
     
     [self.tableView reloadData];
+}
+
+-(void) checkPasteboardValue
+{
+    NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
+    if ([pasteboardValue isValidTrackingNumber]) {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+        if ([ignoredItems containsObject: pasteboardValue]) {
+            return;
+        }
+        
+        NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+        [context performBlock:^{
+            Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:pasteboardValue inContext: context];
+            if (package == nil) {
+                // Show Clipboard tracking number add request.
+                [self showPasteboardSuggestionWithTrackingNumber: pasteboardValue];
+            }
+        }];
+    }
+}
+
+-(void) showPasteboardSuggestionWithTrackingNumber: (NSString *) trackingNumber
+{
+    self.pasteboardView = [[[NSBundle mainBundle] loadNibNamed:@"PasteboardSuggestionView" owner:self options: nil] lastObject];
+    [self.pasteboardView setFrame: CGRectMake((self.navigationController.view.frame.size.width - self.pasteboardView.frame.size.width) * 0.5,
+                                              self.navigationController.view.frame.size.height,
+                                              self.pasteboardView.frame.size.width,
+                                              self.pasteboardView.frame.size.height)];
+    [self.navigationController.view addSubview: self.pasteboardView];
+    
+    [self.navigationController setToolbarHidden:YES animated: YES];
+    
+    [UIView animateWithDuration:0.2
+                          delay:0.3
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [self.pasteboardView setFrame: CGRectMake((self.navigationController.view.frame.size.width - self.pasteboardView.frame.size.width) * 0.5,
+                                                                   self.navigationController.view.frame.size.height - self.pasteboardView.frame.size.height - 20.0,
+                                                                   self.pasteboardView.frame.size.width,
+                                                                   self.pasteboardView.frame.size.height)];
+                     } completion:^(BOOL finished) {
+                         
+                     }];
+    
+    [self.pasteboardView.btnNo addTarget:self action:@selector(dismissSuggestionView) forControlEvents: UIControlEventTouchUpInside];
+    [self.pasteboardView.btnYes addTarget:self action:@selector(addSuggestedTrackingNumber) forControlEvents: UIControlEventTouchUpInside];
+    [self.pasteboardView.lbTrackingNumber setText: trackingNumber];
 }
 
 - (void)didReceiveMemoryWarning
@@ -188,6 +247,43 @@
 
 - (IBAction)refreshPackages:(id)sender {
     [self refreshDataWithHud: YES];
+}
+
+-(void) dismissSuggestionView
+{
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [self.pasteboardView setFrame: CGRectMake((self.navigationController.view.frame.size.width - self.pasteboardView.frame.size.width) * 0.5,
+                                                                   self.navigationController.view.frame.size.height,
+                                                                   self.pasteboardView.frame.size.width,
+                                                                   self.pasteboardView.frame.size.height)];
+                     } completion:^(BOOL finished) {
+                         [self.navigationController setToolbarHidden:NO animated: YES];
+                         
+                         [self.pasteboardView removeFromSuperview];
+                         self.pasteboardView = nil;
+                     }];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+    NSMutableArray *array = [NSMutableArray arrayWithArray: ignoredItems];
+    [array addObject: self.pasteboardView.lbTrackingNumber.text];
+    
+    [defaults setObject:array forKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+    [defaults synchronize];
+}
+
+-(void) addSuggestedTrackingNumber
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    AddPackageViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"AddPackageViewController"];
+    controller.autoFillTrackingNumber = self.pasteboardView.lbTrackingNumber.text;
+    [self.navigationController pushViewController:controller animated: YES];
+    
+    [self.pasteboardView removeFromSuperview];
+    self.pasteboardView = nil;
 }
 
 #pragma mark -

@@ -35,6 +35,7 @@
     // Override point for customization after application launch.
     [SVProgressHUD setBackgroundColor: [UIColor blackColor]];
     [SVProgressHUD setForegroundColor: [UIColor whiteColor]];
+    [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeBlack];
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
