@@ -85,6 +85,7 @@
 		75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */; };
 		A10C793F1C5E69BE005E47E9 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */; };
 		A1F7B9FC1C5E660E00F9348B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */; };
+		D207BC2FA56B4C4CF12A0BF5 /* libPods-PostaRO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E777A4680E2ACDC85435D2D /* libPods-PostaRO.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E777A4680E2ACDC85435D2D /* libPods-PostaRO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PostaRO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		16CE1F64D74AEB0EB3C9675B /* Pods-PostaRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostaRO.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO.debug.xcconfig"; sourceTree = "<group>"; };
 		1D9B94862C07859DEB2BD625 /* libPods-PostaMD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PostaMD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		474D590E1196DF31D7CE2A26 /* Pods-PostaMD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostaMD.release.xcconfig"; path = "Pods/Target Support Files/Pods-PostaMD/Pods-PostaMD.release.xcconfig"; sourceTree = "<group>"; };
 		7507FA171A5F212600A2B5FE /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
@@ -172,6 +175,7 @@
 		75EBA13D18C12AE200DB1856 /* PostaMDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostaMDTests.m; sourceTree = "<group>"; };
 		75F72D0619118637009EDF97 /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
 		75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
+		91F3CC87DD0D2719EA327F09 /* Pods-PostaRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostaRO.release.xcconfig"; path = "Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO.release.xcconfig"; sourceTree = "<group>"; };
 		A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		C16B14B40DA718D6FD1F56F4 /* Pods-PostaMD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostaMD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PostaMD/Pods-PostaMD.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,6 +193,7 @@
 				750A6F481BE0034C0071FD7B /* UIKit.framework in Frameworks */,
 				750A6F491BE0034C0071FD7B /* Foundation.framework in Frameworks */,
 				750A6F4A1BE0034C0071FD7B /* Crashlytics.framework in Frameworks */,
+				D207BC2FA56B4C4CF12A0BF5 /* libPods-PostaRO.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +408,7 @@
 				75EBA11618C12AE200DB1856 /* UIKit.framework */,
 				75EBA13118C12AE200DB1856 /* XCTest.framework */,
 				1D9B94862C07859DEB2BD625 /* libPods-PostaMD.a */,
+				0E777A4680E2ACDC85435D2D /* libPods-PostaRO.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -465,6 +471,8 @@
 			children = (
 				C16B14B40DA718D6FD1F56F4 /* Pods-PostaMD.debug.xcconfig */,
 				474D590E1196DF31D7CE2A26 /* Pods-PostaMD.release.xcconfig */,
+				16CE1F64D74AEB0EB3C9675B /* Pods-PostaRO.debug.xcconfig */,
+				91F3CC87DD0D2719EA327F09 /* Pods-PostaRO.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -476,10 +484,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 750A6F521BE0034C0071FD7B /* Build configuration list for PBXNativeTarget "PostaRO" */;
 			buildPhases = (
+				B1CF845D8FFB2FC0A4BA2235 /* 📦 Check Pods Manifest.lock */,
 				750A6F2F1BE0034C0071FD7B /* Sources */,
 				750A6F431BE0034C0071FD7B /* Frameworks */,
 				750A6F4C1BE0034C0071FD7B /* Resources */,
 				750A6F511BE0034C0071FD7B /* ShellScript */,
+				91E1E935EA5D9AB3F295984D /* 📦 Embed Pods Frameworks */,
+				F03493D31E8FF5569A9BDCF6 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -655,6 +666,21 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
 		};
+		91E1E935EA5D9AB3F295984D /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		ABC0D0FA6508E2C88583E53A /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -670,6 +696,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaMD/Pods-PostaMD-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B1CF845D8FFB2FC0A4BA2235 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		E592125F59020B701D2ABE75 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -683,6 +724,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F03493D31E8FF5569A9BDCF6 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -800,6 +856,7 @@
 /* Begin XCBuildConfiguration section */
 		750A6F531BE0034C0071FD7B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16CE1F64D74AEB0EB3C9675B /* Pods-PostaRO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -825,6 +882,7 @@
 		};
 		750A6F541BE0034C0071FD7B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91F3CC87DD0D2719EA327F09 /* Pods-PostaRO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -951,7 +1009,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaMD.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
