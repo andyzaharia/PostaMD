@@ -35,6 +35,12 @@
 		75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */; };
 		75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */; };
 		75322ED81BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */; };
+		754809631D4B4B000060A7F8 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 754809621D4B4B000060A7F8 /* NSString+Utils.m */; };
+		754809641D4B4B000060A7F8 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 754809621D4B4B000060A7F8 /* NSString+Utils.m */; };
+		754809671D4B4D520060A7F8 /* PasteboardSuggestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 754809661D4B4D520060A7F8 /* PasteboardSuggestionView.m */; };
+		754809681D4B4D520060A7F8 /* PasteboardSuggestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 754809661D4B4D520060A7F8 /* PasteboardSuggestionView.m */; };
+		7548096A1D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754809691D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib */; };
+		7548096B1D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754809691D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib */; };
 		7552AEF31C417E4E000E02A8 /* NSManagedObjectContext+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */; };
 		7552AEF41C417E50000E02A8 /* NSManagedObject+CloudKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */; };
 		7552AEF51C417E53000E02A8 /* NSPersistentStoreCoordinator+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 75322ECD1BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m */; };
@@ -124,6 +130,11 @@
 		75322ED41BD3F8FA00839E76 /* NSManagedObject+CloudKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CloudKit.m"; sourceTree = "<group>"; };
 		75322ED61BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+CloudKit.h"; sourceTree = "<group>"; };
 		75322ED71BD3FBF500839E76 /* NSManagedObjectContext+CloudKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+CloudKit.m"; sourceTree = "<group>"; };
+		754809611D4B4B000060A7F8 /* NSString+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
+		754809621D4B4B000060A7F8 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
+		754809651D4B4D520060A7F8 /* PasteboardSuggestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasteboardSuggestionView.h; sourceTree = "<group>"; };
+		754809661D4B4D520060A7F8 /* PasteboardSuggestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasteboardSuggestionView.m; sourceTree = "<group>"; };
+		754809691D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasteboardSuggestionView.xib; sourceTree = "<group>"; };
 		7552AEFD1C4186E0000E02A8 /* AddPackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPackageViewController.h; sourceTree = "<group>"; };
 		7552AEFE1C4186E0000E02A8 /* AddPackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPackageViewController.m; sourceTree = "<group>"; };
 		7552AF021C4186FE000E02A8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -237,6 +248,15 @@
 			path = DataLoader;
 			sourceTree = "<group>";
 		};
+		754809601D4B4AF30060A7F8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				754809611D4B4B000060A7F8 /* NSString+Utils.h */,
+				754809621D4B4B000060A7F8 /* NSString+Utils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		7552AEFB1C4186E0000E02A8 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +304,9 @@
 				7552AF131C41874B000E02A8 /* PackagesViewController.m */,
 				7552AF101C41874B000E02A8 /* PackageCell.h */,
 				7552AF111C41874B000E02A8 /* PackageCell.m */,
+				754809651D4B4D520060A7F8 /* PasteboardSuggestionView.h */,
+				754809661D4B4D520060A7F8 /* PasteboardSuggestionView.m */,
+				754809691D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib */,
 			);
 			path = PackagesViewController;
 			sourceTree = "<group>";
@@ -416,6 +439,7 @@
 		75EBA11818C12AE200DB1856 /* PostaMD */ = {
 			isa = PBXGroup;
 			children = (
+				754809601D4B4AF30060A7F8 /* Utils */,
 				7552AF181C41876C000E02A8 /* CoreData */,
 				7507FA161A5F212600A2B5FE /* DataLoader */,
 				7552AEFB1C4186E0000E02A8 /* View Controllers */,
@@ -599,6 +623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				750A6F4D1BE0034C0071FD7B /* Images.xcassets in Resources */,
+				7548096B1D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib in Resources */,
 				750A6F4E1BE0034C0071FD7B /* InfoPlist.strings in Resources */,
 				750A6F4F1BE0034C0071FD7B /* Main.storyboard in Resources */,
 			);
@@ -609,6 +634,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75EBA12B18C12AE200DB1856 /* Images.xcassets in Resources */,
+				7548096A1D4B4D6F0060A7F8 /* PasteboardSuggestionView.xib in Resources */,
 				75EBA11D18C12AE200DB1856 /* InfoPlist.strings in Resources */,
 				75EBA12618C12AE200DB1856 /* Main.storyboard in Resources */,
 			);
@@ -759,9 +785,11 @@
 				7552AEFA1C417E5C000E02A8 /* NSManagedObject+CoreData.m in Sources */,
 				7552AF221C41876C000E02A8 /* DataModel.xcdatamodeld in Sources */,
 				7552AF171C41874B000E02A8 /* PackagesViewController.m in Sources */,
+				754809641D4B4B000060A7F8 /* NSString+Utils.m in Sources */,
 				7552AF0A1C418716000E02A8 /* PackageInfoViewController.m in Sources */,
 				7552AF151C41874B000E02A8 /* PackageCell.m in Sources */,
 				7552AEF61C417E55000E02A8 /* NSManagedObjectContextOperation.m in Sources */,
+				754809681D4B4D520060A7F8 /* PasteboardSuggestionView.m in Sources */,
 				750A6F3D1BE0034C0071FD7B /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				750A6F3E1BE0034C0071FD7B /* AppDelegate.m in Sources */,
 				759BCD621C70CC9F0064B549 /* Package+CoreDataProperties.m in Sources */,
@@ -791,9 +819,11 @@
 				7552AF211C41876C000E02A8 /* DataModel.xcdatamodeld in Sources */,
 				7552AF091C418716000E02A8 /* PackageInfoViewController.m in Sources */,
 				75322ED11BD3E8DA00839E76 /* NSManagedObjectContextOperation.m in Sources */,
+				754809631D4B4B000060A7F8 /* NSString+Utils.m in Sources */,
 				7552AF141C41874B000E02A8 /* PackageCell.m in Sources */,
 				75F72D0819118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
+				754809671D4B4D520060A7F8 /* PasteboardSuggestionView.m in Sources */,
 				75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */,
 				75322ED21BD3E8DA00839E76 /* NSPersistentStoreCoordinator+Custom.m in Sources */,
 				759BCD611C70CC9F0064B549 /* Package+CoreDataProperties.m in Sources */,

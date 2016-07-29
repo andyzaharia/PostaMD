@@ -14,6 +14,7 @@
 #import "DataLoader.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "UIAlertView+Alert.h"
+#import "NSString+Utils.h"
 
 @interface AddPackageViewController () <UITextFieldDelegate>
 
@@ -44,6 +45,10 @@
     self.tfTrackingNumber.leftViewMode = UITextFieldViewModeAlways;
     self.tfTrackingNumber.keyboardType = UIKeyboardTypeASCIICapable;
     
+    if (self.autoFillTrackingNumber.length) {
+        [self.tfTrackingNumber setText: self.autoFillTrackingNumber];
+    }
+    
     //RR123456785RO
 }
 
@@ -61,7 +66,7 @@
         return;
     }
     
-    if (![self isValidTrackingNumber: self.tfTrackingNumber.text]) {
+    if (![self.tfTrackingNumber.text isValidTrackingNumber]) {
         [UIAlertView info: NSLocalizedString(@"Invalid tracking number.", nil)];
         return;
     }
@@ -105,7 +110,7 @@
         }
     }];
     
-    [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     
     AddPackageViewController *__weak weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID:trackingNumberStr
@@ -135,22 +140,6 @@
     }
 }
 
-#pragma mark -
-
--(BOOL) isValidTrackingNumber: (NSString *) trackingNumberStr
-{
-    NSError *error = NULL;
-    NSString *pattern = @"^[A-Z]{2}\\d{9}[A-Z]{2}$";
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern: pattern
-                                                                           options: NSRegularExpressionCaseInsensitive
-                                                                             error: &error];
-   
-    NSArray *matches = [regex matchesInString: trackingNumberStr
-                                      options: 0
-                                        range: NSMakeRange(0, trackingNumberStr.length)];
-    return matches.count > 0;
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -163,7 +152,7 @@
     if (textField == self.tfTrackingNumber) {
         
         if ([string isEqualToString:@"\n"]) {
-            if ((self.tfName.text.length > 0) && ([self isValidTrackingNumber: self.tfTrackingNumber.text])) {
+            if ((self.tfName.text.length > 0) && ([self.tfTrackingNumber.text isValidTrackingNumber])) {
                 [self save: nil];
             }
         }

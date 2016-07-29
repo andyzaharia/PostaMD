@@ -18,7 +18,7 @@
                                 <rect key="frame" x="0.0" y="86" width="320" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gbs-X4-gZd" id="hvw-Vk-jEz">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="74.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="74"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHT-dP-uUg">
@@ -244,7 +244,7 @@
                                 <rect key="frame" x="0.0" y="138" width="320" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ut3-Sz-9ak" id="PcD-qg-Zay">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="86.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="248" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-VC-RbW">
@@ -354,7 +354,7 @@
         <!--New Item-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="AddPackageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPackageViewController" id="vXZ-lx-hvc" customClass="AddPackageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VYl-sd-JAV"/>
                         <viewControllerLayoutGuide type="bottom" id="d5g-FF-tUl"/>

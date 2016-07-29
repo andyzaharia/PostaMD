@@ -10,4 +10,7 @@
 
 @interface AddPackageViewController : UIViewController
 
+// Set this tracking number in viewDidLoad.
+@property (nonatomic, strong) NSString *autoFillTrackingNumber;
+
 @end

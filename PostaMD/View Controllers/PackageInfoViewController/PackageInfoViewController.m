@@ -109,7 +109,7 @@
 
 - (IBAction)refreshData:(id)sender {
     
-    [SVProgressHUD showWithMaskType: SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     
     __weak PackageInfoViewController *weakSelf = self;
     
