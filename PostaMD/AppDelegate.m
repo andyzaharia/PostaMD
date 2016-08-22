@@ -55,6 +55,14 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlock:^{
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
+        NSInteger activePackages = [Package countOfEntitiesWithPredicate: predicate];
+        NSTimeInterval fetchInterval = (activePackages > 0) ? 1800 : UIApplicationBackgroundFetchIntervalNever;
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: fetchInterval];
+    }];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
