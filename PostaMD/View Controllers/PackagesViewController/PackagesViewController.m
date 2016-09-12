@@ -211,30 +211,37 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
     _totalItemsToRefresh = [Package countOfEntitiesWithPredicate: predicate];
     
-    NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: _totalItemsToRefresh];
-    for (int i = 0; i < _totalItemsToRefresh; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
-        Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-        if (!package.received.boolValue || (package.info.count == 0)) {
-            [trackingNumbers addObject: package.trackingNumber];
-        }
-    }
-    
-    if ([trackingNumbers count]) {
-        _totalItemsToRefresh = trackingNumbers.count;
+    if (self.fetchedResultsController.sections.count > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
+        NSInteger packagesCount = [sectionInfo numberOfObjects];
         
-        if (withHudPresent) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated: YES];
-            [hud setLabelText: NSLocalizedString(@"Loading...", nil)];
-            [hud setMode: _totalItemsToRefresh <= 1 ? MBProgressHUDModeIndeterminate : MBProgressHUDModeDeterminateHorizontalBar];
-            [hud setDimBackground: YES];
+        NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: _totalItemsToRefresh];
+        for (int i = 0; i < _totalItemsToRefresh; i++) {
+            if (i < packagesCount) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
+                Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
+                if (!package.received.boolValue || (package.info.count == 0)) {
+                    [trackingNumbers addObject: package.trackingNumber];
+                }
+            }
+        }
+        
+        if ([trackingNumbers count]) {
+            _totalItemsToRefresh = trackingNumbers.count;
             
-            [self.navigationItem.rightBarButtonItem setEnabled: NO];
+            if (withHudPresent) {
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated: YES];
+                [hud setLabelText: NSLocalizedString(@"Loading...", nil)];
+                [hud setMode: _totalItemsToRefresh <= 1 ? MBProgressHUDModeIndeterminate : MBProgressHUDModeDeterminateHorizontalBar];
+                [hud setDimBackground: YES];
+                
+                [self.navigationItem.rightBarButtonItem setEnabled: NO];
+            }
+            
+            [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
         }
-        
-        [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
     }
-    
+
     [[DataLoader shared] syncWithCloudKit];
 }
 
@@ -265,14 +272,17 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
                          [self.pasteboardView removeFromSuperview];
                          self.pasteboardView = nil;
                      }];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
-    NSMutableArray *array = [NSMutableArray arrayWithArray: ignoredItems];
-    [array addObject: self.pasteboardView.lbTrackingNumber.text];
-    
-    [defaults setObject:array forKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
-    [defaults synchronize];
+ 
+    NSString *pastBoardTackingNumber = self.pasteboardView.lbTrackingNumber.text;
+    if (pastBoardTackingNumber.length) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+        NSMutableArray *array = [NSMutableArray arrayWithArray: ignoredItems];
+        [array addObject: pastBoardTackingNumber];
+        
+        [defaults setObject:array forKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+        [defaults synchronize];
+    }
 }
 
 -(void) addSuggestedTrackingNumber
