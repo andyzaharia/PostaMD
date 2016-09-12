@@ -76,7 +76,7 @@
 
 -(void) getMdTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
 {
-    if (trackID.length <= maxTrackingNumberLength) {
+    if (trackID.length >= minTrackingNumberLength) {
         NSDictionary *parameters = @{@"itemid": trackID};
         NSString *path = [NSString stringWithFormat: @"http://www.posta.md/ro/tracking?id=%@", trackID];
         
@@ -120,14 +120,14 @@
             }
         });
     } else {
-        NSError *error = [NSError errorWithDescription:@"Tracking number is too long."];
+        NSError *error = [NSError errorWithDescription:@"Tracking number is too short."];
         if (onFailure) onFailure(error);
     }
 }
 
 -(void) getRoTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
 {
-    if (trackID.length <= maxTrackingNumberLength) {
+    if (trackID.length >= minTrackingNumberLength) {
         NSDictionary *parameters = @{@"awb": trackID};
         NSString *path = @"https://www.posta-romana.ro/cnpr-app/modules/track-and-trace/ajax/status.php";
         
@@ -171,7 +171,7 @@
             }
         });
     } else {
-        NSError *error = [NSError errorWithDescription:@"Tracking number is too long."];
+        NSError *error = [NSError errorWithDescription:@"Tracking number is too short."];
         if (onFailure) onFailure(error);
     }
 }
@@ -294,9 +294,6 @@
                 if (package.cloudID.length == 0) {
                     // We must sync this package
                     NSString *trackingNumber = package.trackingNumber;
-                    if (trackingNumber.length > maxTrackingNumberLength) {
-                        trackingNumber = [trackingNumber substringToIndex: maxTrackingNumberLength];
-                    }
                     
                     CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: trackingNumber];
                     CKRecord *cloudPackage = [[CKRecord alloc] initWithRecordType:@"Package" recordID: recordID];

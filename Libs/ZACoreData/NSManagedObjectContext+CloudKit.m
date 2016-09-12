@@ -19,8 +19,8 @@
     
     NSString *recordNameValue = [object valueForKeyPath: recordName];
     if (recordNameValue) {
-        if (recordNameValue.length > maxTrackingNumberLength) {
-            recordNameValue = [recordNameValue substringToIndex: maxTrackingNumberLength];
+        if (recordNameValue.length > minTrackingNumberLength) {
+            recordNameValue = [recordNameValue substringToIndex: minTrackingNumberLength];
         }
         
         CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: recordNameValue];
