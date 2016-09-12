@@ -16,8 +16,9 @@
         return NO;
     }
     
+    
     NSError *error = NULL;
-    NSString *pattern = @"^[A-Z]{2}\\d{9}[A-Z]{2}$";
+    NSString *pattern = @"^[A-Z]{2}[0-9]{9,10}[A-Z]{2}$";
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern: pattern
                                                                            options: NSRegularExpressionCaseInsensitive
                                                                              error: &error];

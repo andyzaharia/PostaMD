@@ -163,41 +163,6 @@
         if (notAllowedStr.length > 0) {
             return NO;
         }
-        
-        UIKeyboardType keyboardType = UIKeyboardTypeDefault;
-        if ((freshStr.length < 2) || (freshStr.length >= maxTrackingNumberLength - 2)) {
-            //Check if the first 2 chars and the last 2 are letters.
-            if ((freshStr.length > 0) && (freshStr.length <= 2)) {
-                NSString *prefixSubString = [freshStr substringWithRange:NSMakeRange(0, freshStr.length)];
-                NSString *notAllowedStr = [prefixSubString stringByTrimmingCharactersInSet: [NSCharacterSet letterCharacterSet]];
-                if (notAllowedStr.length > 0) {
-                    return NO;
-                }
-            }
-            
-            // Check the last 2 characters.
-            if (freshStr.length > maxTrackingNumberLength - 2) {
-                NSRange range = NSMakeRange(maxTrackingNumberLength - 2 , freshStr.length - (maxTrackingNumberLength - 2));
-                NSString *suffixSubString = [freshStr substringWithRange: range];
-                NSString *notAllowedStr = [suffixSubString stringByTrimmingCharactersInSet: [NSCharacterSet letterCharacterSet]];
-                if (notAllowedStr.length > 0) {
-                    return NO;
-                }
-            }
-            
-            
-            keyboardType = UIKeyboardTypeASCIICapable;
-        } else {
-            keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        }
-        
-        if (keyboardType != textField.keyboardType) {
-            [textField setKeyboardType: keyboardType];
-            [textField reloadInputViews];
-        }
-        
-        
-        return (freshStr.length <= maxTrackingNumberLength);
     }
     
     return YES;
