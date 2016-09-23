@@ -8,7 +8,6 @@
 
 #import "DataLoader.h"
 #import "AFHTTPRequestOperationManager+Synchronous.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "PackageParser.h"
 #import "NSError+CustomError.h"
 
@@ -65,7 +64,7 @@
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        [_operationQueue setMaxConcurrentOperationCount: 2];
+        [_operationQueue setMaxConcurrentOperationCount: 1];
         
         self.cloudKitQueue = [[NSOperationQueue alloc] init];
         
@@ -192,7 +191,8 @@
 {
     NSMutableDictionary *__block _packageEventsDic      = [NSMutableDictionary dictionary];
     
-    NSMutableArray *__block signals = [NSMutableArray arrayWithCapacity: trackingNumbers.count];
+    __block NSError *operationError = nil;
+    
     [trackingNumbers enumerateObjectsUsingBlock:^(NSString *trackingId, NSUInteger idx, BOOL *stop) {
         
         NSArray *__block currentEventIDs = nil;
@@ -203,7 +203,9 @@
             if (package) currentEventIDs = [package.info valueForKeyPath:@"eventId"];
         }];
         
-        RACSignal *signal =[RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+        NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+            dispatch_semaphore_t mutex = dispatch_semaphore_create(0);
+            
             [[DataLoader shared] getTrackingInfoForItemWithID:trackingId
                                                        onDone:^(NSNumber *hasFreshItems) {
                                                            
@@ -219,25 +221,43 @@
                                                                        NSArray *events = [TrackingInfo findAllWithPredicate:predicate inContext: ctx];
                                                                        [_packageEventsDic setObject: events forKey: trackingId];
                                                                    }
+                                                                   [ctx save: nil];
                                                                }];
                                                            }
                                                            
-                                                           [subscriber sendCompleted];
-                                                           
+                                                           dispatch_semaphore_signal(mutex);
                                                        } onFailure:^(NSError *error) {
-                                                           [subscriber sendError:error];
+                                                           operationError = error;
+                                                           dispatch_semaphore_signal(mutex);
                                                        }];
-            return nil;
+            
+            dispatch_semaphore_wait(mutex, DISPATCH_TIME_FOREVER);
         }];
         
-        [signals addObject: signal];
+        [self addOperationAfterLast: operation];
     }];
     
-    [[RACSignal merge:signals] subscribeError:^(NSError *error) {
-        if (onFailure) onFailure(error);
-    } completed:^{
-        if (onDone) onDone(_packageEventsDic);
+    NSOperation *finishOperation = [NSBlockOperation blockOperationWithBlock:^{
+        if(operationError == nil) {
+            if (onDone) onDone(_packageEventsDic);
+        } else {
+            if (onFailure) onFailure(operationError);
+        }
     }];
+    
+    [self addOperationAfterLast: finishOperation];
+}
+
+- (void) addOperationAfterLast:(NSOperation *)op
+{
+    if (_operationQueue.maxConcurrentOperationCount != 1)
+    _operationQueue.maxConcurrentOperationCount = 1;
+    
+    NSOperation *lastOp = _operationQueue.operations.lastObject;
+    if (lastOp != nil)
+    [op addDependency: lastOp];
+    
+    [_operationQueue addOperation:op];
 }
 
 #pragma mark - Sync
