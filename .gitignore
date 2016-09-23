@@ -4,3 +4,4 @@ PostaMD.xcworkspace/xcuserdata
 Pods/
 Build
 *.xccheckout
+Podfile.lock
