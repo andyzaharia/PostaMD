@@ -152,8 +152,7 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 
 -(void) updateHudProgressWithItemsToRefresh: (NSInteger) itemsToRefresh
 {
-    NSArray *huds = [MBProgressHUD allHUDsForView: self.navigationController.view];
-    MBProgressHUD *hud = huds.firstObject;
+    MBProgressHUD *hud = [MBProgressHUD HUDForView: self.navigationController.view];
     if (hud) {
         NSInteger refreshedItems = _totalItemsToRefresh - itemsToRefresh;
         CGFloat progress = (float)refreshedItems / (float)(_totalItemsToRefresh);
@@ -189,7 +188,7 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 
 -(void) didFinishDownloading
 {
-    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated: YES];
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated: YES];
     [self.refreshControl endRefreshing];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
 }
@@ -231,9 +230,11 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
             
             if (withHudPresent) {
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated: YES];
-                [hud setLabelText: NSLocalizedString(@"Loading...", nil)];
+                hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+                hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+                
+                [hud.label setText: NSLocalizedString(@"Loading...", nil)];
                 [hud setMode: _totalItemsToRefresh <= 1 ? MBProgressHUDModeIndeterminate : MBProgressHUDModeDeterminateHorizontalBar];
-                [hud setDimBackground: YES];
                 
                 [self.navigationItem.rightBarButtonItem setEnabled: NO];
             }

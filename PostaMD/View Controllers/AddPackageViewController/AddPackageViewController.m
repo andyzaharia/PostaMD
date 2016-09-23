@@ -12,7 +12,7 @@
 #import "Package.h"
 #import "Package+CoreDataProperties.h"
 #import "DataLoader.h"
-#import <SVProgressHUD/SVProgressHUD.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "UIAlertView+Alert.h"
 #import "NSString+Utils.h"
 
@@ -110,16 +110,16 @@
         }
     }];
     
-    [SVProgressHUD show];
+    [MBProgressHUD showHUDAddedTo:self.view animated: YES];
     
     AddPackageViewController *__weak weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID:trackingNumberStr
                                                onDone:^(id data) {
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
-                                                   [SVProgressHUD dismiss];
+                                                   [MBProgressHUD hideHUDForView:weakSelf.view animated: YES];
                                                } onFailure:^(NSError *error) {
                                                    [weakSelf.navigationController popViewControllerAnimated: YES];
-                                                   [SVProgressHUD dismiss];
+                                                   [MBProgressHUD hideHUDForView:weakSelf.view animated: YES];
                                                }];
     
     [[DataLoader shared] syncWithCloudKit];

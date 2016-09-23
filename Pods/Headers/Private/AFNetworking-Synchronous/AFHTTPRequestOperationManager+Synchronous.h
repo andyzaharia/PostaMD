@@ -1,1 +1,0 @@
-../../../AFNetworking-Synchronous/2.x/AFHTTPRequestOperationManager+Synchronous.h

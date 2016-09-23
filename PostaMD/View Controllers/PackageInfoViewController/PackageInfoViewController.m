@@ -9,7 +9,7 @@
 #import "PackageInfoViewController.h"
 #import "TrackingInfoCell.h"
 #import "DataLoader.h"
-#import "SVProgressHUD.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "UITableView+RemoveSeparators.h"
 
 @interface PackageInfoViewController () <NSFetchedResultsControllerDelegate>
@@ -109,17 +109,17 @@
 
 - (IBAction)refreshData:(id)sender {
     
-    [SVProgressHUD show];
+    [MBProgressHUD showHUDAddedTo:self.view animated: YES];
     
     __weak PackageInfoViewController *weakSelf = self;
     
     [[DataLoader shared] getTrackingInfoForItemWithID: self.package.trackingNumber
                                                onDone: ^(id data) {
-                                                   [SVProgressHUD dismiss];
+                                                   [MBProgressHUD hideHUDForView:weakSelf.view animated: YES];
                                                    [weakSelf loadData];
                                                    
                                                } onFailure:^(NSError *error) {
-                                                   [SVProgressHUD dismiss];
+                                                   [MBProgressHUD hideHUDForView:weakSelf.view animated: YES];
                                                }];
 }
 

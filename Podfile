@@ -22,10 +22,8 @@ target "PostaRO" do
     
     pod 'hpple'
     pod 'AFNetworking'
-    pod 'SVProgressHUD'
     pod 'MBProgressHUD'
     pod 'AFNetworking-Synchronous/2.x'
-    pod 'ReactiveCocoa',                  '~>2'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'Reveal-iOS-SDK', :configurations => ['Debug']

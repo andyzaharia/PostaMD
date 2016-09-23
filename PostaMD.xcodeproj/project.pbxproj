@@ -508,13 +508,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 750A6F521BE0034C0071FD7B /* Build configuration list for PBXNativeTarget "PostaRO" */;
 			buildPhases = (
-				B1CF845D8FFB2FC0A4BA2235 /* 📦 Check Pods Manifest.lock */,
+				B1CF845D8FFB2FC0A4BA2235 /* [CP] Check Pods Manifest.lock */,
 				750A6F2F1BE0034C0071FD7B /* Sources */,
 				750A6F431BE0034C0071FD7B /* Frameworks */,
 				750A6F4C1BE0034C0071FD7B /* Resources */,
 				750A6F511BE0034C0071FD7B /* ShellScript */,
-				91E1E935EA5D9AB3F295984D /* 📦 Embed Pods Frameworks */,
-				F03493D31E8FF5569A9BDCF6 /* 📦 Copy Pods Resources */,
+				91E1E935EA5D9AB3F295984D /* [CP] Embed Pods Frameworks */,
+				F03493D31E8FF5569A9BDCF6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -529,13 +529,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75EBA14118C12AE200DB1856 /* Build configuration list for PBXNativeTarget "PostaMD" */;
 			buildPhases = (
-				E592125F59020B701D2ABE75 /* 📦 Check Pods Manifest.lock */,
+				E592125F59020B701D2ABE75 /* [CP] Check Pods Manifest.lock */,
 				75EBA10B18C12AE200DB1856 /* Sources */,
 				75EBA10C18C12AE200DB1856 /* Frameworks */,
 				75EBA10D18C12AE200DB1856 /* Resources */,
 				751DEBE91A862C550092A935 /* ShellScript */,
-				ABC0D0FA6508E2C88583E53A /* 📦 Embed Pods Frameworks */,
-				2BD33171D2B8410DCED51775 /* 📦 Copy Pods Resources */,
+				ABC0D0FA6508E2C88583E53A /* [CP] Embed Pods Frameworks */,
+				2BD33171D2B8410DCED51775 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -583,6 +583,7 @@
 					};
 					75EBA10E18C12AE200DB1856 = {
 						DevelopmentTeam = WYQJU87AXN;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -651,14 +652,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2BD33171D2B8410DCED51775 /* 📦 Copy Pods Resources */ = {
+		2BD33171D2B8410DCED51775 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,14 +693,14 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
 		};
-		91E1E935EA5D9AB3F295984D /* 📦 Embed Pods Frameworks */ = {
+		91E1E935EA5D9AB3F295984D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -707,14 +708,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ABC0D0FA6508E2C88583E53A /* 📦 Embed Pods Frameworks */ = {
+		ABC0D0FA6508E2C88583E53A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -722,44 +723,44 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaMD/Pods-PostaMD-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B1CF845D8FFB2FC0A4BA2235 /* 📦 Check Pods Manifest.lock */ = {
+		B1CF845D8FFB2FC0A4BA2235 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		E592125F59020B701D2ABE75 /* 📦 Check Pods Manifest.lock */ = {
+		E592125F59020B701D2ABE75 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F03493D31E8FF5569A9BDCF6 /* 📦 Copy Pods Resources */ = {
+		F03493D31E8FF5569A9BDCF6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1024,8 +1025,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaMD.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrei Zaharia (6FN8YVDHX3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WYQJU87AXN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1038,8 +1039,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "16d8d08a-ce0a-471e-8bf6-062abf4000c4";
-				PROVISIONING_PROFILE_SPECIFIER = "Posta MD AppStore";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1052,7 +1053,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = PostaMD/Misc/PostaMD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrei Zaharia (WYQJU87AXN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = WYQJU87AXN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1064,7 +1066,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyzaharia.posta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "16d8d08a-ce0a-471e-8bf6-062abf4000c4";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

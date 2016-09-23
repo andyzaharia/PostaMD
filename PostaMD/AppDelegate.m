@@ -8,10 +8,10 @@
 
 #import "AppDelegate.h"
 #import "DataLoader.h"
-#import "SVProgressHUD.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <iRate/iRate.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @implementation AppDelegate
 
@@ -29,13 +29,8 @@
     [NSManagedObjectContext contextForMainThread];
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
-    
+        
     [DataLoader shared];
-    
-    // Override point for customization after application launch.
-    [SVProgressHUD setBackgroundColor: [UIColor blackColor]];
-    [SVProgressHUD setForegroundColor: [UIColor whiteColor]];
-    [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeBlack];
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
