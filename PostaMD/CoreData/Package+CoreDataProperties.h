@@ -2,25 +2,26 @@
 //  Package+CoreDataProperties.h
 //  PostaMD
 //
-//  Created by Andrei Zaharia on 2/14/16.
+//  Created by Andrei Zaharia on 10/12/16.
 //  Copyright © 2016 Andrei Zaharia. All rights reserved.
-//
-//  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
-//  to delete and recreate this implementation file for your updated model.
 //
 
 #import "Package.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Package (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *cloudID;
-@property (nullable, nonatomic, retain) NSDate *date;
-@property (nullable, nonatomic, retain) NSDate *lastChecked;
-@property (nullable, nonatomic, retain) NSString *name;
-@property (nullable, nonatomic, retain) NSNumber *received;
-@property (nullable, nonatomic, retain) NSString *trackingNumber;
++ (NSFetchRequest<Package *> *)fetchRequest;
+
+@property (nullable, nonatomic, copy) NSString *cloudID;
+@property (nullable, nonatomic, copy) NSDate *date;
+@property (nullable, nonatomic, copy) NSDate *lastChecked;
+@property (nullable, nonatomic, copy) NSString *name;
+@property (nullable, nonatomic, copy) NSNumber *received;
+@property (nullable, nonatomic, copy) NSString *trackingNumber;
+@property (nullable, nonatomic, copy) NSNumber *unread;
 @property (nullable, nonatomic, retain) NSSet<TrackingInfo *> *info;
 
 @end

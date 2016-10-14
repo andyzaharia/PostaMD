@@ -10,7 +10,7 @@
 #import "TrackingInfo.h"
 #import "Package+CoreDataProperties.h"
 #import "NSManagedObjectContext+CloudKit.h"
-#import "UIAlertView+Alert.h"
+#import "UIAlertController+Alert.h"
 
 @implementation Package
 
@@ -23,7 +23,7 @@
                     andRecordNameProperty:@"cloudID"
                                completion:^(NSError *error) {
                                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                                       if (error) [UIAlertView error: error.localizedDescription];
+                                       if (error) [UIAlertController error: error.localizedDescription];
                                    });
                                }];
         } else {

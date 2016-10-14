@@ -7,6 +7,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="received" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="trackingNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unread" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="info" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrackingInfo" inverseName="package" inverseEntity="TrackingInfo" syncable="YES"/>
     </entity>
     <entity name="TrackingInfo" representedClassName="TrackingInfo" syncable="YES">
@@ -20,7 +21,7 @@
         <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="info" inverseEntity="Package" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Package" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Package" positionX="0" positionY="0" width="128" height="165"/>
         <element name="TrackingInfo" positionX="0" positionY="0" width="128" height="163"/>
     </elements>
 </model>
