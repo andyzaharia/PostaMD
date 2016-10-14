@@ -13,7 +13,7 @@
 #import "Package+CoreDataProperties.h"
 #import "DataLoader.h"
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "UIAlertView+Alert.h"
+#import "UIAlertController+Alert.h"
 #import "NSString+Utils.h"
 
 @interface AddPackageViewController () <UITextFieldDelegate>
@@ -57,17 +57,17 @@
     [self.view endEditing: YES];
     
     if (self.tfTrackingNumber.text.length == 0) {
-        [UIAlertView info: NSLocalizedString(@"Empty tracking number not allowed.", nil)];
+        [UIAlertController info: NSLocalizedString(@"Empty tracking number not allowed.", nil)];
         return;
     }
 
     if (self.tfName.text.length == 0) {
-        [UIAlertView info: NSLocalizedString(@"Empty name not allowed.", nil)];
+        [UIAlertController info: NSLocalizedString(@"Empty name not allowed.", nil)];
         return;
     }
     
     if (![self.tfTrackingNumber.text isValidTrackingNumber]) {
-        [UIAlertView info: NSLocalizedString(@"Invalid tracking number.", nil)];
+        [UIAlertController info: NSLocalizedString(@"Invalid tracking number.", nil)];
         return;
     }
     
@@ -91,7 +91,7 @@
         if (alreadyExistingPackageName.length) {
             message = [message stringByAppendingFormat:@"\n The item is called %@.", alreadyExistingPackageName];
         }
-        [UIAlertView info: message];
+        [UIAlertController info: message];
         return;
     }
    

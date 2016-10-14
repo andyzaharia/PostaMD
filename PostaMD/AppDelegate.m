@@ -28,7 +28,10 @@
     [NSPersistentStoreCoordinator setDataModelName:@"DataModel" withStoreName:@"data.sqlite"];
     [NSManagedObjectContext contextForMainThread];
     
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1800]; // 30 Minutes
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 1500]; // 30 Minutes
+    
+    [[MBProgressHUD appearance] setBackgroundColor:[UIColor blackColor]];
+    
         
     [DataLoader shared];
     

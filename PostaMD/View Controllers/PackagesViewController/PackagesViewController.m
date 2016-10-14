@@ -16,7 +16,7 @@
 #import "MBProgressHUD.h"
 #import "UITableView+RemoveSeparators.h"
 #import "NSManagedObjectContext+CloudKit.h"
-#import "UIAlertView+Alert.h"
+#import "UIAlertController+Alert.h"
 #import "NSString+Utils.h"
 #import "PasteboardSuggestionView.h"
 #import "AddPackageViewController.h"
@@ -58,12 +58,12 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController setToolbarHidden:YES animated:YES];
+    //[self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    //[self.navigationController setToolbarHidden:NO animated:YES];
     
     [self checkPasteboardValue];
 }
@@ -363,27 +363,26 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 {
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
     Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-    [package.managedObjectContext performBlockAndWait:^{
-        NSArray *items = [package.info allObjects];
-        items = [items sortedArrayUsingDescriptors:@[descriptor]];
-        
-        TrackingInfo *lastTrackInfo = [items lastObject];
-        if (lastTrackInfo) {
-            NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
-            if ([lastTrackInfo.localityStr length]) {
-                trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
-            }
-            cell.lbLastTrackingInfo.text = trackingStr;
-            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
-        } else {
-            cell.lbLastTrackingInfo.text = NSLocalizedString(@"No data.", nil);
-            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+    NSArray *items = [package.info allObjects];
+    items = [items sortedArrayUsingDescriptors:@[descriptor]];
+    
+    TrackingInfo *lastTrackInfo = [items lastObject];
+    if (lastTrackInfo) {
+        NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+        if ([lastTrackInfo.localityStr length]) {
+            trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
         }
-        
-        cell.lbName.text = package.name;
-        cell.lbTrackingNumber.text = package.trackingNumber;
-        cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
-    }];
+        cell.lbLastTrackingInfo.text = trackingStr;
+        cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+    } else {
+        cell.lbLastTrackingInfo.text = NSLocalizedString(@"No data.", nil);
+        cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+    }
+    
+    cell.lbName.text = package.name;
+    cell.lbTrackingNumber.text = package.trackingNumber;
+    cell.unRead = package.unread.boolValue;
+    cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

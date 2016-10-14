@@ -95,7 +95,12 @@
                 [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
                     Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
                     initialEventsCount = [package.info count];
-                    [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: moc];
+                    
+                    NSArray *freshEvents = [PackageParser parseMdPackageTrackingInfoWithData: data
+                                                                           andTrackingNumber: trackID
+                                                                                   inContext: moc];
+                    package.unread = @(freshEvents.count > 0);
+                    
                 } onSaved:^{
                     
                     NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];

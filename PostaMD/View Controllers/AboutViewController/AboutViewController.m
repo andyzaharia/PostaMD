@@ -8,7 +8,7 @@
 
 #import "AboutViewController.h"
 #import <MessageUI/MessageUI.h>
-#import "UIAlertView+Alert.h"
+#import "UIAlertController+Alert.h"
 
 @interface AboutViewController () <MFMailComposeViewControllerDelegate>
 
@@ -44,7 +44,7 @@
         
         [self presentViewController:mailer animated: YES completion: nil];
     }  else {
-        [UIAlertView error: @"You have to set up an email account first."];
+        [UIAlertController error: @"You have to set up an email account first."];
     }
 }
 
