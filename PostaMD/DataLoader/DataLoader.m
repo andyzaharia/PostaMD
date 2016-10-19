@@ -99,7 +99,9 @@
                     NSArray *freshEvents = [PackageParser parseMdPackageTrackingInfoWithData: data
                                                                            andTrackingNumber: trackID
                                                                                    inContext: moc];
-                    package.unread = @(freshEvents.count > 0);
+                    if(freshEvents.count > 0) {
+                        package.unread = @(YES);
+                    }
                     
                 } onSaved:^{
                     

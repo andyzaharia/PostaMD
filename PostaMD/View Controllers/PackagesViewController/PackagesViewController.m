@@ -381,8 +381,8 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     
     cell.lbName.text = package.name;
     cell.lbTrackingNumber.text = package.trackingNumber;
-    cell.unRead = package.unread.boolValue;
-    cell.accessoryType = ([package.received boolValue]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+    cell.unRead = package.unread.boolValue && (!package.received.boolValue);
+    cell.accessoryType = (package.received.boolValue) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
