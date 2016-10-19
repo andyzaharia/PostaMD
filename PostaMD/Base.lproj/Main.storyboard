@@ -27,7 +27,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgP-bX-q2I">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="Scc-oz-hOX"/>
+                                                        <constraint firstAttribute="height" constant="24" id="Scc-oz-hOX"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                                     <color key="textColor" red="0.26823785901069641" green="0.26827189326286316" blue="0.26821959018707275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -37,9 +37,9 @@
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmX-CX-qWr">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="MVD-v7-BIa"/>
+                                                        <constraint firstAttribute="height" constant="14" id="MVD-v7-BIa"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.7974980828220859" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <color key="shadowColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -64,7 +64,7 @@
                                                 <constraint firstItem="RmX-CX-qWr" firstAttribute="leading" secondItem="VHT-dP-uUg" secondAttribute="leading" id="FhW-gv-KNu"/>
                                                 <constraint firstAttribute="trailing" secondItem="RmX-CX-qWr" secondAttribute="trailing" id="HNS-qW-ewY"/>
                                                 <constraint firstItem="qgP-bX-q2I" firstAttribute="top" secondItem="VHT-dP-uUg" secondAttribute="top" constant="5" id="KFj-55-wtn"/>
-                                                <constraint firstItem="bU2-db-VP5" firstAttribute="top" secondItem="RmX-CX-qWr" secondAttribute="bottom" constant="1" id="LEv-DZ-et5"/>
+                                                <constraint firstItem="bU2-db-VP5" firstAttribute="top" secondItem="RmX-CX-qWr" secondAttribute="bottom" constant="2" id="LEv-DZ-et5"/>
                                                 <constraint firstAttribute="trailing" secondItem="qgP-bX-q2I" secondAttribute="trailing" id="OYE-1c-xIo"/>
                                                 <constraint firstItem="bU2-db-VP5" firstAttribute="leading" secondItem="VHT-dP-uUg" secondAttribute="leading" id="fGa-hr-BdW"/>
                                                 <constraint firstItem="qgP-bX-q2I" firstAttribute="leading" secondItem="VHT-dP-uUg" secondAttribute="leading" id="g55-PB-Nca"/>
@@ -243,7 +243,7 @@
                                 <rect key="frame" x="0.0" y="138" width="375" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ut3-Sz-9ak" id="PcD-qg-Zay">
-                                    <frame key="frameInset" width="375" height="86"/>
+                                    <frame key="frameInset" width="375" height="86.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="248" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-VC-RbW">

@@ -23,13 +23,15 @@
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
 {
-    NSInteger _totalItemsToRefresh;
+    
 }
 
 @property (nonatomic, strong) UISearchController                  *searchController;
 @property (nonatomic, strong) NSFetchedResultsController          *fetchedResultsController;
 
 @property (nonatomic, strong) PasteboardSuggestionView            *pasteboardView;
+
+@property (nonatomic) NSInteger totalItemsToRefresh;
 
 @end
 
@@ -67,6 +69,14 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     
     [self checkPasteboardValue];
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
 
 -(void) loadData
 {
@@ -142,26 +152,35 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     [self.pasteboardView.lbTrackingNumber setText: trackingNumber];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark -
 
 -(void) updateHudProgressWithItemsToRefresh: (NSInteger) itemsToRefresh
 {
     MBProgressHUD *hud = [MBProgressHUD HUDForView: self.navigationController.view];
     if (hud) {
-        NSInteger refreshedItems = _totalItemsToRefresh - itemsToRefresh;
-        CGFloat progress = (float)refreshedItems / (float)(_totalItemsToRefresh);
+        NSInteger refreshedItems = self.totalItemsToRefresh - itemsToRefresh;
+        CGFloat progress = (float)refreshedItems / (float)(self.totalItemsToRefresh);
         [hud setProgress: progress];
     }
 }
 
 -(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
 {
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlock:^{
+        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumbers[index] inContext: context];
+        NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject: package];
+        if(indexPath.row != NSNotFound) {
+            UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleGray];
+            indicatorView.hidesWhenStopped = YES;
+            [indicatorView startAnimating];
+            
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
+            cell.accessoryView = indicatorView;
+        }
+    }];
+
+    
     __weak PackagesViewController *weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID: trackingNumbers[index]
                                                onDone: ^(id data) {
@@ -191,58 +210,50 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     [MBProgressHUD hideHUDForView:self.navigationController.view animated: YES];
     [self.refreshControl endRefreshing];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    
+    self.totalItemsToRefresh = 0;
 }
 
 -(void) refreshData
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
-    _totalItemsToRefresh = [Package countOfEntitiesWithPredicate: predicate];
-    
-    if (_totalItemsToRefresh) {
-        [self refreshDataWithHud: NO];
-    } else {
-        [self.refreshControl endRefreshing];
+    if (self.totalItemsToRefresh == 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
+        NSInteger itemsToRefresh = [Package countOfEntitiesWithPredicate: predicate];
+        
+        if (itemsToRefresh) {
+            [self refreshDataWithHud: NO];
+        } else {
+            [self.refreshControl endRefreshing];
+        }
     }
 }
 
 -(void) refreshDataWithHud: (BOOL) withHudPresent
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"received == NO"];
-    _totalItemsToRefresh = [Package countOfEntitiesWithPredicate: predicate];
-    
-    if (self.fetchedResultsController.sections.count > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex: 0];
-        NSInteger packagesCount = [sectionInfo numberOfObjects];
-        
-        NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: _totalItemsToRefresh];
-        for (int i = 0; i < _totalItemsToRefresh; i++) {
-            if (i < packagesCount) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i inSection: 0];
-                Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
-                if (!package.received.boolValue || (package.info.count == 0)) {
-                    [trackingNumbers addObject: package.trackingNumber];
-                }
-            }
-        }
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlock:^{
+        NSArray *items = [Package findAllWithPredicate: predicate inContext: context];
+        NSMutableArray *trackingNumbers = [NSMutableArray arrayWithArray: [items valueForKeyPath: @"trackingNumber"]];
         
         if ([trackingNumbers count]) {
-            _totalItemsToRefresh = trackingNumbers.count;
+            self.totalItemsToRefresh = trackingNumbers.count;
             
             if (withHudPresent) {
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated: YES];
-                hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-                hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+                //hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+                //hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
                 
                 [hud.label setText: NSLocalizedString(@"Loading...", nil)];
-                [hud setMode: _totalItemsToRefresh <= 1 ? MBProgressHUDModeIndeterminate : MBProgressHUDModeDeterminateHorizontalBar];
+                [hud setMode: self.totalItemsToRefresh <= 1 ? MBProgressHUDModeIndeterminate : MBProgressHUDModeDeterminateHorizontalBar];
                 
                 [self.navigationItem.rightBarButtonItem setEnabled: NO];
             }
             
             [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
         }
-    }
-
+    }];
+    
     [[DataLoader shared] syncWithCloudKit];
 }
 
@@ -254,7 +265,9 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 #pragma mark - Actions
 
 - (IBAction)refreshPackages:(id)sender {
-    [self refreshDataWithHud: YES];
+    if (self.totalItemsToRefresh == 0) {
+        [self refreshDataWithHud: YES];
+    }
 }
 
 -(void) dismissSuggestionView
@@ -382,6 +395,7 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     cell.lbName.text = package.name;
     cell.lbTrackingNumber.text = package.trackingNumber;
     cell.unRead = package.unread.boolValue && (!package.received.boolValue);
+    cell.accessoryView = nil;
     cell.accessoryType = (package.received.boolValue) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
 }
 

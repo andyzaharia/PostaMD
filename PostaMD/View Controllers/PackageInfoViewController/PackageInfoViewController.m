@@ -73,6 +73,28 @@
     [self loadData];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear: animated];
+    
+    if(self.package) {
+        if (self.package.unread.boolValue) {
+            [self.package.managedObjectContext performBlock:^{
+                self.package.unread = @(NO);
+                [self.package.managedObjectContext save: nil];
+            }];
+        }
+    }
+}
+
+#pragma mark -
+
 -(void) loadData
 {
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
@@ -97,26 +119,6 @@
     }
     
     [self.tableView reloadData];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear: animated];
-    
-    if(self.package) {
-        if (self.package.unread.boolValue) {
-            [self.package.managedObjectContext performBlock:^{
-                self.package.unread = @(NO);
-                [self.package.managedObjectContext save: nil];
-            }];
-        }
-    }
 }
 
 #pragma mark - Actions
