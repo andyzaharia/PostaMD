@@ -105,6 +105,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear: animated];
+    
+    if(self.package) {
+        if (self.package.unread.boolValue) {
+            [self.package.managedObjectContext performBlock:^{
+                self.package.unread = @(NO);
+                [self.package.managedObjectContext save: nil];
+            }];
+        }
+    }
+}
+
 #pragma mark - Actions
 
 - (IBAction)refreshData:(id)sender {
@@ -132,6 +146,7 @@
                                                    style:UIAlertActionStyleDestructive
                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                      if(self.package) [Package deleteWithItem: self.package];
+                                                     self.package = nil;
                                                      [self.navigationController popViewControllerAnimated: YES];
                                                  }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"No"
