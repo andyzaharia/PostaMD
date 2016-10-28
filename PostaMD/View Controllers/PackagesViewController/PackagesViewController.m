@@ -20,6 +20,7 @@
 #import "NSString+Utils.h"
 #import "PasteboardSuggestionView.h"
 #import "AddPackageViewController.h"
+#import "Constants.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
 {
@@ -37,7 +38,6 @@
 
 @implementation PackagesViewController
 
-static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY";
 
 - (void)viewDidLoad
 {
@@ -56,11 +56,20 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents: UIControlEventValueChanged];
     [self.tableView addSubview: self.refreshControl];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkPasteboardValue)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //[self.navigationController setToolbarHidden:YES animated:YES];
+    
+    if (self.pasteboardView) {
+        [self dismissSuggestionView];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -104,6 +113,12 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 
 -(void) checkPasteboardValue
 {
+    // Lets check first if we actually have this controller as the visible one in the Navigation stack
+    if (self.navigationController.topViewController != self) {
+        // Bail out.
+        return;
+    }
+    
     NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
     if ([pasteboardValue isValidTrackingNumber]) {
         
@@ -126,6 +141,10 @@ static NSString *kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY = @"kDEFAULTS_IGNORED_TR
 
 -(void) showPasteboardSuggestionWithTrackingNumber: (NSString *) trackingNumber
 {
+    if (self.pasteboardView.superview) {
+        return;
+    }
+    
     self.pasteboardView = [[[NSBundle mainBundle] loadNibNamed:@"PasteboardSuggestionView" owner:self options: nil] lastObject];
     [self.pasteboardView setFrame: CGRectMake((self.navigationController.view.frame.size.width - self.pasteboardView.frame.size.width) * 0.5,
                                               self.navigationController.view.frame.size.height,
