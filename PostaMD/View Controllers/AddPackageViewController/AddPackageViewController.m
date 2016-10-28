@@ -15,6 +15,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIAlertController+Alert.h"
 #import "NSString+Utils.h"
+#import "Constants.h"
 
 @interface AddPackageViewController () <UITextFieldDelegate>
 
@@ -49,7 +50,40 @@
         [self.tfTrackingNumber setText: self.autoFillTrackingNumber];
     }
     
-    //RR123456785RO
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkPasteboardValue)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+#pragma mark -
+
+-(void) checkPasteboardValue
+{
+    // Lets check first if we actually have this controller as the visible one in the Navigation stack
+    if (self.navigationController.topViewController != self) {
+        // Bail out.
+        return;
+    }
+    
+    NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
+    if ([pasteboardValue isValidTrackingNumber]) {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+        if ([ignoredItems containsObject: pasteboardValue]) {
+            return;
+        }
+        
+        NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+        [context performBlock:^{
+            Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:pasteboardValue inContext: context];
+            if (package == nil) {
+                // Show Clipboard tracking number add request.
+                self.tfTrackingNumber.text = pasteboardValue;
+            }
+        }];
+    }
 }
 
 - (IBAction)save:(id)sender {
@@ -133,10 +167,14 @@
     
     if ([self.tfTrackingNumber isFirstResponder]) {
         [self.tfTrackingNumber paste: sender];
-    }
-    
-    if ([self.tfName isFirstResponder]) {
+    } else if ([self.tfName isFirstResponder]) {
         [self.tfName paste: sender];
+    } else {
+        NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
+        if ([pasteboardValue isValidTrackingNumber]) {
+            self.tfTrackingNumber.text = pasteboardValue;
+            [self.tfName becomeFirstResponder];
+        }
     }
 }
 

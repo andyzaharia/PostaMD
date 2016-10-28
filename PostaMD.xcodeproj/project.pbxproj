@@ -185,6 +185,7 @@
 		75F72D0619118637009EDF97 /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
 		75F72D0719118637009EDF97 /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
 		91F3CC87DD0D2719EA327F09 /* Pods-PostaRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostaRO.release.xcconfig"; path = "Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO.release.xcconfig"; sourceTree = "<group>"; };
+		A15EDBF51DC3F3030005755C /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A1CEE0691DB0F40C00BB3A40 /* UIAlertController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Alert.h"; sourceTree = "<group>"; };
 		A1CEE06A1DB0F40C00BB3A40 /* UIAlertController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Alert.m"; sourceTree = "<group>"; };
 		A1CEE0701DB0FB6E00BB3A40 /* DataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 4.xcdatamodel"; sourceTree = "<group>"; };
@@ -263,8 +264,8 @@
 			children = (
 				7552AF0F1C41874B000E02A8 /* PackagesViewController */,
 				7552AF061C418716000E02A8 /* PackageInfoViewController */,
-				7552AF011C4186FE000E02A8 /* AboutViewController */,
 				7552AEFC1C4186E0000E02A8 /* AddPackageViewController */,
+				7552AF011C4186FE000E02A8 /* AboutViewController */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -437,6 +438,7 @@
 				7552AEFB1C4186E0000E02A8 /* View Controllers */,
 				75EBA12118C12AE200DB1856 /* AppDelegate.h */,
 				75EBA12218C12AE200DB1856 /* AppDelegate.m */,
+				A15EDBF51DC3F3030005755C /* Constants.h */,
 				75EBA12418C12AE200DB1856 /* Main.storyboard */,
 				75EBA12A18C12AE200DB1856 /* Images.xcassets */,
 				75EBA11918C12AE200DB1856 /* Supporting Files */,
