@@ -32,6 +32,7 @@
 {
     [super prepareForReuse];
     
+    self.accessoryView = nil;
     self.ivUnread.alpha = 0.0;
     self.containerLeadingConstraint.constant = 16.0;
 }

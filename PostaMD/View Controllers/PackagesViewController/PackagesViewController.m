@@ -335,14 +335,28 @@
 {
     if ([segue.identifier isEqualToString:@"PackageInfo"]) {
         
-        NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         if (indexPath) {
             PackageInfoViewController *controller = segue.destinationViewController;
             controller.package = [self.fetchedResultsController objectAtIndexPath: indexPath];
         }
-    } else {
-        
     }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"PackageInfo"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        if (indexPath) {
+            Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
+            return package != nil;
+        } else {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 #pragma mark - Table view data source
