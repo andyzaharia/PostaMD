@@ -4,7 +4,7 @@ inhibit_all_warnings!
 
 target "PostaMD" do
 
-	pod 'hpple'
+    pod 'HTMLReader'
 	pod 'AFNetworking'
 	pod 'MBProgressHUD'
 	pod 'AFNetworking-Synchronous/2.x'
@@ -18,7 +18,7 @@ end
 
 target "PostaRO" do
     
-    pod 'hpple'
+    pod 'HTMLReader'
     pod 'AFNetworking'
     pod 'MBProgressHUD'
     pod 'AFNetworking-Synchronous/2.x'
@@ -26,5 +26,6 @@ target "PostaRO" do
     pod 'Crashlytics'
     pod 'Reveal-iOS-SDK', :configurations => ['Debug']
     pod 'iRate'
+    pod 'HTMLReader'
     
 end
