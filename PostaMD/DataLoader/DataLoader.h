@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 #import "Package.h"
 #import "Package+CoreDataProperties.h"
 #import "TrackingInfo.h"
@@ -35,5 +34,8 @@ static NSInteger minTrackingNumberLength = 13;
                       onFailure: (OnFailure) onFailure;
 
 -(void) syncWithCloudKit;
+
+
+-(void) debug;
 
 @end

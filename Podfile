@@ -5,9 +5,7 @@ inhibit_all_warnings!
 target "PostaMD" do
 
     pod 'HTMLReader'
-	pod 'AFNetworking'
 	pod 'MBProgressHUD'
-	pod 'AFNetworking-Synchronous/2.x'
 	pod 'Fabric'
 	pod 'Crashlytics'
 	pod 'Reveal-iOS-SDK', :configurations => ['Debug']
@@ -19,9 +17,7 @@ end
 target "PostaRO" do
     
     pod 'HTMLReader'
-    pod 'AFNetworking'
     pod 'MBProgressHUD'
-    pod 'AFNetworking-Synchronous/2.x'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'Reveal-iOS-SDK', :configurations => ['Debug']

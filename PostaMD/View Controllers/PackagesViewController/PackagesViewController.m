@@ -354,6 +354,10 @@
         } else {
             return NO;
         }
+    } else if([identifier isEqualToString:@"addPackageSeque"]) {
+        if([self.navigationController.topViewController isKindOfClass: AddPackageViewController.class]) {
+            return NO;
+        }
     }
     
     return YES;

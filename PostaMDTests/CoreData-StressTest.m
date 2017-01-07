@@ -7,12 +7,14 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "DataLoader.h"
 
-@interface PostaMDTests : XCTestCase
+
+@interface CoreDataStressTes : XCTestCase
 
 @end
 
-@implementation PostaMDTests
+@implementation CoreDataStressTes
 
 - (void)setUp
 {
