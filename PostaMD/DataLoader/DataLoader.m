@@ -56,6 +56,35 @@
     return nil;
 }
 
++ (NSData *)sendSynchronousRequest:(NSURLRequest *)request
+                 returningResponse:(__autoreleasing NSURLResponse **)responsePtr
+                             error:(__autoreleasing NSError **)errorPtr {
+    dispatch_semaphore_t    sem;
+    __block NSData *        result;
+    
+    result = nil;
+    
+    sem = dispatch_semaphore_create(0);
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request
+                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                         if (errorPtr != NULL) {
+                                             *errorPtr = error;
+                                         }
+                                         if (responsePtr != NULL) {
+                                             *responsePtr = response;
+                                         }  
+                                         if (error == nil) {  
+                                             result = data;  
+                                         }  
+                                         dispatch_semaphore_signal(sem);  
+                                     }] resume];  
+    
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);  
+    
+    return result;  
+}  
+
 #pragma mark -
 
 -(id) init
@@ -72,73 +101,58 @@
     return self;
 }
 
--(void) getMdTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
+-(BOOL) getMdTrackingInfoForItemWithID: (NSString *) trackID error: (__autoreleasing NSError **)errorPtr
 {
     if (trackID.length >= minTrackingNumberLength) {
         //NSDictionary *parameters = @{@"itemid": trackID};
         NSString *path = [NSString stringWithFormat: @"http://www.posta.md/ro/tracking?id=%@", trackID];
         
-        //Background Thread
+        NSError * __autoreleasing error = nil;
+        NSURLResponse *response = nil;
 
-        NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-            
-            NSError *error = nil;
-            NSURLResponse *response = nil;
-            NSData *data = nil;
-            
-            NSURL *url = [NSURL URLWithString: path];
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: url];
-            request.HTTPMethod = @"POST";
-            
-            NSData *syncData = nil;
-            syncData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            if(syncData) {
-                data = syncData;
-            }
-            
-            if (data) {
-                NSInteger __block initialEventsCount = 0;
-                
-                [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-                    Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: moc];
-                    initialEventsCount = [package.info count];
-                    
-                    NSArray *freshEvents = [PackageParser parseMdPackageTrackingInfoWithData: data
-                                                                           andTrackingNumber: trackID
-                                                                                   inContext: moc];
-                    if(freshEvents.count > 0) {
-                        package.unread = @(YES);
-                    }
-                    
-                } onSaved:^{
-                    
-                    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *ctx) {
-                        Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: ctx];
-                        [ctx refreshObject:pkg mergeChanges: YES];
-                        
-                        NSInteger afterUpdateEventsCount = [pkg.info count];
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^(void){
-                            if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
-                        });
-                    }];
-                }];
-                
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    //Run UI Updates
-                    if (onFailure) onFailure(error);
-                });
-            }
-            
-        }];
         
-        [self addOperationAfterLast: operation];
+        NSURL *url = [NSURL URLWithString: path];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: url];
+        request.HTTPMethod = @"POST";
+        request.timeoutInterval = 25.0;
+        request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
         
+        NSData *data = [DataLoader sendSynchronousRequest:request returningResponse:&response error: &error];
+        
+        if(error) {
+            *errorPtr = error;
+            return NO;
+        } else if (data) {
+            NSInteger __block initialEventsCount = 0;
+            
+            __block BOOL hasNewItems = NO;
+            
+            NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
+            [context performBlockAndWait:^{
+                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: context];
+                initialEventsCount = [package.info count];
+                
+                NSArray *freshEvents = [PackageParser parseMdPackageTrackingInfoWithData: data andTrackingNumber: trackID inContext: context];
+                if(freshEvents.count > 0) {
+                    package.unread = @(YES);
+                }
+                
+                NSInteger afterUpdateEventsCount = [package.info count];
+                hasNewItems = (initialEventsCount < afterUpdateEventsCount);
+                
+                if([context hasChanges]) [context save: nil];
+            }];
+            
+            return hasNewItems;
+        }
+    
     } else {
-        NSError *error = [NSError errorWithDescription:@"Tracking number is too short."];
-        if (onFailure) onFailure(error);
+        NSError *__autoreleasing error = [NSError errorWithDescription:@"Tracking number is too short."];
+        *errorPtr = error;
+        return NO;
     }
+    
+    return NO;
 }
 
 -(void) getRoTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
@@ -202,12 +216,24 @@
 
 -(void) getTrackingInfoForItemWithID: (NSString *) trackID onDone: (OnSuccess) onDone onFailure: (OnFailure) onFailure
 {
-    if ([DataLoader isRomanianApp]) {
-        //Go for Romania
-        [self getRoTrackingInfoForItemWithID:trackID onDone: onDone onFailure: onFailure];
-    } else {
-        [self getMdTrackingInfoForItemWithID:trackID onDone: onDone onFailure: onFailure];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        if ([DataLoader isRomanianApp]) {
+            //Go for Romania
+            [self getRoTrackingInfoForItemWithID:trackID onDone: onDone onFailure: onFailure];
+        } else {
+            
+            NSError *error = nil;
+            BOOL hasNewData = [self getMdTrackingInfoForItemWithID:trackID error: &error];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                if(error == nil) {
+                    if(onDone) onDone(@(hasNewData));
+                } else {
+                    if(onFailure) onFailure(error);
+                }
+            });
+        }
+    });
 }
 
 -(void) getTrackingInfoForItems: (NSArray *) trackingNumbers
@@ -229,34 +255,32 @@
         }];
         
         NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-            dispatch_semaphore_t mutex = dispatch_semaphore_create(0);
             
-            [[DataLoader shared] getTrackingInfoForItemWithID:trackingId
-                                                       onDone:^(NSNumber *hasFreshItems) {
-                                                           
-                                                           if (hasFreshItems.boolValue) {
-                                                               NSManagedObjectContext *ctx = [NSManagedObjectContext contextForMainThread];
-                                                               [ctx performBlockAndWait:^{
-                                                                   Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackingId inContext: ctx];
-                                                                   if (pkg) {
-                                                                       [ctx refreshObject:pkg mergeChanges: YES];
-                                                                       
-                                                                       //Fetch only the new events
-                                                                       NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(package == %@) AND (NOT (eventId IN %@))", pkg, currentEventIDs];
-                                                                       NSArray *events = [TrackingInfo findAllWithPredicate:predicate inContext: ctx];
-                                                                       [_packageEventsDic setObject: events forKey: trackingId];
-                                                                   }
-                                                                   [ctx save: nil];
-                                                               }];
-                                                           }
-                                                           
-                                                           dispatch_semaphore_signal(mutex);
-                                                       } onFailure:^(NSError *error) {
-                                                           operationError = error;
-                                                           dispatch_semaphore_signal(mutex);
-                                                       }];
+            NSError *error = nil;
+            BOOL hasNewData = [[DataLoader shared] getMdTrackingInfoForItemWithID:trackingId error: &error];
             
-            dispatch_semaphore_wait(mutex, DISPATCH_TIME_FOREVER);
+            if(error == nil) {
+                if(hasNewData) {
+                   NSManagedObjectContext *ctx = [NSManagedObjectContext contextForBackgroundThread];
+                   [ctx performBlockAndWait:^{
+                       Package *pkg = [Package findFirstByAttribute:@"trackingNumber" withValue: trackingId inContext: ctx];
+                       if (pkg) {
+                           [ctx refreshObject:pkg mergeChanges: YES];
+
+                           //Fetch only the new events
+                           NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(package == %@) AND (NOT (eventId IN %@))", pkg, currentEventIDs];
+                           NSArray *events = [TrackingInfo findAllWithPredicate:predicate inContext: ctx];
+                           [_packageEventsDic setObject: events forKey: trackingId];
+                       }
+                       
+                       if([ctx hasChanges]) {
+                           [ctx save: nil];
+                       }
+                   }];
+                }
+            } else {
+                operationError = error;
+            }
         }];
         
         [self addOperationAfterLast: operation];

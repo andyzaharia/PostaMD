@@ -20,6 +20,7 @@
 #import "NSString+Utils.h"
 #import "PasteboardSuggestionView.h"
 #import "AddPackageViewController.h"
+#import "PackageInfoViewController.h"
 #import "Constants.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
@@ -33,6 +34,8 @@
 @property (nonatomic, strong) PasteboardSuggestionView            *pasteboardView;
 
 @property (nonatomic) NSInteger totalItemsToRefresh;
+
+@property (nonatomic) NSMutableArray *downloadingPackages; // Holds the tracking number of downloading packages
 
 @end
 
@@ -119,24 +122,29 @@
         return;
     }
     
-    NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
-    if ([pasteboardValue isValidTrackingNumber]) {
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
-        if ([ignoredItems containsObject: pasteboardValue]) {
-            return;
-        }
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-        [context performBlock:^{
-            Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:pasteboardValue inContext: context];
-            if (package == nil) {
-                // Show Clipboard tracking number add request.
-                [self showPasteboardSuggestionWithTrackingNumber: pasteboardValue];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    
+        if (UIPasteboard.generalPasteboard.hasStrings) {
+            NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
+            if ([pasteboardValue isValidTrackingNumber]) {
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+                if ([ignoredItems containsObject: pasteboardValue]) {
+                    return;
+                }
+                
+                NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+                [context performBlock:^{
+                    Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:pasteboardValue inContext: context];
+                    if (package == nil) {
+                        // Show Clipboard tracking number add request.
+                        [self showPasteboardSuggestionWithTrackingNumber: pasteboardValue];
+                    }
+                }];
             }
-        }];
-    }
+        }
+    });
 }
 
 -(void) showPasteboardSuggestionWithTrackingNumber: (NSString *) trackingNumber
@@ -183,28 +191,55 @@
     }
 }
 
--(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
-{
+-(void) configureCellWithDownloadingStatus: (BOOL) downloading forPackageWithTrackingNumber: (NSString *) trackingNumber {
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     [context performBlock:^{
-        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumbers[index] inContext: context];
-        NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject: package];
-        if(indexPath.row != NSNotFound) {
-            UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleGray];
-            indicatorView.hidesWhenStopped = YES;
-            [indicatorView startAnimating];
+        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumber inContext: context];
+        if(package != nil) {
             
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
-            cell.accessoryView = indicatorView;
+            NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject: package];
+            if(indexPath.row != NSNotFound) {
+            
+                NSArray *visibleCellIndexPaths = self.tableView.indexPathsForVisibleRows;
+                BOOL isCellVisible = NO;
+                for(NSIndexPath *ip in visibleCellIndexPaths) {
+                    if((ip.row == indexPath.row) && (ip.section == indexPath.section)) {
+                        isCellVisible = true;
+                        break;
+                    }
+                }
+                
+                if(isCellVisible) {
+                    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
+                    
+                    if(downloading == true) {
+                        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleGray];
+                        indicatorView.hidesWhenStopped = YES;
+                        [indicatorView startAnimating];
+                        
+                        cell.accessoryView = indicatorView;
+                    } else {
+                        cell.accessoryView = nil;
+                        cell.accessoryType = (package.received.boolValue) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+                    }
+                }
+            }
         }
     }];
+}
 
+-(void) downloadTrackingDataWithTrackingNumbers: (NSMutableArray *) trackingNumbers forIndex: (NSInteger) index
+{
+    [self configureCellWithDownloadingStatus:YES forPackageWithTrackingNumber: trackingNumbers[index]];
     
     __weak PackagesViewController *weakSelf = self;
     [[DataLoader shared] getTrackingInfoForItemWithID: trackingNumbers[index]
                                                onDone: ^(id data) {
+                                                   NSString *trackingNumber = trackingNumbers[index];
                                                    [trackingNumbers removeObjectAtIndex: index];
                                                    [weakSelf updateHudProgressWithItemsToRefresh: trackingNumbers.count];
+                                                   
+                                                   [weakSelf configureCellWithDownloadingStatus:NO forPackageWithTrackingNumber: trackingNumber];
                                                    
                                                    if ([trackingNumbers count] == 0) {
                                                        [weakSelf didFinishDownloading];
@@ -213,6 +248,7 @@
                                                    }
                                           
                                                } onFailure:^(NSError *error) {
+                                                   NSString *trackingNumber = trackingNumbers[index];
                                                    [trackingNumbers removeObjectAtIndex: index];
                                                    [weakSelf updateHudProgressWithItemsToRefresh: trackingNumbers.count];
                                                    
@@ -221,6 +257,8 @@
                                                    } else {
                                                        [weakSelf downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
                                                    }
+                                                   
+                                                   [weakSelf configureCellWithDownloadingStatus:NO forPackageWithTrackingNumber: trackingNumber];
                                                }];
 }
 
@@ -269,7 +307,9 @@
                 [self.navigationItem.rightBarButtonItem setEnabled: NO];
             }
             
-            [self downloadTrackingDataWithTrackingNumbers: trackingNumbers forIndex: 0];
+            self.downloadingPackages = trackingNumbers;
+            
+            [self downloadTrackingDataWithTrackingNumbers: self.downloadingPackages forIndex: 0];
         }
     }];
     
@@ -345,6 +385,13 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+    BOOL hasAddPackageInStack = [self.navigationController.topViewController isKindOfClass: AddPackageViewController.class];
+    BOOL hasPackageInfoInStack = [self.navigationController.topViewController isKindOfClass: PackageInfoViewController.class];
+    
+    if(hasAddPackageInStack || hasPackageInfoInStack) {
+        return NO;
+    }    
+    
     if ([identifier isEqualToString:@"PackageInfo"]) {
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
@@ -355,9 +402,7 @@
             return NO;
         }
     } else if([identifier isEqualToString:@"addPackageSeque"]) {
-        if([self.navigationController.topViewController isKindOfClass: AddPackageViewController.class]) {
-            return NO;
-        }
+
     }
     
     return YES;
@@ -434,6 +479,19 @@
     cell.unRead = package.unread.boolValue && (!package.received.boolValue);
     cell.accessoryView = nil;
     cell.accessoryType = (package.received.boolValue) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
+    
+    BOOL downloading = [self.downloadingPackages containsObject: package.trackingNumber];
+    if(downloading == true) {
+        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleGray];
+        indicatorView.hidesWhenStopped = YES;
+        [indicatorView startAnimating];
+        
+        cell.accessoryView = indicatorView;
+    }
+    
+    
+    cell.selectedBackgroundView = [UIView new];
+    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
