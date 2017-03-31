@@ -31,7 +31,7 @@
                         } else {
                             [self performBlockAndWait:^{
                                 [self deleteObject: object];
-                                [self save: nil]; // Would be nice to handle this
+                                [self recursiveSave]; // Would be nice to handle this
                             }];
                             if (completionHandler) completionHandler(nil);
                         }

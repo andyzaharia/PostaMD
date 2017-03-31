@@ -29,7 +29,7 @@
         } else {
             [context deleteObject: item];
         }
-        [context save: nil];
+        [context recursiveSave];
     }];
 }
 

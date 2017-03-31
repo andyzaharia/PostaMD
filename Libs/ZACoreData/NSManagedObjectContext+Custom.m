@@ -30,6 +30,9 @@ static NSOperationQueue         *_operationQueue;
     if (!_masterPrivateContext) {
         _masterPrivateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSPrivateQueueConcurrencyType];
         _masterPrivateContext.persistentStoreCoordinator = [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator];
+        
+        _masterPrivateContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+        _masterPrivateContext.undoManager = nil;
     }
     
     return _masterPrivateContext;
@@ -54,63 +57,20 @@ static NSOperationQueue         *_operationQueue;
     }
     
     NSThread *thread = [NSThread mainThread];
-
-    //NSAssert([[NSThread currentThread] isEqual: thread], @"Cannot access main thread context from a separate thread");
     
     if (![[thread name] length]) {
         [thread setName: [NSManagedObjectContext generateGUID]];
         
         NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSMainQueueConcurrencyType];
-        context.persistentStoreCoordinator = [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator];
+        [context setParentContext: [NSManagedObjectContext masterWriterPrivateContext]];
         [context setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
         
         [_managedObjectContextsDictionary setObject:context forKey: [thread name]];
         
-        __weak NSManagedObjectContext *weakCtxRef = context;
-        
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserverForName: NSManagedObjectContextDidSaveNotification
-                                        object: nil //context.persistentStoreCoordinator, we where not receiving notifications from performSaveOperationWithBlock:
-                                         queue: [NSOperationQueue mainQueue]
-                                    usingBlock:^(NSNotification *note) {
-                                        
-                                        NSManagedObjectContext *savedContext = [note object];
-                                        if (savedContext == weakCtxRef) {
-                                            return;
-                                        }
-                                        
-                                        if (savedContext.persistentStoreCoordinator != [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator]) {
-                                            return;
-                                        }
-                                        
-                                        if (savedContext == [NSManagedObjectContext contextForMainThread]) {
-                                            return;
-                                        }
-                                        
-                                        NSArray *updatedObjects = note.userInfo[NSUpdatedObjectsKey];
-                                        NSArray *insertedObjects = note.userInfo[NSInsertedObjectsKey];
-                                        NSArray *deletedObjects = note.userInfo[NSDeletedObjectsKey];
-                                        
-                                        //NSLog(@"DidSave: Inserted(%d) Deleted(%d) Updated(%d)", [insertedObjects count], [deletedObjects count], [updatedObjects count]);
-                                        
-                                        if ([updatedObjects count] || [insertedObjects count] || [deletedObjects count]) {
-                                            [weakCtxRef performBlock:^{
-                                                
-                                                // http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different                                                
-                                                dispatch_async(dispatch_get_main_queue(), ^(void){
-                                                    for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey]) {
-                                                        [[weakCtxRef objectWithID:[object objectID]] willAccessValueForKey:nil];
-                                                    }
-                                                    
-                                                    [weakCtxRef mergeChangesFromContextDidSaveNotification: note];
-                                                });
-                                            }];
-                                        }
-
-        }];
         return context;
     } else {
-        return [_managedObjectContextsDictionary objectForKey: [thread name]];
+        NSManagedObjectContext *context = _managedObjectContextsDictionary[thread.name];
+        return context;
     }
 }
 
@@ -126,19 +86,24 @@ static NSOperationQueue         *_operationQueue;
     if ([NSThread isMainThread]) {
         return [NSManagedObjectContext contextForMainThread];
     }
-
+    
+    NSAssert([NSThread isMainThread], @"Cannot access %s from a background thread.", __PRETTY_FUNCTION__);
+    
     NSThread *currentThread = [NSThread currentThread];
     if (![[currentThread name] length]) {
         [currentThread setName: [NSManagedObjectContext generateGUID]];
         
-        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSPrivateQueueConcurrencyType];
-        context.parentContext = [NSManagedObjectContext contextForMainThread];
-        context.undoManager = nil;
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+        //Main thread as parent context
+        NSManagedObjectContext *mainThreadContext = _managedObjectContextsDictionary[[NSThread mainThread].name];
+        NSAssert(mainThreadContext, @"Main thread cannot be nil.");
         
-         @synchronized(_managedObjectContextsDictionary) {
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSPrivateQueueConcurrencyType];
+        context.parentContext = mainThreadContext;
+        context.undoManager = nil;
+        
+        @synchronized(_managedObjectContextsDictionary) {
             [_managedObjectContextsDictionary setObject:context forKey: [currentThread name]];
-         }
+        }
         
         return context;
     } else {
@@ -169,6 +134,8 @@ static NSOperationQueue         *_operationQueue;
 
 + (NSManagedObjectContext *) contextForBackgroundThread
 {
+    /* Must be removed. */
+    
     @synchronized(_managedObjectContextsDictionary) {
         
         if(![NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator]) return nil;
@@ -178,10 +145,17 @@ static NSOperationQueue         *_operationQueue;
         NSManagedObjectContext *backgroundContext = [_managedObjectContextsDictionary objectForKey: backgroundThreadContextKey];
         
         if (!backgroundContext) {
+            //Main thread as parent context
+            NSManagedObjectContext *mainThreadContext = _managedObjectContextsDictionary[[NSThread mainThread].name];
+            NSAssert(mainThreadContext, @"Main thread cannot be nil.");
+            
             backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-            backgroundContext.parentContext = [NSManagedObjectContext contextForMainThread];
-            [backgroundContext setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
+            backgroundContext.parentContext = mainThreadContext;
+            //backgroundContext.persistentStoreCoordinator = [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator];
+            //[backgroundContext setMergePolicy: NSMergeByPropertyObjectTrumpMergePolicy];
             backgroundContext.undoManager = nil;
+            
+            //[_managedObjectContextsDictionary setObject:backgroundContext forKey: backgroundThreadContextKey];
         }
         
         return backgroundContext;
@@ -244,29 +218,70 @@ static NSOperationQueue         *_operationQueue;
 
 #pragma mark -
 
-+ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved
-{
-    if (!_operationQueue) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 1;
-    }
-    
-    if (!_operationQueue) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 1;
-    }
-    
-    NSPersistentStoreCoordinator *store = [NSPersistentStoreCoordinator sharedPersisntentStoreCoordinator];
-    NSManagedObjectContextOperation *operation = [[NSManagedObjectContextOperation alloc] initWithPersistentStoreCoordinator: store];
-    operation.operationBlock = block;
-    operation.onOperationCompleted = onSaved;
-    
-    [_operationQueue addOperation: operation];
-}
-
 + (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block
 {
     [self performSaveOperationWithBlock:block onSaved: nil];
+}
+
++ (void) performSaveOperationWithBlock: (CoreDataOperationBlock) block onSaved: (OnSaved) onSaved
+{
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSPrivateQueueConcurrencyType];
+    [context setParentContext: [NSManagedObjectContext contextForMainThread]];
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    [context performBlock:^{
+        
+        @try {
+            block(context);
+            
+            [context recursiveSave];
+            
+        } @catch (NSException *exception) {
+            NSLog(@"Exception: %@", exception);
+        } @finally {
+            if (onSaved) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    onSaved();
+                });
+            }
+        }
+    }];
+}
+
++ (NSUInteger) operationsInQueue
+{
+    return _operationQueue.operationCount;
+}
+
+#pragma mark -
+
+-(void) recursiveSave
+{
+    if ([self hasChanges]) {
+        NSError *error;
+        if([self save: &error]) {
+            
+            __block NSManagedObjectContext *parent = self.parentContext;
+            while (parent != nil) {
+                [parent performBlockAndWait:^{
+                    if([parent hasChanges]) {
+                        NSError *error;
+                        if ([parent save:&error]) {
+                            parent = parent.parentContext;
+                        } else {
+                            NSLog(@"Failed context save: %@", [error userInfo]);
+                            parent = nil;
+                        }
+                    } else {
+                        parent = nil;
+                    }
+                }];
+            }
+        } else {
+            NSLog(@"Failed context save: %@", [error userInfo]);
+        }
+    }
 }
 
 @end

@@ -140,7 +140,7 @@
                 NSInteger afterUpdateEventsCount = [package.info count];
                 hasNewItems = (initialEventsCount < afterUpdateEventsCount);
                 
-                if([context hasChanges]) [context save: nil];
+                if([context hasChanges]) [context recursiveSave];
             }];
             
             return hasNewItems;
@@ -195,7 +195,7 @@
                         NSInteger afterUpdateEventsCount = [pkg.info count];
                         
                         if (onDone) onDone(@(initialEventsCount < afterUpdateEventsCount));
-                        [ctx save: nil];
+                        [ctx recursiveSave];
                     }];
                     
                 }];
@@ -274,7 +274,7 @@
                        }
                        
                        if([ctx hasChanges]) {
-                           [ctx save: nil];
+                           [ctx recursiveSave];
                        }
                    }];
                 }
@@ -438,7 +438,7 @@
             package.received        = record[@"received"];
             package.cloudID         = record[@"trackingNumber"];
             
-            [moc save: nil];
+            [moc recursiveSave];
             
             [self getTrackingInfoForItemWithID:trackingNumber onDone:nil onFailure:nil];
         }

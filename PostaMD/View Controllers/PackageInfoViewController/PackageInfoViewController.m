@@ -87,7 +87,7 @@
         if (self.package.unread.boolValue) {
             [self.package.managedObjectContext performBlock:^{
                 self.package.unread = @(NO);
-                [self.package.managedObjectContext save: nil];
+                [self.package.managedObjectContext recursiveSave];
             }];
         }
     }
@@ -281,7 +281,7 @@
     NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
     [context performBlockAndWait:^{
         self.package.trackingNumber = self.tfTrackingNumber.text;
-        [context save: nil];
+        [context recursiveSave];
     }];
     
     [textField resignFirstResponder];
