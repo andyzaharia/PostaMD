@@ -124,24 +124,30 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     
-        if (UIPasteboard.generalPasteboard.hasStrings) {
-            NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
-            if ([pasteboardValue isValidTrackingNumber]) {
-                
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
-                if ([ignoredItems containsObject: pasteboardValue]) {
-                    return;
-                }
-                
-                NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
-                [context performBlock:^{
-                    Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:pasteboardValue inContext: context];
-                    if (package == nil) {
-                        // Show Clipboard tracking number add request.
-                        [self showPasteboardSuggestionWithTrackingNumber: pasteboardValue];
+        UIPasteboard *pasteboard = UIPasteboard.generalPasteboard;
+        
+        if ([pasteboard respondsToSelector:@selector(hasStrings)]) {
+            
+            if (pasteboard.hasStrings) {
+            
+                NSString *pasteboardValue = [UIPasteboard generalPasteboard].string;
+                if ([pasteboardValue isValidTrackingNumber]) {
+                    
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSArray *ignoredItems = [defaults objectForKey: kDEFAULTS_IGNORED_TRACKING_NUMBERS_KEY];
+                    if ([ignoredItems containsObject: pasteboardValue]) {
+                        return;
                     }
-                }];
+                    
+                    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+                    [context performBlock:^{
+                        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:pasteboardValue inContext: context];
+                        if (package == nil) {
+                            // Show Clipboard tracking number add request.
+                            [self showPasteboardSuggestionWithTrackingNumber: pasteboardValue];
+                        }
+                    }];
+                }
             }
         }
     });
