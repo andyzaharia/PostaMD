@@ -466,23 +466,36 @@
     Package *package = [self.fetchedResultsController objectAtIndexPath: indexPath];
     NSArray *items = [package.info allObjects];
     items = [items sortedArrayUsingDescriptors:@[descriptor]];
-    
-    TrackingInfo *lastTrackInfo = [items lastObject];
-    if (lastTrackInfo) {
-        NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
-        if ([lastTrackInfo.localityStr length]) {
-            trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
-        }
-        cell.lbLastTrackingInfo.text = trackingStr;
+
+    if (package.errorOccurred.length > 0) {
+
+        cell.lbLastTrackingInfo.text = package.errorOccurred;
+        cell.lbLastTrackingInfo.textColor = [UIColor redColor];
         cell.lastTrackingInfoHeightConstraint.constant = 21.0;
     } else {
-        cell.lbLastTrackingInfo.text = NSLocalizedString(@"No data.", nil);
-        cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+        TrackingInfo *lastTrackInfo = [items lastObject];
+        if (lastTrackInfo) {
+            NSString *trackingStr = (lastTrackInfo) ? lastTrackInfo.eventStr : @"";
+            if ([lastTrackInfo.localityStr length]) {
+                trackingStr = [trackingStr stringByAppendingFormat:@" - %@", lastTrackInfo.localityStr];
+            }
+            cell.lbLastTrackingInfo.text = trackingStr;
+            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+        } else {
+            cell.lbLastTrackingInfo.text = NSLocalizedString(@"No data.", nil);
+            cell.lastTrackingInfoHeightConstraint.constant = 21.0;
+        }
+
+        cell.lbLastTrackingInfo.textColor = [UIColor colorWithRed:170.0/255.0
+                                                            green:170.0/255.0
+                                                             blue:170.0/255.0
+                                                            alpha:0.8];
     }
     
     cell.lbName.text = package.name;
     cell.lbTrackingNumber.text = package.trackingNumber;
-    cell.unRead = package.unread.boolValue && (!package.received.boolValue);
+    cell.unRead = package.unread.boolValue && (package.received.boolValue == NO);
+    cell.hasError = (package.errorOccurred.length > 0) && (package.received.boolValue == NO);
     cell.accessoryView = nil;
     cell.accessoryType = (package.received.boolValue) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
     

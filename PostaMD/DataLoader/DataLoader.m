@@ -114,12 +114,23 @@
         NSURL *url = [NSURL URLWithString: path];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: url];
         request.HTTPMethod = @"POST";
-        request.timeoutInterval = 25.0;
+        request.timeoutInterval = 15.0;
         request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
         
         NSData *data = [DataLoader sendSynchronousRequest:request returningResponse:&response error: &error];
         
         if(error) {
+            NSString *errorMessage = error.localizedDescription;
+            NSManagedObjectContext *context = [NSManagedObjectContext contextForBackgroundThread];
+            [context performBlockAndWait:^{
+                Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackID inContext: context];
+                if (package) {
+                    package.errorOccurred = errorMessage;
+                }
+
+                if([context hasChanges]) [context recursiveSave];
+            }];
+
             *errorPtr = error;
             return NO;
         } else if (data) {
@@ -136,6 +147,8 @@
                 if(freshEvents.count > 0) {
                     package.unread = @(YES);
                 }
+
+                package.errorOccurred = @"";
                 
                 NSInteger afterUpdateEventsCount = [package.info count];
                 hasNewItems = (initialEventsCount < afterUpdateEventsCount);

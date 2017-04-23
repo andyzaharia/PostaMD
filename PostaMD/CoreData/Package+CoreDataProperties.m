@@ -22,5 +22,6 @@
 @dynamic trackingNumber;
 @dynamic unread;
 @dynamic info;
+@dynamic errorOccurred;
 
 @end

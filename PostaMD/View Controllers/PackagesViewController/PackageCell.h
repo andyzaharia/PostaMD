@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lastTrackingInfoHeightConstraint;
 
 @property (nonatomic) BOOL unRead;
+@property (nonatomic) BOOL hasError;
 
 @end

@@ -11,6 +11,7 @@
 @interface PackageCell()
 
 @property (weak, nonatomic) IBOutlet UIImageView *ivUnread;
+@property (weak, nonatomic) IBOutlet UIImageView *ivError;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerLeadingConstraint;
 
 @end
@@ -24,6 +25,7 @@
         // Initialization code
         
         _ivUnread.alpha = 0.0;
+        _ivError.alpha = 0.0;
     }
     return self;
 }
@@ -34,6 +36,7 @@
     
     self.accessoryView = nil;
     self.ivUnread.alpha = 0.0;
+    self.ivError.alpha = 0.0;
     self.containerLeadingConstraint.constant = 16.0;
 }
 
@@ -44,11 +47,20 @@
     // Configure the view for the selected state
 }
 
+-(void) setHasError:(BOOL)hasError{
+    _hasError = hasError;
+
+    self.ivError.alpha = hasError ? 1.0 : 0.0;
+    self.ivUnread.alpha = 0.0;
+    self.containerLeadingConstraint.constant = hasError ? 28.0 : 16.0;
+}
+
 -(void) setUnRead:(BOOL)unRead
 {
     _unRead = unRead;
     
     self.ivUnread.alpha = unRead ? 1.0 : 0.0;
+    self.ivError.alpha = 0.0;
     self.containerLeadingConstraint.constant = unRead ? 28.0 : 16.0;
 }
 

@@ -3,6 +3,7 @@
     <entity name="Package" representedClassName="Package" syncable="YES">
         <attribute name="cloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="errorOccurred" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastChecked" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="received" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
@@ -21,7 +22,7 @@
         <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="info" inverseEntity="Package" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Package" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="Package" positionX="0" positionY="0" width="128" height="180"/>
         <element name="TrackingInfo" positionX="0" positionY="0" width="128" height="163"/>
     </elements>
 </model>
