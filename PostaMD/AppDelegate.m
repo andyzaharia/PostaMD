@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DataLoader.h"
+#import "Constants.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <iRate/iRate.h>
@@ -109,6 +110,10 @@
                                              } else {
                                                  completionHandler(UIBackgroundFetchResultNoData);
                                              }
+
+                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                             [defaults setObject:[NSDate date] forKey: kDEFAULTS_LAST_FULL_UPDATE];
+                                             [defaults synchronize];
                                              
                                              if (newEvents > 0) {
                                                  

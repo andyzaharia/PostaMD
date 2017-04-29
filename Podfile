@@ -10,6 +10,7 @@ target "PostaMD" do
 	pod 'Crashlytics'
 	pod 'Reveal-iOS-SDK', :configurations => ['Debug']
     pod 'iRate'
+    pod 'DateTools'
 	#pod 'GDCoreDataConcurrencyDebugging'
 
 end

@@ -21,6 +21,7 @@
 #import "PasteboardSuggestionView.h"
 #import "AddPackageViewController.h"
 #import "PackageInfoViewController.h"
+#import "NSDate+DateTools.h"
 #import "Constants.h"
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
@@ -55,7 +56,7 @@
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
-    
+
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents: UIControlEventValueChanged];
     [self.tableView addSubview: self.refreshControl];
@@ -80,6 +81,7 @@
     //[self.navigationController setToolbarHidden:NO animated:YES];
     
     [self checkPasteboardValue];
+    [self updateLastUpdatedLabel];
 }
 
 - (void)didReceiveMemoryWarning
@@ -275,6 +277,19 @@
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     
     self.totalItemsToRefresh = 0;
+
+    NSManagedObjectContext *context = [NSManagedObjectContext contextForMainThread];
+    [context performBlock:^{
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(received == NO) AND (self.errorOccurred != '')"];
+        NSArray *items = [Package findAllWithPredicate: predicate inContext: context];
+        if (items.count == 0) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:[NSDate date] forKey: kDEFAULTS_LAST_FULL_UPDATE];
+            [defaults synchronize];
+
+            [self updateLastUpdatedLabel];
+        }
+    }];
 }
 
 -(void) refreshData
@@ -320,6 +335,16 @@
     }];
     
     [[DataLoader shared] syncWithCloudKit];
+}
+
+-(void) updateLastUpdatedLabel
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdated = [defaults objectForKey: kDEFAULTS_LAST_FULL_UPDATE];
+    if (lastUpdated) {
+        NSString *updateStr = [NSString stringWithFormat:@"Last updated: %@", lastUpdated.timeAgoSinceNow];
+        self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString: updateStr];
+    }
 }
 
 -(void) deletePackage: (Package *) package
@@ -494,8 +519,10 @@
     
     cell.lbName.text = package.name;
     cell.lbTrackingNumber.text = package.trackingNumber;
+
     cell.unRead = package.unread.boolValue && (package.received.boolValue == NO);
     cell.hasError = (package.errorOccurred.length > 0) && (package.received.boolValue == NO);
+
     cell.accessoryView = nil;
     cell.accessoryType = (package.received.boolValue) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryDisclosureIndicator;
     

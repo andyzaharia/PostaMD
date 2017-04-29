@@ -47,12 +47,18 @@
     // Configure the view for the selected state
 }
 
+
+
 -(void) setHasError:(BOOL)hasError{
     _hasError = hasError;
 
     self.ivError.alpha = hasError ? 1.0 : 0.0;
-    self.ivUnread.alpha = 0.0;
-    self.containerLeadingConstraint.constant = hasError ? 28.0 : 16.0;
+    self.ivUnread.alpha = self.unRead ? 1.0 : 0.0;;
+    self.containerLeadingConstraint.constant = hasError || self.unRead ? 28.0 : 16.0;
+
+    if (hasError) {
+        self.ivUnread.hidden = YES;
+    }
 }
 
 -(void) setUnRead:(BOOL)unRead
@@ -60,8 +66,12 @@
     _unRead = unRead;
     
     self.ivUnread.alpha = unRead ? 1.0 : 0.0;
-    self.ivError.alpha = 0.0;
-    self.containerLeadingConstraint.constant = unRead ? 28.0 : 16.0;
+    self.ivError.alpha = self.hasError ? 1.0 : 0.0;
+    self.containerLeadingConstraint.constant = self.hasError || unRead ? 28.0 : 16.0;
+
+    if (unRead) {
+        self.ivUnread.hidden = NO;
+    }
 }
 
 @end
