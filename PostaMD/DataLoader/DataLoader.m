@@ -423,6 +423,12 @@
                     [fetchOperation setRecordFetchedBlock:^(CKRecord * _Nonnull record) {
                         [weakSelf savePackageCKRecord: record];
                     }];
+                    [fetchOperation setQueryCompletionBlock:^(CKQueryCursor * _Nullable cursor, NSError * _Nullable operationError){
+                        if (operationError) {
+                            NSLog(@"Error: %@", operationError);
+                        }
+                    }];
+
                     if(_lastOperation) [fetchOperation addDependency:_lastOperation];
                     [operations addObject: fetchOperation];
                     _lastOperation = fetchOperation;
@@ -430,6 +436,8 @@
                     if (operations.count) {
                         [self.cloudKitQueue addOperations:operations waitUntilFinished: NO];
                     }
+
+
                 }];
             }
         } else {
