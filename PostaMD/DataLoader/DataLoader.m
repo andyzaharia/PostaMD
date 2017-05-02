@@ -456,7 +456,7 @@
             package.date            = record[@"date"];
             package.trackingNumber  = trackingNumber;
             package.lastChecked     = record[@"lastChecked"];
-            package.received        = record[@"received"];
+            package.received        = record[@"received"] ? record[@"received"] : @(0);
             package.cloudID         = record[@"trackingNumber"];
             
             [moc recursiveSave];

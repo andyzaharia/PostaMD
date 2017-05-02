@@ -111,54 +111,60 @@
                                                  completionHandler(UIBackgroundFetchResultNoData);
                                              }
 
-                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                             [defaults setObject:[NSDate date] forKey: kDEFAULTS_LAST_FULL_UPDATE];
-                                             [defaults synchronize];
-                                             
-                                             if (newEvents > 0) {
-                                                 
-                                                 NSString *messageBody = @"";
-                                                 if (newEvents == 1) {
-                                                     NSArray *allKeys = [info allKeys];
-                                                     NSString *firstTrackingId = [allKeys firstObject];
-                                                     
-                                                     Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:firstTrackingId];
-                                                     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
-                                                     NSArray *items = [package.info allObjects];
-                                                     NSArray *events = [items sortedArrayUsingDescriptors:@[descriptor]];
-
-                                                     if ([events count]) {
-                                                         TrackingInfo *lastEvent = [events lastObject];
-                                                         NSString *localityStr = [lastEvent.localityStr length] ? [NSString stringWithFormat:@"(%@)", lastEvent.localityStr] : @"";
-                                                         messageBody = [NSString stringWithFormat:@"%@ - %@%@.", package.name, lastEvent.eventStr, localityStr];
-                                                     }
-                                                 } else {
-                                                     NSArray *allKeys = [info allKeys];
-                                                     
-                                                     NSMutableString *bodyStr = [NSMutableString stringWithFormat:@"Updates in "];
-                                                     [allKeys enumerateObjectsUsingBlock:^(NSString *trackingId, NSUInteger idx, BOOL *stop) {
-                                                         Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackingId];
-                                                         if (idx < newEvents - 1) {
-                                                             [bodyStr appendFormat:@"%@, ", package.name];
-                                                         } else {
-                                                             [bodyStr appendFormat:@"%@.", package.name];
-                                                         }
-                                                     }];
-                                                     messageBody = bodyStr;
-                                                 }
-                                                 
-                                                 if ([messageBody length]) {
-                                                     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-                                                     localNotification.fireDate = [NSDate date];
-                                                     localNotification.alertBody = messageBody;
-                                                     localNotification.soundName = UILocalNotificationDefaultSoundName;
-                                                     localNotification.applicationIconBadgeNumber = newEvents;
-                                                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-                                                 }
-                                             }
+                                            dispatch_async(dispatch_get_main_queue(), ^(void){
+                                                [self backgroundFetchPerformedWithItems: info.allKeys hasNewItems: (newEvents > 0)];
+                                            });
                                           } onFailure:^(NSError *error) {
                                               completionHandler(UIBackgroundFetchResultFailed);
                                           }];
+}
+
+#pragma mark -
+
+-(void) backgroundFetchPerformedWithItems: (NSArray *) items hasNewItems: (BOOL) newEvents
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSDate date] forKey: kDEFAULTS_LAST_FULL_UPDATE];
+    [defaults synchronize];
+
+    NSString *messageBody = @"";
+    if (newEvents == 1) {
+        NSArray *allKeys = items;
+        NSString *firstTrackingId = [allKeys firstObject];
+
+        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:firstTrackingId];
+        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"eventId" ascending: YES];
+        NSArray *items = [package.info allObjects];
+        NSArray *events = [items sortedArrayUsingDescriptors:@[descriptor]];
+
+        if ([events count]) {
+            TrackingInfo *lastEvent = [events lastObject];
+            NSString *localityStr = [lastEvent.localityStr length] ? [NSString stringWithFormat:@"(%@)", lastEvent.localityStr] : @"";
+            messageBody = [NSString stringWithFormat:@"%@ - %@%@.", package.name, lastEvent.eventStr, localityStr];
+        }
+    } else {
+        NSArray *allKeys = items;
+
+        NSMutableString *bodyStr = [NSMutableString stringWithFormat:@"Updates in "];
+        [allKeys enumerateObjectsUsingBlock:^(NSString *trackingId, NSUInteger idx, BOOL *stop) {
+            Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackingId];
+            if (idx < newEvents - 1) {
+                [bodyStr appendFormat:@"%@, ", package.name];
+            } else {
+                [bodyStr appendFormat:@"%@.", package.name];
+            }
+        }];
+        messageBody = bodyStr;
+    }
+
+    if ([messageBody length]) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.fireDate = [NSDate date];
+        localNotification.alertBody = messageBody;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.applicationIconBadgeNumber = newEvents;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 @end

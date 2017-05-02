@@ -371,7 +371,7 @@
                                                                    self.pasteboardView.frame.size.width,
                                                                    self.pasteboardView.frame.size.height)];
                      } completion:^(BOOL finished) {
-                         [self.navigationController setToolbarHidden:NO animated: YES];
+                         //[self.navigationController setToolbarHidden:NO animated: YES];
                          
                          [self.pasteboardView removeFromSuperview];
                          self.pasteboardView = nil;

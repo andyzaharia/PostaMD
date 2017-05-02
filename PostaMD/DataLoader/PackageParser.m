@@ -60,10 +60,10 @@ static NSDateFormatter *sharedDateFormatter = nil;
         
         NSPredicate *trackingPredicate = nil;
         if (date) {
-            trackingPredicate = [NSPredicate predicateWithFormat:@"(date == %@) AND (eventStr LIKE %@) AND (countryStr LIKE %@)", date, eventString, countryString];
+            trackingPredicate = [NSPredicate predicateWithFormat:@"(date == %@) AND (eventStr LIKE %@) AND (countryStr LIKE %@) AND (package == %@)", date, eventString, countryString, package];
         } else {
             // Fall back on checking 3 properties
-            trackingPredicate = [NSPredicate predicateWithFormat:@"(countryStr LIKE %@) AND (eventStr LIKE %@) AND (localityStr LIKE %@)", countryString, eventString, localityString];
+            trackingPredicate = [NSPredicate predicateWithFormat:@"(countryStr LIKE %@) AND (eventStr LIKE %@) AND (localityStr LIKE %@) AND (package == %@)", countryString, eventString, localityString, package];
         }
         
         TrackingInfo *info = [TrackingInfo findFirstWithPredicate:trackingPredicate inContext: context];
