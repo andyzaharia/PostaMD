@@ -96,7 +96,7 @@
     NSArray *items = [context executeFetchRequest: request error: nil];
     NSMutableArray *trackingNumbers = [NSMutableArray arrayWithCapacity: [items count]];
     [items enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL *stop) {
-        if (![package.received boolValue]) {
+        if ((![package.received boolValue]) && (package.trackingNumber.length > 0)) {
             [trackingNumbers addObject: package.trackingNumber];
         }
     }];
