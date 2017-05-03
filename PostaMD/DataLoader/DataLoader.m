@@ -377,41 +377,42 @@
                     packages = [Package findAllInContext: context];
                     
                     NSLog(@"%@", [DataLoader cloudKitContainerIdentifier]);
-                    
-                    
+
                     // Upload to CloudKit the new items
                     [packages enumerateObjectsUsingBlock:^(Package *package, NSUInteger idx, BOOL * _Nonnull stop) {
                         if (package.cloudID.length == 0) {
                             // We must sync this package
                             NSString *trackingNumber = package.trackingNumber;
-                            
-                            CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: trackingNumber];
-                            CKRecord *cloudPackage = [[CKRecord alloc] initWithRecordType:@"Package" recordID: recordID];
-                            cloudPackage[@"name"]               = package.name;
-                            cloudPackage[@"date"]               = package.date;
-                            cloudPackage[@"trackingNumber"]     = package.trackingNumber;
-                            cloudPackage[@"lastChecked"]        = package.lastChecked;
-                            cloudPackage[@"received"]           = package.received;
-                            
-                            CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:@[cloudPackage]
-                                                                                                        recordIDsToDelete: nil];
-                            operation.savePolicy = CKRecordSaveAllKeys;
-                            operation.database = privateDB;
-                            if(_lastOperation) [operation addDependency:_lastOperation];
-                            
-                            [operation setModifyRecordsCompletionBlock:^(NSArray<CKRecord *> * _Nullable savedRecords, NSArray<CKRecordID *> * _Nullable deletedRecordIDs, NSError * _Nullable error) {
-                                if (error == nil) {
-                                    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-                                        Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumber inContext: moc];
-                                        package.cloudID = trackingNumber;
-                                    }];
-                                } else {
-                                    NSLog(@"Error: %@", error.localizedDescription);
-                                }
-                            }];
-                            
-                            _lastOperation = operation;
-                            [operations addObject: operation];
+
+                            if (trackingNumber.length) {
+                                CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: trackingNumber];
+                                CKRecord *cloudPackage = [[CKRecord alloc] initWithRecordType:@"Package" recordID: recordID];
+                                cloudPackage[@"name"]               = package.name;
+                                cloudPackage[@"date"]               = package.date;
+                                cloudPackage[@"trackingNumber"]     = package.trackingNumber;
+                                cloudPackage[@"lastChecked"]        = package.lastChecked;
+                                cloudPackage[@"received"]           = package.received;
+                                
+                                CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:@[cloudPackage]
+                                                                                                            recordIDsToDelete: nil];
+                                operation.savePolicy = CKRecordSaveAllKeys;
+                                operation.database = privateDB;
+                                if(_lastOperation) [operation addDependency:_lastOperation];
+                                
+                                [operation setModifyRecordsCompletionBlock:^(NSArray<CKRecord *> * _Nullable savedRecords, NSArray<CKRecordID *> * _Nullable deletedRecordIDs, NSError * _Nullable error) {
+                                    if (error == nil) {
+                                        [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                                            Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumber inContext: moc];
+                                            package.cloudID = trackingNumber;
+                                        }];
+                                    } else {
+                                        NSLog(@"Error: %@", error.localizedDescription);
+                                    }
+                                }];
+                                
+                                _lastOperation = operation;
+                                [operations addObject: operation];
+                            }
                         }
                     }];
                     
