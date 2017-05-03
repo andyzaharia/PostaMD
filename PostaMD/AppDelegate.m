@@ -145,7 +145,7 @@
     } else {
         NSArray *allKeys = items;
 
-        NSMutableString *bodyStr = [NSMutableString stringWithFormat:@"Updates in "];
+        NSMutableString *bodyStr = [NSMutableString stringWithFormat:@""];
         [allKeys enumerateObjectsUsingBlock:^(NSString *trackingId, NSUInteger idx, BOOL *stop) {
             Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue: trackingId];
             if (idx < newEvents - 1) {
@@ -154,7 +154,10 @@
                 [bodyStr appendFormat:@"%@.", package.name];
             }
         }];
-        messageBody = bodyStr;
+
+        if (bodyStr.length > 0) {
+            messageBody = [NSString stringWithFormat: @"Updates in %@", bodyStr];
+        }
     }
 
     if ([messageBody length]) {
