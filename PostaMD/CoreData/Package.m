@@ -22,9 +22,7 @@
             [context cloudKitDeleteObject:item
                     andRecordNameProperty:@"cloudID"
                                completion:^(NSError *error) {
-                                   dispatch_async(dispatch_get_main_queue(), ^(void){
-                                       if (error) [UIAlertController error: error.localizedDescription];
-                                   });
+                                    if (error) [UIAlertController error: error.localizedDescription];
                                }];
         } else {
             [context deleteObject: item];

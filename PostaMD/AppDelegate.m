@@ -39,8 +39,9 @@
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
         [application registerUserNotificationSettings: settings];
+        [application registerForRemoteNotifications];
     }
-    
+
     return YES;
 }
 
@@ -68,7 +69,7 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    [[DataLoader shared] syncWithCloudKit];
+    //[[DataLoader shared] syncWithCloudKit];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -118,6 +119,11 @@
                                               completionHandler(UIBackgroundFetchResultFailed);
                                           }];
 }
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Notification: %@", userInfo);
+}
+
 
 #pragma mark -
 

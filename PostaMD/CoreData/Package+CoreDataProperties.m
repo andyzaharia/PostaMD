@@ -23,5 +23,6 @@
 @dynamic unread;
 @dynamic info;
 @dynamic errorOccurred;
+@dynamic deleted;
 
 @end

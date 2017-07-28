@@ -23,6 +23,7 @@
 #import "PackageInfoViewController.h"
 #import "NSDate+DateTools.h"
 #import "Constants.h"
+#import <CloudKit/CloudKit.h>
 
 @interface PackagesViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
 {
@@ -65,12 +66,48 @@
                                              selector:@selector(checkPasteboardValue)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+
+    NSString *containerIdentier = [DataLoader cloudKitContainerIdentifier];
+    CKContainer *container = [CKContainer containerWithIdentifier: containerIdentier];
+    CKDatabase *privateDB = [container privateCloudDatabase];
+
+    CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName:@"DS2000330803AS"];
+
+//    CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
+//    fetchOperation.database = privateDB;
+//    [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
+//        NSLog(@"Error: %@", error.localizedDescription);
+//    }];
+//
+//    [privateDB addOperation: fetchOperation];
+//
+//    [NSTimer scheduledTimerWithTimeInterval:100 repeats:NO block:^(NSTimer * _Nonnull timer) {
+//
+//        CKContainer *container = [CKContainer defaultContainer];
+//        CKDatabase *privateDB = [container privateCloudDatabase];
+//
+//        CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName:@"DS2000330803AS"];
+//
+//        CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
+//        fetchOperation.database = privateDB;
+//        [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
+//            NSLog(@"Error: %@", error.localizedDescription);
+//        }];
+//        
+//        [privateDB addOperation: fetchOperation];
+//    }];
+
+    [privateDB deleteRecordWithID:recordID completionHandler:^(CKRecordID * _Nullable recordID, NSError * _Nullable error) {
+        if(error) {
+            NSLog(@"Error: %@", error);
+        }
+    }];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //[self.navigationController setToolbarHidden:YES animated:YES];
-    
+
     if (self.pasteboardView) {
         [self dismissSuggestionView];
     }
@@ -101,6 +138,7 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
     [request setSortDescriptors: @[sortByReceived, sortByDate]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"deleted == NO"]];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:context
@@ -350,6 +388,18 @@
 -(void) deletePackage: (Package *) package
 {
     if(package) [Package deleteWithItem: package];
+
+//    NSString *containerIdentier = [DataLoader cloudKitContainerIdentifier];
+//    CKContainer *container = [CKContainer containerWithIdentifier: containerIdentier];
+//    CKDatabase *privateDB = [container privateCloudDatabase];
+//
+//    CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: package.trackingNumber];
+//
+//    [privateDB deleteRecordWithID:recordID completionHandler:^(CKRecordID * _Nullable recordID, NSError * _Nullable error) {
+//        if(error) {
+//            NSLog(@"Error: %@", error);
+//        }
+//    }];
 }
 
 #pragma mark - Actions
@@ -576,7 +626,7 @@
             break;
 
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
             break;
 
         case NSFetchedResultsChangeUpdate:

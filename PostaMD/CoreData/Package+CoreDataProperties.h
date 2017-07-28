@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSNumber *received;
 @property (nullable, nonatomic, copy) NSString *trackingNumber;
 @property (nullable, nonatomic, copy) NSNumber *unread;
+@property (nullable, nonatomic, copy) NSNumber *deleted;
 @property (nullable, nonatomic, retain) NSSet<TrackingInfo *> *info;
 @property (nullable, nonatomic, copy) NSString *errorOccurred;
 
