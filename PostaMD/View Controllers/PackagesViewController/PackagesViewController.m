@@ -66,42 +66,7 @@
                                              selector:@selector(checkPasteboardValue)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-
-    NSString *containerIdentier = [DataLoader cloudKitContainerIdentifier];
-    CKContainer *container = [CKContainer containerWithIdentifier: containerIdentier];
-    CKDatabase *privateDB = [container privateCloudDatabase];
-
-    CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName:@"DS2000330803AS"];
-
-//    CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
-//    fetchOperation.database = privateDB;
-//    [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
-//        NSLog(@"Error: %@", error.localizedDescription);
-//    }];
-//
-//    [privateDB addOperation: fetchOperation];
-//
-//    [NSTimer scheduledTimerWithTimeInterval:100 repeats:NO block:^(NSTimer * _Nonnull timer) {
-//
-//        CKContainer *container = [CKContainer defaultContainer];
-//        CKDatabase *privateDB = [container privateCloudDatabase];
-//
-//        CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName:@"DS2000330803AS"];
-//
-//        CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
-//        fetchOperation.database = privateDB;
-//        [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
-//            NSLog(@"Error: %@", error.localizedDescription);
-//        }];
-//        
-//        [privateDB addOperation: fetchOperation];
-//    }];
-
-    [privateDB deleteRecordWithID:recordID completionHandler:^(CKRecordID * _Nullable recordID, NSError * _Nullable error) {
-        if(error) {
-            NSLog(@"Error: %@", error);
-        }
-    }];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -138,8 +103,8 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
     [request setSortDescriptors: @[sortByReceived, sortByDate]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"deleted == NO"]];
-    
+    //[request setPredicate:[NSPredicate predicateWithFormat:@"deleted == NO"]];
+
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:context
                                                                           sectionNameKeyPath:@"received"
@@ -387,7 +352,21 @@
 
 -(void) deletePackage: (Package *) package
 {
-    if(package) [Package deleteWithItem: package];
+    if(package) {
+
+        if (package.cloudID.length > 0) {
+            __weak PackagesViewController *weakSelf = self;
+
+            [MBProgressHUD showHUDAddedTo:self.view animated: YES];
+
+            [Package deleteWithItem: package onCompletion:^(NSError *error) {
+                [MBProgressHUD hideHUDForView:weakSelf.view animated: YES];
+            }];
+            
+        } else {
+            [Package deleteWithItem: package onCompletion: nil];
+        }
+    }
 
 //    NSString *containerIdentier = [DataLoader cloudKitContainerIdentifier];
 //    CKContainer *container = [CKContainer containerWithIdentifier: containerIdentier];
@@ -585,9 +564,9 @@
         cell.accessoryView = indicatorView;
     }
     
-    
     cell.selectedBackgroundView = [UIView new];
     cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+    //NSLog(@"Name: %@ Deleted %@", package.name, package.deleted);
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

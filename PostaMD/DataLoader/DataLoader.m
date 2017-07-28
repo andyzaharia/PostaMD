@@ -406,6 +406,9 @@ static NSString *kDatabaseChangesSubscription = @"com.andyzaharia.post.subscript
 
             [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
                 NSPredicate *deletePredicate = [NSPredicate predicateWithFormat:@"trackingNumber == %@", trackingNumber];
+                NSInteger count = [Package countOfEntitiesWithPredicate:deletePredicate];
+                NSLog(@"About to delete: %ld items", count);
+
                 [Package deleteAllMatchingPredicate:deletePredicate inContext: moc];
             }];
         }];

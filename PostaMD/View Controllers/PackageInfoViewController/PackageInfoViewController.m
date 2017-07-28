@@ -141,14 +141,15 @@
 
 -(void) delete:(id)sender
 {
+    __weak PackageInfoViewController *weakSelf = self;
+
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Are you sure?"
                                                                         message:nil
                                                                  preferredStyle:UIAlertControllerStyleActionSheet];
     [controller addAction:[UIAlertAction actionWithTitle:@"Yes"
                                                    style:UIAlertActionStyleDestructive
                                                  handler:^(UIAlertAction * _Nonnull action) {
-                                                     if(self.package) [Package deleteWithItem: self.package];
-                                                     self.package = nil;
+                                                     [weakSelf delete];
                                                      [self.navigationController popViewControllerAnimated: YES];
                                                  }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"No"
@@ -157,6 +158,17 @@
                                                      
                                                  }]];
     [self presentViewController:controller animated:YES completion: nil];
+}
+
+-(void) delete
+{
+    __weak PackageInfoViewController *weakSelf = self;
+
+    if(self.package) [Package deleteWithItem: self.package onCompletion:^(NSError *error) {
+        //
+    }];
+
+    self.package = nil;
 }
 
 #pragma mark - Table view data source

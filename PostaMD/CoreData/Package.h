@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+typedef void (^OnDeleteCompleted)(NSError *error);
+
 @class TrackingInfo;
 
 @interface Package : NSManagedObject
 
-+(void) deleteWithItem:(Package *) item;
++(void) deleteWithItem:(Package *) item onCompletion: (OnDeleteCompleted) onCompletion;
 
 @end
