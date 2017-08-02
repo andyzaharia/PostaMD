@@ -26,66 +26,102 @@
 
     if (item.cloudID.length > 0) {
         CKRecordID *recordID = [[CKRecordID alloc] initWithRecordName: item.cloudID];
-        [privateDB fetchRecordWithID:recordID
-                   completionHandler:^(CKRecord * _Nullable record, NSError * _Nullable error) {
 
-                       if ((error == nil) && record) {
-                           record[@"isDeleted"] = @(1);
+        CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
+        fetchOperation.database = privateDB;
+        [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
 
-                           CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave: @[record]
-                                                                                                       recordIDsToDelete: @[recordID]];
-                           operation.qualityOfService = NSQualityOfServiceUserInitiated;
-                           operation.database = privateDB;
+            if ((error == nil) && record) {
+                record[@"isDeleted"] = @(1);
 
-                           [operation setModifyRecordsCompletionBlock:^(NSArray<CKRecord *> * _Nullable savedRecords,
-                                                                        NSArray<CKRecordID *> * _Nullable deletedRecordIDs,
-                                                                        NSError * _Nullable error) {
-                               if (error == nil) {
+                CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave: @[record]
+                                                                                            recordIDsToDelete: nil];
+                operation.qualityOfService = NSQualityOfServiceUserInitiated;
+                operation.database = privateDB;
 
-                                   [deletedRecordIDs enumerateObjectsUsingBlock:^(CKRecordID * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                                       if ([recordID isEqual: obj]) {
-                                           // Execute the block on the receiver's queue.
+                [operation setModifyRecordsCompletionBlock:^(NSArray<CKRecord *> * _Nullable savedRecords,
+                                                             NSArray<CKRecordID *> * _Nullable deletedRecordIDs,
+                                                             NSError * _Nullable error) {
+                    if (error == nil) {
 
-                                           [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-                                               NSManagedObject *package = [moc objectWithID: packageObjectID];
-                                               if (package) {
-                                                   [moc deleteObject:package];
-                                               }
-                                           } onSaved:^{
-                                               if (onCompletion) onCompletion(nil);
-                                           }];
-                                       }
-                                   }];
-                               } else {
-                                   NSLog(@"Error: %@", error.localizedDescription);
+                        CKModifyRecordsOperation *operation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave: nil
+                                                                                                    recordIDsToDelete: @[recordID]];
+                        operation.qualityOfService = NSQualityOfServiceUserInitiated;
+                        operation.database = privateDB;
 
-                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                       if (onCompletion) onCompletion(error);
-                                   });
-                               }
-                           }];
+                        [operation setModifyRecordsCompletionBlock:^(NSArray<CKRecord *> * _Nullable savedRecords,
+                                                                     NSArray<CKRecordID *> * _Nullable deletedRecordIDs,
+                                                                     NSError * _Nullable error) {
 
-                           [privateDB addOperation: operation];
-                       } else {
-                           // Failed.
+                            if (error == nil) {
+                                __block BOOL didFinish = NO;
 
-                           if (error.code == CKErrorUnknownItem) {
-                               [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
-                                   NSManagedObject *package = [moc objectWithID: packageObjectID];
-                                   if (package) {
-                                       [moc deleteObject:package];
-                                   }
-                               } onSaved:^{
-                                   if (onCompletion) onCompletion(nil);
-                               }];
-                           } else {
+                                [deletedRecordIDs enumerateObjectsUsingBlock:^(CKRecordID * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                    if ([recordID isEqual: obj]) {
+                                        // Execute the block on the receiver's queue.
+                                        didFinish = YES;
 
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                   if (onCompletion) onCompletion(error);
-                               });
-                           }
-                       }
-                   }];
+                                        [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                                            NSManagedObject *package = [moc objectWithID: packageObjectID];
+                                            if (package) {
+                                                [moc deleteObject:package];
+                                            }
+                                        } onSaved:^{
+                                            if (onCompletion) onCompletion(nil);
+                                        }];
+                                    }
+                                }];
+
+                                if (didFinish == NO) {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        if (onCompletion) onCompletion(nil);
+                                    });
+                                }
+
+                            } else {
+                                NSLog(@"Error: %@", error.localizedDescription);
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    if (onCompletion) onCompletion(error);
+                                });
+                            }
+
+                        }];
+
+                        [privateDB addOperation: operation];
+
+                    } else {
+                        NSLog(@"Error: %@", error.localizedDescription);
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (onCompletion) onCompletion(error);
+                        });
+                    }
+                }];
+
+                [privateDB addOperation: operation];
+            } else {
+                // Failed.
+
+                if (error.code == CKErrorUnknownItem) {
+                    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                        NSManagedObject *package = [moc objectWithID: packageObjectID];
+                        if (package) {
+                            [moc deleteObject:package];
+                        }
+                    } onSaved:^{
+                        if (onCompletion) onCompletion(nil);
+                    }];
+                } else {
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (onCompletion) onCompletion(error);
+                    });
+                }
+            }
+
+        }];
+
+        [privateDB addOperation: fetchOperation];
     } else {
 
         [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {

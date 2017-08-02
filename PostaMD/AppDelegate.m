@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "DataLoader.h"
 #import "Constants.h"
+
+#import <CloudKit/CloudKit.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <iRate/iRate.h>
@@ -41,6 +43,12 @@
         [application registerUserNotificationSettings: settings];
         [application registerForRemoteNotifications];
     }
+
+
+    [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+        [Package deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"name == NULL"]
+                                  inContext: moc];
+    }];
 
     return YES;
 }
@@ -120,8 +128,19 @@
                                           }];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+{
     NSLog(@"Notification: %@", userInfo);
+
+    CKNotification *cloudKitNotification = [CKNotification notificationFromRemoteNotificationDictionary:userInfo];
+    if (cloudKitNotification.notificationType == CKNotificationTypeQuery) {
+        CKQueryNotification *notification = (CKQueryNotification *)cloudKitNotification;
+        [[DataLoader shared] processQueryNotification: notification onFinish:^(UIBackgroundFetchResult result){
+            completionHandler(result);
+        }];
+    } else {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 

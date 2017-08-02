@@ -103,7 +103,7 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: @"Package"];
     [request setSortDescriptors: @[sortByReceived, sortByDate]];
-    //[request setPredicate:[NSPredicate predicateWithFormat:@"deleted == NO"]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"(deleted == NO) AND (received != nil)"]];
 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:context
@@ -567,6 +567,10 @@
     cell.selectedBackgroundView = [UIView new];
     cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
     //NSLog(@"Name: %@ Deleted %@", package.name, package.deleted);
+
+    NSLog(@"Received: %@", package.received);
+    NSLog(@"Name: %@", package.name);
+    NSLog(@"Deleted: %@", package.deleted);
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

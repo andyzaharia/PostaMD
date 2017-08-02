@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CloudKit/CloudKit.h>
+
 #import "Package.h"
 #import "Package+CoreDataProperties.h"
 #import "TrackingInfo.h"
@@ -16,6 +18,8 @@ typedef void (^OnFailure)(NSError *error);
 
 typedef void (^OnFetchSuccess)(BOOL didFetchNewData);
 typedef void (^OnFetchSuccessEx)(NSDictionary *info);
+
+typedef void (^OnFinished)(UIBackgroundFetchResult result);
 
 static NSInteger minTrackingNumberLength = 13;
 
@@ -35,6 +39,7 @@ static NSInteger minTrackingNumberLength = 13;
 
 -(void) syncWithCloudKit;
 
+-(void) processQueryNotification: (CKQueryNotification *) notification onFinish: (OnFinished) onFinish;
 
 -(void) debug;
 

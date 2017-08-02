@@ -11,17 +11,11 @@
 @implementation NSPersistentStoreCoordinator (Custom)
 
 static NSPersistentStoreCoordinator *_sharedPersistentStore = nil;
-static NSString *_ubiquitousContentNameKey = nil;
 static NSString *_dataModelName = nil;
 static NSString *_storeFileName = nil;
 
 + (NSString *)applicationDocumentsDirectory {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-}
-
-+ (void) setUbiquitousContentNameKey: (NSString *) keyName
-{
-    _ubiquitousContentNameKey = keyName;
 }
 
 + (void) setDataModelName: (NSString *) name withStoreName: (NSString *) storeFileName {
@@ -49,9 +43,6 @@ static NSString *_storeFileName = nil;
             
             NSMutableDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES),
                                              NSInferMappingModelAutomaticallyOption : @(YES)}.mutableCopy;
-            if (_ubiquitousContentNameKey) {
-                [options setObject:_ubiquitousContentNameKey forKey: NSPersistentStoreUbiquitousContentNameKey];
-            }
             
             NSError *error;
             _sharedPersistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: _managedObjectModel];

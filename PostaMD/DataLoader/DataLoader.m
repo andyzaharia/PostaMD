@@ -11,7 +11,6 @@
 #import "NSError+CustomError.h"
 
 #import "NSManagedObjectContext+Custom.h"
-#import <CloudKit/CloudKit.h>
 
 @interface DataLoader ()
 {
@@ -330,20 +329,21 @@ static NSString *kDatabaseChangesSubscription = @"com.andyzaharia.post.subscript
 
 -(void) registerSubscription
 {
-    CKSubscriptionOptions options = CKSubscriptionOptionsFiresOnRecordCreation | CKSubscriptionOptionsFiresOnRecordUpdate | CKSubscriptionOptionsFiresOnRecordDeletion;
+    CKQuerySubscriptionOptions options = CKQuerySubscriptionOptionsFiresOnRecordCreation |
+                                         CKQuerySubscriptionOptionsFiresOnRecordUpdate |
+                                         CKQuerySubscriptionOptionsFiresOnRecordDeletion;
 
-    CKSubscription *subscription = [[CKSubscription alloc] initWithRecordType:@"Package"
-                                                                    predicate:[NSPredicate predicateWithValue:YES]
-                                                               subscriptionID:kDatabaseChangesSubscription
-                                                                      options:options];
+    CKQuerySubscription *subscription = [[CKQuerySubscription alloc] initWithRecordType:@"Package"
+                                                                              predicate:[NSPredicate predicateWithValue:YES]
+                                                                         subscriptionID:kDatabaseChangesSubscription
+                                                                                options:options];
 
     CKNotificationInfo *notificationInfo = [CKNotificationInfo new];
-    notificationInfo.alertLocalizationKey = @"New update.";
-    notificationInfo.shouldBadge = YES;
+    notificationInfo.alertLocalizationKey = nil;
+    notificationInfo.shouldBadge = NO;
+    notificationInfo.shouldSendContentAvailable = YES;
 
     subscription.notificationInfo = notificationInfo;
-
-
 
     CKContainer *container = [CKContainer defaultContainer];
     CKDatabase *privateDB = [container privateCloudDatabase];
@@ -379,6 +379,8 @@ static NSString *kDatabaseChangesSubscription = @"com.andyzaharia.post.subscript
             }];
         }
     }];
+
+    [self registerSubscription];
 }
 
 #pragma mark - Sync
@@ -464,7 +466,7 @@ static NSString *kDatabaseChangesSubscription = @"com.andyzaharia.post.subscript
                     NSString *trackingNumber = record[@"trackingNumber"];
 
                     Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumber inContext: moc];
-                    package.cloudID = trackingNumber;
+                    package.cloudID = record.recordID.recordName;
                 }];
             }];
         } else {
@@ -592,7 +594,7 @@ static NSString *kDatabaseChangesSubscription = @"com.andyzaharia.post.subscript
             package.lastChecked     = record[@"lastChecked"];
             package.received        = record[@"received"] ? record[@"received"] : @(0);
             package.cloudID         = record.recordID.recordName;
-            package.deleted         = record[@"isDeleted"];
+            package.deleted         = record[@"isDeleted"] ? record[@"isDeleted"] : @(NO);
             
             [moc recursiveSave];
             
@@ -600,6 +602,146 @@ static NSString *kDatabaseChangesSubscription = @"com.andyzaharia.post.subscript
         }
     }];
 }
+
+#pragma mark - Subscription implementation
+
+-(void) fetchAndSaveWithRecordID: (CKRecordID *) recordID onFinish: (OnFinished) onFinish
+{
+    __weak DataLoader *weakSelf = self;
+
+    CKContainer *container = [CKContainer defaultContainer];
+    CKDatabase *privateDB = [container privateCloudDatabase];
+
+    CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
+    fetchOperation.database = privateDB;
+    [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
+        if (error == nil) {
+            // Not entirely safe, we should wait for the save to complete.
+            [weakSelf savePackageCKRecord: record];
+        } else {
+            // Do nothing. Its a silent notification anyway.
+        }
+    }];
+
+    [fetchOperation setCompletionBlock:^{
+        onFinish(UIBackgroundFetchResultNewData);
+    }];
+
+    [privateDB addOperation: fetchOperation];
+}
+
+-(void) fetchAndUpdateWithRecordID: (CKRecordID *) recordID onFinish: (OnFinished) onFinish
+{
+    __weak DataLoader *weakSelf = self;
+
+    CKContainer *container = [CKContainer defaultContainer];
+    CKDatabase *privateDB = [container privateCloudDatabase];
+
+    CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
+    fetchOperation.database = privateDB;
+    [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
+        if (error == nil) {
+            // Not entirely safe, we should wait for the save to complete.
+            NSString *trackingNumber = record[@"trackingNumber"];
+            if (trackingNumber.length) {
+                [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+
+                    Package *package = [Package findFirstByAttribute:@"trackingNumber" withValue:trackingNumber inContext: moc];
+                    if (package == nil) {
+                        package = [Package createEntityInContext: moc];
+                    }
+
+                    if(package) {
+                        package.name            = record[@"name"];
+                        package.date            = record[@"date"];
+                        package.trackingNumber  = trackingNumber;
+                        package.lastChecked     = record[@"lastChecked"];
+                        package.received        = record[@"received"] ? record[@"received"] : @(0);
+                        package.cloudID         = record.recordID.recordName;
+                        package.deleted         = record[@"isDeleted"];
+
+                        [moc recursiveSave];
+
+                        [weakSelf getTrackingInfoForItemWithID:trackingNumber onDone:nil onFailure:nil];
+                    }
+                }];
+            }
+        } else {
+            // Do nothing. Its a silent notification anyway.
+        }
+    }];
+
+    [fetchOperation setCompletionBlock:^{
+        onFinish(UIBackgroundFetchResultNewData);
+    }];
+
+    [privateDB addOperation: fetchOperation];
+}
+
+-(void) fetchAndDeleteWithRecordID: (CKRecordID *) recordID onFinish: (OnFinished) onFinish
+{
+    CKContainer *container = [CKContainer defaultContainer];
+    CKDatabase *privateDB = [container privateCloudDatabase];
+
+    CKFetchRecordsOperation *fetchOperation = [[CKFetchRecordsOperation alloc] initWithRecordIDs: @[recordID]];
+    fetchOperation.database = privateDB;
+    [fetchOperation setPerRecordCompletionBlock:^(CKRecord * _Nullable record, CKRecordID * _Nullable recordID, NSError * _Nullable error){
+        if (error == nil) {
+            // Not entirely safe, we should wait for the save to complete.
+            NSString *trackingNumber = record[@"trackingNumber"];
+            if (trackingNumber.length) {
+                [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                    [Package deleteAllMatchingPredicate: [NSPredicate predicateWithFormat:@"trackingNumber == %@", trackingNumber]
+                                              inContext: moc];
+                }];
+            }
+        } else {
+            // Do nothing. Its a silent notification anyway.
+            [NSManagedObjectContext performSaveOperationWithBlock:^(NSManagedObjectContext *moc) {
+                [Package deleteAllMatchingPredicate: [NSPredicate predicateWithFormat:@"cloudID == %@", recordID.recordName]
+                                          inContext: moc];
+            }];
+        }
+    }];
+
+    [fetchOperation setCompletionBlock:^{
+        onFinish(UIBackgroundFetchResultNewData);
+    }];
+    
+    [privateDB addOperation: fetchOperation];
+}
+
+-(void) processQueryNotification: (CKQueryNotification *) notification onFinish: (OnFinished) onFinish
+{
+    CKRecordID *recordID = [notification recordID];
+
+    switch (notification.queryNotificationReason) {
+        case CKQueryNotificationReasonRecordCreated: {
+            [self fetchAndSaveWithRecordID:recordID onFinish:^(UIBackgroundFetchResult result) {
+                onFinish(result);
+            }];
+            break;
+        }
+        case CKQueryNotificationReasonRecordUpdated: {
+            [self fetchAndUpdateWithRecordID:recordID onFinish:^(UIBackgroundFetchResult result) {
+                onFinish(result);
+            }];
+            break;
+        }
+        case CKQueryNotificationReasonRecordDeleted: {
+            [self fetchAndDeleteWithRecordID:recordID onFinish:^(UIBackgroundFetchResult result) {
+                onFinish(result);
+            }];
+            break;
+        }
+        default: {
+            onFinish(UIBackgroundFetchResultNoData);
+        }
+            break;
+    }
+}
+
+#pragma mark -
 
 -(void) debug {
     

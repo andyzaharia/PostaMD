@@ -11,7 +11,6 @@
 @interface NSPersistentStoreCoordinator (Custom)
 
 // Configuration
-+ (void) setUbiquitousContentNameKey: (NSString *) keyName;
 + (void) setDataModelName: (NSString *) name withStoreName: (NSString *) storeFileName;
 
 + (NSPersistentStoreCoordinator *) sharedPersisntentStoreCoordinator;
