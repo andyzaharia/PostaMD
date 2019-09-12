@@ -1,11 +1,10 @@
-platform :ios, '7.0'
+platform :ios, '10.0'
 
 inhibit_all_warnings!
 
 target "PostaMD" do
 
-    pod 'HTMLReader'
-	pod 'MBProgressHUD'
+  pod 'HTMLReader'
 	pod 'Fabric'
 	pod 'Crashlytics'
 	pod 'Reveal-iOS-SDK', :configurations => ['Debug']

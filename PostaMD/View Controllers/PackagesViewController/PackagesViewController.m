@@ -195,6 +195,7 @@
 -(void) updateHudProgressWithItemsToRefresh: (NSInteger) itemsToRefresh
 {
     MBProgressHUD *hud = [MBProgressHUD HUDForView: self.navigationController.view];
+    hud.defaultMotionEffectsEnabled = NO;
     if (hud) {
         NSInteger refreshedItems = self.totalItemsToRefresh - itemsToRefresh;
         CGFloat progress = (float)refreshedItems / (float)(self.totalItemsToRefresh);
@@ -322,6 +323,7 @@
             
             if (withHudPresent) {
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated: YES];
+                hud.defaultMotionEffectsEnabled = NO;
                 //hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
                 //hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
                 

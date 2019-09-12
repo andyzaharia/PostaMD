@@ -88,6 +88,8 @@
 		A10C793F1C5E69BE005E47E9 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */; };
 		A12E4F9E1E2151C100C6C529 /* XCTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = A12E4F9D1E2151C100C6C529 /* XCTestCase.m */; };
 		A13CAF351F2DD5DD00CC5BA9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A13CAF341F2DD5DD00CC5BA9 /* Launch Screen.storyboard */; };
+		A1C999BD232A2DF900E9BFCB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C999B9232A2DF800E9BFCB /* MBProgressHUD.m */; };
+		A1C999BE232A2DF900E9BFCB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C999B9232A2DF800E9BFCB /* MBProgressHUD.m */; };
 		A1CEE06B1DB0F40C00BB3A40 /* UIAlertController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = A1CEE06A1DB0F40C00BB3A40 /* UIAlertController+Alert.m */; };
 		A1CEE06C1DB0F40C00BB3A40 /* UIAlertController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = A1CEE06A1DB0F40C00BB3A40 /* UIAlertController+Alert.m */; };
 		A1F7B9FC1C5E660E00F9348B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7B9FB1C5E660E00F9348B /* CloudKit.framework */; };
@@ -187,6 +189,8 @@
 		A13CAF341F2DD5DD00CC5BA9 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Resource/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A15EDBF51DC3F3030005755C /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A17AA5EA1EAD202F00DFE6D9 /* DataModel 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 5.xcdatamodel"; sourceTree = "<group>"; };
+		A1C999B9232A2DF800E9BFCB /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		A1C999BB232A2DF800E9BFCB /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		A1CEE0691DB0F40C00BB3A40 /* UIAlertController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Alert.h"; sourceTree = "<group>"; };
 		A1CEE06A1DB0F40C00BB3A40 /* UIAlertController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Alert.m"; sourceTree = "<group>"; };
 		A1CEE0701DB0FB6E00BB3A40 /* DataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 4.xcdatamodel"; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 		755851A018C13A0900AA0553 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				A1C999B8232A2DF800E9BFCB /* MBProgressHUD */,
 				759BCD5A1C70C8D60064B549 /* NSError+CustomError */,
 				A1CEE0681DB0F40C00BB3A40 /* UIAlertController */,
 				75A26E2B1BD18B3900C8F75C /* UITableView+RemoveSeparators */,
@@ -477,6 +482,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A1C999B8232A2DF800E9BFCB /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A1C999BB232A2DF800E9BFCB /* MBProgressHUD.h */,
+				A1C999B9232A2DF800E9BFCB /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		A1CEE0681DB0F40C00BB3A40 /* UIAlertController */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,7 +523,6 @@
 				750A6F431BE0034C0071FD7B /* Frameworks */,
 				750A6F4C1BE0034C0071FD7B /* Resources */,
 				750A6F511BE0034C0071FD7B /* ShellScript */,
-				91E1E935EA5D9AB3F295984D /* [CP] Embed Pods Frameworks */,
 				F03493D31E8FF5569A9BDCF6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -530,7 +543,6 @@
 				75EBA10C18C12AE200DB1856 /* Frameworks */,
 				75EBA10D18C12AE200DB1856 /* Resources */,
 				751DEBE91A862C550092A935 /* ShellScript */,
-				ABC0D0FA6508E2C88583E53A /* [CP] Embed Pods Frameworks */,
 				2BD33171D2B8410DCED51775 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -602,6 +614,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -658,13 +671,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PostaMD/Pods-PostaMD-resources.sh",
+				"${PODS_ROOT}/DateTools/DateTools/DateTools/DateTools.bundle",
+				"${PODS_ROOT}/iRate/iRate/iRate.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DateTools.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/iRate.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaMD/Pods-PostaMD-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PostaMD/Pods-PostaMD-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		750A6F511BE0034C0071FD7B /* ShellScript */ = {
@@ -693,49 +711,22 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" c3e75b562ff5786f994ec42058dcdcfc3cac7b21 f8cf792dbe5119bb09533498f314114a27a9f018ef460dccf8323afb61434021\n";
 		};
-		91E1E935EA5D9AB3F295984D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ABC0D0FA6508E2C88583E53A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaMD/Pods-PostaMD-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B1CF845D8FFB2FC0A4BA2235 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PostaRO-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E592125F59020B701D2ABE75 /* [CP] Check Pods Manifest.lock */ = {
@@ -744,13 +735,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PostaMD-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F03493D31E8FF5569A9BDCF6 /* [CP] Copy Pods Resources */ = {
@@ -759,13 +753,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PostaRO/Pods-PostaRO-resources.sh",
+				"${PODS_ROOT}/iRate/iRate/iRate.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/iRate.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PostaRO/Pods-PostaRO-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PostaRO/Pods-PostaRO-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -788,6 +785,7 @@
 				7552AF171C41874B000E02A8 /* PackagesViewController.m in Sources */,
 				754809641D4B4B000060A7F8 /* NSString+Utils.m in Sources */,
 				7552AF0A1C418716000E02A8 /* PackageInfoViewController.m in Sources */,
+				A1C999BE232A2DF900E9BFCB /* MBProgressHUD.m in Sources */,
 				7552AF151C41874B000E02A8 /* PackageCell.m in Sources */,
 				7552AEF61C417E55000E02A8 /* NSManagedObjectContextOperation.m in Sources */,
 				754809681D4B4D520060A7F8 /* PasteboardSuggestionView.m in Sources */,
@@ -821,6 +819,7 @@
 				75322ED11BD3E8DA00839E76 /* NSManagedObjectContextOperation.m in Sources */,
 				754809631D4B4B000060A7F8 /* NSString+Utils.m in Sources */,
 				7552AF141C41874B000E02A8 /* PackageCell.m in Sources */,
+				A1C999BD232A2DF900E9BFCB /* MBProgressHUD.m in Sources */,
 				75EBA12318C12AE200DB1856 /* AppDelegate.m in Sources */,
 				754809671D4B4D520060A7F8 /* PasteboardSuggestionView.m in Sources */,
 				75322ED51BD3F8FA00839E76 /* NSManagedObject+CloudKit.m in Sources */,
